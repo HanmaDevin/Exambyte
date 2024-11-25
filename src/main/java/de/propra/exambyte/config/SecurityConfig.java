@@ -12,7 +12,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity chainBuilder) throws Exception {
         chainBuilder.authorizeHttpRequests(
-                        configurer -> configurer.requestMatchers("/", "/login", "/register").permitAll()
+                        configurer -> configurer.requestMatchers("/", "/login", "/register", "/css/*").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(Customizer.withDefaults());
