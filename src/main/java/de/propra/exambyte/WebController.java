@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WebController {
     @GetMapping("/")
     public String home() {
-        return "home";
+        return "public/home";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "public/login";
     }
 
     @GetMapping("/register")
     public String register() {
-        return "register";
+        return "public/register";
     }
 }
