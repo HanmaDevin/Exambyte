@@ -14,7 +14,6 @@ public class SecurityConfig {
         chainBuilder.authorizeHttpRequests(
                         configurer -> configurer.requestMatchers("/", "/login", "/register", "/css/*").permitAll()
                                 .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
                 .oauth2Login(Customizer.withDefaults());
 
         return chainBuilder.build();
