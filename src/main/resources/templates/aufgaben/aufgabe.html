@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titel}">Aufgabe</title>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<h1 th:text="${titel}" class="text-center mt-4">Aufgabe</h1>
+
+<div class="container mt-5">
+    <div class="list-group">
+        <div th:each="aufgabe : ${aufgaben}" class="mb-2">
+            <a th:text="${aufgabe.getName()}" th:href="@{{id}(id=${aufgabe.getID()})}" class="list-group-item list-group-item-action">Link</a>
+        </div>
+    </div>
+    <div class="mt-4">
+        <form>
+            <div class="form-group">
+                <p th:text="${aufgabenBeschreibung}" class="form-text"></p>
+                <label for="antwort">Antwort:</label>
+                <input type="text" id="antwort" name="antwort" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Absenden</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
