@@ -16,6 +16,10 @@
             <a class="btn btn-secondary btn-lg" href="/register" role="button">Register</a>
         </div>
     </div>
+    <br>
+    <div th:if="${id}" class="container-fluid row-cols-1">
+        <a class="btn btn-success btn-lg" href="/aufgaben/aufgabenListe" role="button">Zu den Aufgaben</a>
+    </div>
 </div>
 </body>
 </html>
