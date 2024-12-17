@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tests</title>
+
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<! -- this whole html is only for testing -- >
+<div th:each="aufgabenstellung : ${tests}" class="mb-3">
+    <p th:text="${aufgabenstellung.getAufgabenstellung()}"> </p>
+</div>
+
+</body>
+</html>
