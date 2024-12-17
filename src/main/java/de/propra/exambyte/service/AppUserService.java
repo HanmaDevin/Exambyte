@@ -1,4 +1,4 @@
-package de.propra.exambyte;
+package de.propra.exambyte.service;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
