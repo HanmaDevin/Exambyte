@@ -18,38 +18,38 @@ import java.util.ArrayList;
 @RequestMapping("/tests")
 public class TestsController {
 
-    private final ArrayList<MCTestForm> tests = new ArrayList<>();
+    private final ArrayList<MCTestForm> mcTests = new ArrayList<>();
 
     @GetMapping("/addMCTest")
-    public String addMCTest(MCTestForm test, Model model) {
-        model.addAttribute("test", test);
+    public String index(MCTestForm mcTestForm, Model model) {
+        model.addAttribute("mcTest", mcTestForm);
         return "tests/addMCTest";
     }
 
     @PostMapping("/addMCTest")
-    public String addMCTest(@Valid MCTestForm test, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addMCTest(@Valid MCTestForm mcTestForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasFieldErrors()) {
+        if (bindingResult.hasErrors()) {
             return "tests/addMCTest";
         }
 
-        MCTestForm newTest = new MCTestForm(test.aufgabenstellung(),
-                test.antworten(), test.punktzahl(),
-                test.loesung(), test.erklaerung(),
-                test.bearbeitungsBeginn(), test.abgabeZeitpunkt(),
-                test.veroeffentlichungsZeitpunkt());
+        MCTestForm newTest = new MCTestForm(mcTestForm.aufgabenstellung(),
+                mcTestForm.antworten(), mcTestForm.punktzahl(),
+                mcTestForm.loesung(), mcTestForm.erklaerung(),
+                mcTestForm.bearbeitungsBeginn(), mcTestForm.abgabeZeitpunkt(),
+                mcTestForm.veroeffentlichungsZeitpunkt());
 
-        tests.add(newTest);
-        System.out.println(tests);
+        mcTests.add(newTest);
+        System.out.println(mcTests);
 
-        redirectAttributes.addFlashAttribute("test", test);
+        redirectAttributes.addFlashAttribute("mcTest", mcTestForm);
 
         return "redirect:/tests/addMCTest";
     }
 
     @GetMapping("/testListe")
-    public String testListe(Model model) {
-        model.addAttribute("tests", tests);
+    public String showMCTestListe(Model model) {
+        model.addAttribute("mcTests", mcTests);
         return "tests/testListe";
     }
 }
