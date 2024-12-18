@@ -21,34 +21,34 @@ public class TestsController {
     private final ArrayList<MCTestForm> tests = new ArrayList<>();
 
     @GetMapping("/addMCTest")
-    public String addMCTest(MCTestForm testForm, Model model) {
-        model.addAttribute("testForm", testForm);
+    public String addMCTest(MCTestForm test, Model model) {
+        model.addAttribute("test", test);
         return "tests/addMCTest";
     }
 
     @PostMapping("/addMCTest")
-    public String addMCTest(@Valid MCTestForm testForm, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String addMCTest(@Valid MCTestForm test, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors()) {
+        if (bindingResult.hasFieldErrors()) {
             return "tests/addMCTest";
         }
 
-        MCTestForm newTest = new MCTestForm(testForm.getAufgabenstellung(),
-                testForm.getAntworten(), testForm.getPunktzahl(),
-                testForm.getLoesung(), testForm.getErklaerung(),
-                testForm.getBearbeitungsBeginn(), testForm.getAbgabeZeitpunkt(),
-                testForm.getVeroeffentlichungsZeitpunkt());
+        MCTestForm newTest = new MCTestForm(test.aufgabenstellung(),
+                test.antworten(), test.punktzahl(),
+                test.loesung(), test.erklaerung(),
+                test.bearbeitungsBeginn(), test.abgabeZeitpunkt(),
+                test.veroeffentlichungsZeitpunkt());
 
         tests.add(newTest);
         System.out.println(tests);
 
-        redirectAttributes.addFlashAttribute("testForm", testForm);
+        redirectAttributes.addFlashAttribute("test", test);
 
         return "redirect:/tests/addMCTest";
     }
 
     @GetMapping("/testListe")
-    public String testsListe(Model model) {
+    public String testListe(Model model) {
         model.addAttribute("tests", tests);
         return "tests/testListe";
     }
