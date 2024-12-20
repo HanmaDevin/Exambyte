@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Current roles:</p>
+<ul>
+  <li th:each="role : ${roles}" th:text="${role.authority}"></li>
+</ul>
+</body>
+</html>
