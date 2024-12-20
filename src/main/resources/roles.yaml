@@ -1,0 +1,24 @@
+users:
+  - username: "IliasAlhandiui"
+    role: "organizer"
+  - username: "HanmaDevin"
+    role: "organizer"
+  - username: "Anas-El-Jarrari"
+    role: "organizer"
+
+roles:
+  student:
+    description: "Student:in"
+  corrector:
+    description: "Korrektor:in"
+    permission:
+      - "view_assigned_answers"
+      - 'assign_scores'
+  organizer:
+    description: "Organisator:in"
+    permission:
+      - "view_all_answers"
+      - "modify_scores"
+      - "mark_test_as_finished"
+      - "view_all_statistics"
+      - "export_results"
