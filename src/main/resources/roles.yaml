@@ -1,20 +1,20 @@
 users:
   - username: "IliasAlhandiui"
-    role: "organizer"
+    role: "ORGANIZER"
   - username: "HanmaDevin"
-    role: "organizer"
+    role: "ORGANIZER"
   - username: "Anas-El-Jarrari"
-    role: "organizer"
+    role: "ORGANIZER"
 
 roles:
-  student:
+  STUDENT:
     description: "Student:in"
-  corrector:
+  CORRECTOR:
     description: "Korrektor:in"
     permission:
       - "view_assigned_answers"
-      - 'assign_scores'
-  organizer:
+      - "assign_scores"
+  ORGANIZER:
     description: "Organisator:in"
     permission:
       - "view_all_answers"
