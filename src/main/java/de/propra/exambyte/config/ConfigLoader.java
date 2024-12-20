@@ -47,7 +47,7 @@ public class ConfigLoader {
                 return user.get("role");
             }
         }
-        return "student";
+        return "STUDENT";
     }
 
 
