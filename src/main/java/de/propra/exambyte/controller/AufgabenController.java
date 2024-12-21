@@ -1,5 +1,6 @@
-package de.propra.exambyte;
+package de.propra.exambyte.controller;
 
+import de.propra.exambyte.model.test_typen.Aufgabe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

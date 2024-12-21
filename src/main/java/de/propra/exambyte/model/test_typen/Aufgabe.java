@@ -1,4 +1,4 @@
-package de.propra.exambyte;
+package de.propra.exambyte.model.test_typen;
 
 public class Aufgabe {
     private final int ID;
