@@ -28,8 +28,8 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity chainBuilder) throws Exception {
         chainBuilder.authorizeHttpRequests(
                         configurer -> configurer.requestMatchers("/", "/login", "/register", "/css/*").permitAll()
-                                .requestMatchers("/organizer/**").hasAuthority("ROLE_ORGANIZER")
-                                .requestMatchers("/corrector/**").hasAuthority("ROLE_CORRECTOR")
+                                .requestMatchers("/organizer/*").hasAuthority("ROLE_ORGANIZER")
+                                .requestMatchers("/corrector/*").hasAuthority("ROLE_CORRECTOR")
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
