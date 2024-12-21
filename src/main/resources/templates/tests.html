@@ -28,16 +28,16 @@
         <tr th:each="test, iterStat : ${tests}">
             <td th:text="${iterStat.index + 1}">1</td>
             <td th:text="${test.title}">Test Titel</td>
-            <td th:text="${#dates.format(test.startTime, 'dd.MM.yyyy HH:mm')}">Startzeit</td>
-            <td th:text="${#dates.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
-            <td th:text="${#dates.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
+            <td th:text="${#temporals.format(test.startTime, 'dd.MM.yyyy HH:mm')}">Startzeit</td>
+            <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
+            <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
             <td>
                 <a th:href="@{/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen anzeigen</a>
                 <a th:href="@{/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC hinzufügen</a>
-                <a th:href="@{/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext
-                    hinzufügen</a>
+                <a th:href="@{/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext hinzufügen</a>
             </td>
         </tr>
+
         </tbody>
     </table>
 </div>
