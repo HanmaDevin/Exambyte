@@ -1,4 +1,4 @@
-package de.propra.exambyte.test_typen;
+package de.propra.exambyte.model.test_typen;
 
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;

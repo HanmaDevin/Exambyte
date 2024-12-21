@@ -1,4 +1,4 @@
-package de.propra.exambyte.test_typen;
+package de.propra.exambyte.model.test_typen;
 
 import java.time.LocalDateTime;
 import java.util.List;

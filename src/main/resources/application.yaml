@@ -8,6 +8,9 @@ logging:
         security: info
 
 spring:
+  mvc:
+    format:
+      date-time: yyyy-MM-dd'T'HH:mm
   security:
     oauth2:
       client:
@@ -17,3 +20,17 @@ spring:
             client-secret: ${CLIENT_SECRET}
             scope:
               - read:public_repo
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: exambyte
+    password: exambyte
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

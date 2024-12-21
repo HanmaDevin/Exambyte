@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuen Test erstellen</title>
+  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center">Neuen Test erstellen</h1>
+  <form th:action="@{/tests/new}" th:object="${testDto}" method="post" class="mt-4">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titel</label>
+      <input type="text" class="form-control" id="title" th:field="*{title}" required>
+    </div>
+    <div class="mb-3">
+      <label for="startTime" class="form-label">Startzeitpunkt</label>
+      <input type="datetime-local" class="form-control" id="startTime" th:field="*{startTime}">
+    </div>
+    <div class="mb-3">
+      <label for="endTime" class="form-label">Endzeitpunkt</label>
+      <input type="datetime-local" class="form-control" id="endTime" th:field="*{endTime}">
+    </div>
+    <div class="mb-3">
+      <label for="resultTime" class="form-label">Ergebniszeitpunkt</label>
+      <input type="datetime-local" class="form-control" id="resultTime" th:field="*{resultTime}">
+    </div>
+    <button type="submit" class="btn btn-primary">Test speichern</button>
+    <a href="/tests" class="btn btn-secondary">Abbrechen</a>
+  </form>
+</div>
+
+</body>
+</html>
