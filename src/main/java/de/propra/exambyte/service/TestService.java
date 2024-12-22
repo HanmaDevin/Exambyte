@@ -1,6 +1,8 @@
 package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.exception.TestNotFoundException;
+import de.propra.exambyte.exception.WrongDateInput;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.model.Questions;
@@ -32,7 +34,7 @@ public class TestService {
 
     public void addMultipleChoiceQuestionToTest(Long testId, MultipleChoiceQuestion multipleChoiceQuestion) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test not found"));
 
         test.addMultipleChoiceQuestion(multipleChoiceQuestion);
         testRepository.save(test);
@@ -40,7 +42,7 @@ public class TestService {
 
     public void addFreeTextQuestionToTest(Long testId, FreeTextQuestion freeTextQuestion) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test not found"));
 
         test.addFreeTextQuestion(freeTextQuestion);
         testRepository.save(test);
@@ -48,18 +50,23 @@ public class TestService {
 
     public List<Questions> getAllQuestions(Long testId) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test not found"));
 
         return test.getAllQuestions();
     }
 
 
     private void validateTestTimes(TestDto testDto) {
-        if (testDto.getEndTime().isBefore(testDto.getStartTime())) {
-            throw new IllegalArgumentException("End time must be after start time.");
+        if (testDto.getStartTime() == null || testDto.getEndTime() == null || testDto.getResultTime() == null) {
+            throw new WrongDateInput("All fields must be provided.");
         }
+
+        if (testDto.getEndTime().isBefore(testDto.getStartTime())) {
+            throw new WrongDateInput("End time must be after start time.");
+        }
+
         if (testDto.getResultTime().isBefore(testDto.getEndTime())) {
-            throw new IllegalArgumentException("Result time must be after end time.");
+            throw new WrongDateInput("Result time must be after end time.");
         }
     }
 

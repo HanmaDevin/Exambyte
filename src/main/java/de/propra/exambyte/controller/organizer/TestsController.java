@@ -1,4 +1,4 @@
-package de.propra.exambyte.controller;
+package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.service.TestService;
@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-// This class is only for logik testing, could change a lot
 
 @Controller
-@RequestMapping("/tests")
+@RequestMapping("/organizer/tests")
 public class TestsController {
 
     private final TestService testService;

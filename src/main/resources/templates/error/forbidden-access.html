@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forbidden Access</title>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Error Message Box -->
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <strong>Fehler:</strong> <span th:text="${error}"></span>
+    </div>
+</div>
+</body>
+</html>
