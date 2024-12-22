@@ -36,7 +36,15 @@ public class TestsController {
     @PostMapping("/new")
     public String createTest(@ModelAttribute TestDto testDto) {
         testService.createTest(testDto);
-        return "redirect:/tests";
+        return "redirect:/organizer/tests";
     }
+
+    //TODO: Implement DTO for MultipleChoiceQuestion/FreeTextQuestion and Services
+//    @GetMapping("/{testId}/mc-questions")
+//    public String showCreateMcQuestionForm(@PathVariable Long testId, Model model) {
+//        model.addAttribute("testId", testId);
+//        model.addAttribute("mcQuestionDto", new MultipleChoiceQuestionDto());
+//        return "mc-question-form";
+//    }
 
 }

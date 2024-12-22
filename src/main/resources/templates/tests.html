@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <h1 class="text-center">Test Übersicht</h1>
     <div class="d-flex justify-content-end mb-4">
-        <a href="/tests/new" class="btn btn-primary">Neuen Test erstellen</a>
+        <a href="/organizer/tests/new" class="btn btn-primary">Neuen Test erstellen</a>
     </div>
 
     <table class="table table-bordered">
@@ -32,9 +32,9 @@
             <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
             <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
             <td>
-                <a th:href="@{/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen anzeigen</a>
-                <a th:href="@{/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC hinzufügen</a>
-                <a th:href="@{/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext hinzufügen</a>
+                <a th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen anzeigen</a>
+                <a th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC hinzufügen</a>
+                <a th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext hinzufügen</a>
             </td>
         </tr>
 

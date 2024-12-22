@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>show questions</title>
+  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<h1>question for the test <span th:text="${test.title}"></span> </h1>
+
+<ul>
+  <li th:each="question : ${questions}">
+    <span th:text="${question.question != null ? question.question : 'Keine Frage vorhanden'}"></span>
+    - <strong>Max Points:</strong> <span th:text="${question.maxScore}"></span>
+  </li>
+</ul>
+
+
+<a href="/tests">go back</a>
+</body>
+</html>
