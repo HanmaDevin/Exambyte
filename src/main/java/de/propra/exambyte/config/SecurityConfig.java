@@ -35,6 +35,13 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService()) // Use a custom user service
                         )
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            System.out.println("Access denied: " + request.getRequestURI());
+                            request.setAttribute("error", accessDeniedException.getMessage());
+                            request.getRequestDispatcher("/forbidden-access").forward(request, response);
+                        })
                 );
 
 

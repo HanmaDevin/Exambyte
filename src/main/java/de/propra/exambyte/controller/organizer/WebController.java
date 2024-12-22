@@ -1,4 +1,4 @@
-package de.propra.exambyte.controller;
+package de.propra.exambyte.controller.organizer;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,10 +26,6 @@ public class WebController {
         return "public/login";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "public/register";
-    }
 
     // Temp dashboard for debugging
     @GetMapping("/dashboard")

@@ -2,7 +2,8 @@ package de.propra.exambyte.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Title is mandatory")
     private String title;
 
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -24,13 +26,17 @@ public class Test {
     private List<FreeTextQuestion> freeTextQuestions = new ArrayList<>();
 
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") private LocalDateTime startTime;
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") private LocalDateTime endTime;
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") private LocalDateTime resultTime;
+    @NotNull(message = "Start time is mandatory")
+    private LocalDateTime startTime;
+    @NotNull(message = "End time is mandatory")
+    private LocalDateTime endTime;
+    @NotNull(message = "Result time is mandatory")
+    private LocalDateTime resultTime;
 
-    public Test() {}
+    public Test() {
+    }
 
-    public Test(String title, @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime startTime, @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime endTime, @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime resultTime) {
+    public Test(String title, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime resultTime) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
