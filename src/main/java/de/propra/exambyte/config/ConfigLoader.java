@@ -40,6 +40,8 @@ public class ConfigLoader {
 
     public String getRole(String username) {
         configData = getConfigData();
+
+        @SuppressWarnings("unchecked")
         List<Map<String, String>> users = (List<Map<String, String>>) configData.get("users");
 
         for (Map<String, String> user : users) {

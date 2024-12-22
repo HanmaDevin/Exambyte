@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 // This class is only for logik testing, could change a lot
 
@@ -31,12 +30,7 @@ public class TestsController {
 
     @GetMapping("/new")
     public String showCreateTestForm(Model model) {
-        model.addAttribute("testDto", new TestDto(
-                "",
-                LocalDateTime.now(),
-                LocalDateTime.now().plusHours(1),
-                LocalDateTime.now().plusHours(2)
-        ));
+        model.addAttribute("testDto", new TestDto());
         return "test-form";
     }
 

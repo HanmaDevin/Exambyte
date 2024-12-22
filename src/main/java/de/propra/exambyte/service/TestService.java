@@ -18,7 +18,7 @@ public class TestService {
         this.testRepository = testRepository;
     }
 
-    public Test createTest(TestDto testDto) {
+    public void createTest(TestDto testDto) {
         validateTestTimes(testDto);
 
         Test test = new Test(
@@ -27,7 +27,7 @@ public class TestService {
                 testDto.getEndTime(),
                 testDto.getResultTime());
 
-        return testRepository.save(test);
+        testRepository.save(test);
     }
 
     public void addMultipleChoiceQuestionToTest(Long testId, MultipleChoiceQuestion multipleChoiceQuestion) {
