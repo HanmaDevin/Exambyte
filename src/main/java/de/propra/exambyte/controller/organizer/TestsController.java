@@ -1,14 +1,14 @@
 package de.propra.exambyte.controller.organizer;
 
+import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestsController {
 
     private final TestService testService;
+    private final FreeTextQuestionService freeTextQuestionService;
 
-    public TestsController(TestService testService) {
+    public TestsController(TestService testService, FreeTextQuestionService freeTextQuestionService) {
         this.testService = testService;
+        this.freeTextQuestionService = freeTextQuestionService;
     }
 
     @GetMapping
@@ -47,4 +49,28 @@ public class TestsController {
 //        return "mc-question-form";
 //    }
 
+
+    @GetMapping("/{id}/ft-question")
+    public String showCreateFreeTextQuestionForm(@PathVariable Long id, Model model) {
+        model.addAttribute("testId", id);
+        model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
+        return "free-text-question-form";
+    }
+
+    @PostMapping("/{id}/ft-question")
+    public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto, RedirectAttributes redirectAttributes) {
+        FreeTextQuestion freeTextQuestion = freeTextQuestionService.createFreeTextQuestion(id, freeTextQuestionDto);
+        testService.addFreeTextQuestionToTest(id, freeTextQuestion);
+        redirectAttributes.addFlashAttribute("id", id);
+
+        // Redirect to the same page to add more questions, ignore this warning
+        return "redirect:/organizer/tests/" + id + "/ft-question";
+    }
+
+    @GetMapping("/{id}/questions")
+    public String showQuestions(@PathVariable Long id, Model model) {
+        model.addAttribute("questions", testService.getAllQuestions(id));
+        model.addAttribute("test", testService.findTestById(id));
+        return "questions";
+    }
 }
