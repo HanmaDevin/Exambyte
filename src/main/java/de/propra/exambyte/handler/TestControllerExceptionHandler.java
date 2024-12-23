@@ -16,5 +16,4 @@ public class TestControllerExceptionHandler {
         model.addAttribute("testDto", new TestDto());
         return "test-form";
     }
-
 }
