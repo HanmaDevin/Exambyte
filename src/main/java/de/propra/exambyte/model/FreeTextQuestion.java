@@ -19,8 +19,7 @@ public class FreeTextQuestion implements Questions {
     public FreeTextQuestion() {
     }
 
-    public FreeTextQuestion(Long id, String questionText, String possibleAnswer, int maxScore) {
-        this.id = id;
+    public FreeTextQuestion(String questionText, String possibleAnswer, int maxScore) {
         this.questionText = questionText;
         this.possibleAnswer = possibleAnswer;
         this.maxScore = maxScore;

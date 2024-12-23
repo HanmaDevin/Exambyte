@@ -2,20 +2,31 @@ package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
+import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerThanZeroException;
 import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.repository.FreeTextQuestionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FreeTextQuestionService {
+    private final FreeTextQuestionRepository freeTextQuestionRepository;
 
-    public FreeTextQuestion createFreeTextQuestion(Long ID, FreeTextQuestionDto freeTextQuestionDto) {
+    public FreeTextQuestionService(FreeTextQuestionRepository freeTextQuestionRepository) {
+        this.freeTextQuestionRepository = freeTextQuestionRepository;
+    }
+
+    public void createFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
         validateFreeTextQuestion(freeTextQuestionDto);
 
-        return new FreeTextQuestion(ID,
+        FreeTextQuestion freeTextQuestion = new FreeTextQuestion(
                 freeTextQuestionDto.getQuestion(),
                 freeTextQuestionDto.getPossibleAnswer(),
-                freeTextQuestionDto.getMaxScore());
+                freeTextQuestionDto.getMaxScore()
+
+        );
+
+        freeTextQuestionRepository.save(freeTextQuestion);
     }
 
     private void validateFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
@@ -31,5 +42,13 @@ public class FreeTextQuestionService {
             throw new LowerThanZeroException("Max score must be greater than 0");
         }
 
+    }
+
+    public FreeTextQuestion findFreeTextQuestionById(Long id) {
+        return freeTextQuestionRepository.findById(id).orElseThrow(() -> new FreeTextQuestionNotFoundException("FreeTextQuestion not found"));
+    }
+
+    public Long getId(Long id) {
+        return freeTextQuestionRepository.getFreeTextQuestionById(id).getId();
     }
 }
