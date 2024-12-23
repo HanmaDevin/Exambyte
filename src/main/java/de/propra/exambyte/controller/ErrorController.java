@@ -10,4 +10,9 @@ public class ErrorController {
     public String forbiddenAccess() {
         return "error/forbidden-access";
     }
+
+    @GetMapping("/test-not-found")
+    public String testNotFound() {
+        return "error/test-not-found";
+    }
 }
