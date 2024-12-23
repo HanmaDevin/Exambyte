@@ -15,4 +15,9 @@ public class ErrorController {
     public String testNotFound() {
         return "error/test-not-found";
     }
+
+    @GetMapping("/free-text-question-not-found")
+    public String freeTextQuestionNotFound() {
+        return "error/free-text-question-not-found";
+    }
 }
