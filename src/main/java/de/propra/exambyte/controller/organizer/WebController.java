@@ -21,12 +21,6 @@ public class WebController {
         return "public/home";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "public/login";
-    }
-
-
     // Temp dashboard for debugging
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
