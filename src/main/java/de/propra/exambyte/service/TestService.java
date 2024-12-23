@@ -2,7 +2,7 @@ package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.TestNotFoundException;
-import de.propra.exambyte.exception.WrongDateInput;
+import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.model.Questions;
@@ -58,23 +58,27 @@ public class TestService {
 
     private void validateTestTimes(TestDto testDto) {
         if (testDto.getStartTime() == null || testDto.getEndTime() == null || testDto.getResultTime() == null) {
-            throw new WrongDateInput("All fields must be provided.");
+            throw new WrongDateInputException("All fields must be provided.");
         }
 
         if (testDto.getEndTime().isBefore(testDto.getStartTime())) {
-            throw new WrongDateInput("End time must be after start time.");
+            throw new WrongDateInputException("End time must be after start time.");
         }
 
         if (testDto.getResultTime().isBefore(testDto.getEndTime())) {
-            throw new WrongDateInput("Result time must be after end time.");
+            throw new WrongDateInputException("Result time must be after end time.");
         }
 
         if (testDto.getStartTime().isBefore(java.time.LocalDateTime.now())) {
-            throw new WrongDateInput("Start time must be in the future.");
+            throw new WrongDateInputException("Start time must be in the future.");
         }
     }
 
     public List<Test> getAllTests() {
         return testRepository.findAll();
+    }
+
+    public Object findTestById(Long id) {
+        return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test not found"));
     }
 }
