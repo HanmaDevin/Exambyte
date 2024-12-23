@@ -11,6 +11,7 @@ public class FreeTextQuestion implements Questions {
     private Long id;
     private String questionText;
     private int maxScore;
+    private String possibleAnswer;
 
     @ManyToOne
     private Test test;
@@ -18,9 +19,10 @@ public class FreeTextQuestion implements Questions {
     public FreeTextQuestion() {
     }
 
-    public FreeTextQuestion(Long id, String questionText, int maxScore) {
+    public FreeTextQuestion(Long id, String questionText, String possibleAnswer, int maxScore) {
         this.id = id;
         this.questionText = questionText;
+        this.possibleAnswer = possibleAnswer;
         this.maxScore = maxScore;
     }
 
@@ -44,4 +46,7 @@ public class FreeTextQuestion implements Questions {
         this.test = test;
     }
 
+    public String getPossibleAnswer() {
+        return possibleAnswer;
+    }
 }
