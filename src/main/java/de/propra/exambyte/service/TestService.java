@@ -68,6 +68,10 @@ public class TestService {
         if (testDto.getResultTime().isBefore(testDto.getEndTime())) {
             throw new WrongDateInput("Result time must be after end time.");
         }
+
+        if (testDto.getStartTime().isBefore(java.time.LocalDateTime.now())) {
+            throw new WrongDateInput("Start time must be in the future.");
+        }
     }
 
     public List<Test> getAllTests() {
