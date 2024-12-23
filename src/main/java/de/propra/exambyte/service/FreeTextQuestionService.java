@@ -20,7 +20,7 @@ public class FreeTextQuestionService {
         validateFreeTextQuestion(freeTextQuestionDto);
 
         FreeTextQuestion freeTextQuestion = new FreeTextQuestion(
-                freeTextQuestionDto.getQuestion(),
+                freeTextQuestionDto.getQuestionText(),
                 freeTextQuestionDto.getPossibleAnswer(),
                 freeTextQuestionDto.getMaxScore()
 
@@ -30,7 +30,7 @@ public class FreeTextQuestionService {
     }
 
     private void validateFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
-        if (freeTextQuestionDto.getQuestion() == null || freeTextQuestionDto.getQuestion().isEmpty()) {
+        if (freeTextQuestionDto.getQuestionText() == null || freeTextQuestionDto.getQuestionText().isEmpty()) {
             throw new EmptyInputException("Question must not be empty");
         }
 

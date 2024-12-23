@@ -2,25 +2,25 @@ package de.propra.exambyte.dto;
 
 public class FreeTextQuestionDto {
 
-    private String question;
+    private String questionText;
     private int maxScore;
     private String possibleAnswer;
 
     public FreeTextQuestionDto() {
     }
 
-    public FreeTextQuestionDto(String question, int maxScore, String possibleAnswer) {
-        this.question = question;
+    public FreeTextQuestionDto(String questionText, int maxScore, String possibleAnswer) {
+        this.questionText = questionText;
         this.maxScore = maxScore;
         this.possibleAnswer = possibleAnswer;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionText() {
+        return questionText;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public int getMaxScore() {

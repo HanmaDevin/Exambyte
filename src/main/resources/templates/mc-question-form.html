@@ -1,0 +1,44 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Neue Frage erstellen</title>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+
+    <!-- Error Message Box -->
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <strong>Fehler:</strong> <span th:text="${error}"></span>
+    </div>
+
+    <h1 class="text-center">Neue Multiple-Choice Frage erstellen</h1>
+    <form th:action="@{/organizer/tests/{test-id}/mc-question(test-id=${id})}" th:object="${multipleChoiceQuestionDto}" method="post" class="mt-4">
+        <div class="mb-3">
+            <label for="frage" class="form-label">Frage</label>
+            <input type="text" class="form-control" id="frage" th:field="*{questionText}" required>
+        </div>
+        <div class="mb-3">
+            <label for="answersOptions" class="form-label">Antwortmöglichkeiten (Kommagetrennt)</label>
+            <input type="text" class="form-control" id="answersOptions" th:field="*{answersOptions}" placeholder="Option1, Option2, Option3..." required>
+        </div>
+        <div class="mb-3">
+            <label for="correctAnswers" class="form-label">Korrekte Antworten (Indexe, kommagetrennt)</label>
+            <input type="text" class="form-control" id="correctAnswers" th:field="*{correctAnswers}" placeholder="0,2 für erste und dritte Option" required>
+        </div>
+        <div class="mb-3">
+            <label for="maxScore" class="form-label">Punktzahl</label>
+            <input type="number" class="form-control" id="maxScore" th:field="*{maxScore}" required>
+        </div>
+        <div class="mb-3">
+            <label for="explanation" class="form-label">Erklärung</label>
+            <textarea class="form-control" id="explanation" th:field="*{explanation}" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Frage hinzufuegen</button>
+        <a href="#" th:href="@{/organizer/tests/{test-id}/mc-question(test-id=${id})}" class="btn btn-secondary">Abbrechen</a>
+        <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurueck</a>
+    </form>
+</div>
+</body>
+</html>

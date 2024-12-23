@@ -29,8 +29,7 @@ public class MultipleChoiceQuestion implements Questions {
 
     }
 
-    public MultipleChoiceQuestion(Long id, String questionText, List<String> answersOptions, List<Integer> correctAnswers, int maxScore, String explanation) {
-        this.id = id;
+    public MultipleChoiceQuestion(String questionText, List<String> answersOptions, List<Integer> correctAnswers, int maxScore, String explanation) {
         this.questionText = questionText;
         this.answersOptions = answersOptions;
         this.correctAnswers = correctAnswers;
@@ -46,6 +45,18 @@ public class MultipleChoiceQuestion implements Questions {
     @Override
     public String getQuestion() {
         return questionText;
+    }
+
+    public List<String> getAnswersOptions() {
+        return answersOptions;
+    }
+
+    public List<Integer> getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public String getExplanation() {
+        return explanation;
     }
 
     @Override
