@@ -50,29 +50,4 @@ public class TestsController {
 //        model.addAttribute("mcQuestionDto", new MultipleChoiceQuestionDto());
 //        return "mc-question-form";
 //    }
-
-
-    @GetMapping("/{id}/ft-question")
-    public String showCreateFreeTextQuestionForm(@PathVariable Long id, Model model) {
-        model.addAttribute("testId", id);
-        model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
-        return "free-text-question-form";
-    }
-
-    @PostMapping("/{id}/ft-question")
-    public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto, RedirectAttributes redirectAttributes) {
-        FreeTextQuestion freeTextQuestion = freeTextQuestionService.createFreeTextQuestion(id, freeTextQuestionDto);
-        testService.addFreeTextQuestionToTest(id, freeTextQuestion);
-        redirectAttributes.addFlashAttribute("id", id);
-
-        // Redirect to the same page to add more questions, ignore this warning
-        return "redirect:/organizer/tests/" + id + "/ft-question";
-    }
-
-    @GetMapping("/{id}/questions")
-    public String showQuestions(@PathVariable Long id, Model model) {
-        model.addAttribute("questions", testService.getAllQuestions(id));
-        model.addAttribute("test", testService.findTestById(id));
-        return "questions";
-    }
 }
