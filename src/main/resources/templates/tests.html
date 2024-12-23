@@ -32,11 +32,11 @@
             <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
             <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
             <td>
-                <a th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen
+                <a href="#" th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen
                     anzeigen</a>
-                <a th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC
+                <a href="#" th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC
                     hinzufügen</a>
-                <a th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext
+                <a href="#" th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext
                     hinzufügen</a>
             </td>
         </tr>
