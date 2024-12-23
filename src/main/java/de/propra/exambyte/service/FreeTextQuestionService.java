@@ -16,7 +16,7 @@ public class FreeTextQuestionService {
         this.freeTextQuestionRepository = freeTextQuestionRepository;
     }
 
-    public void createFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
+    public FreeTextQuestion createFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
         validateFreeTextQuestion(freeTextQuestionDto);
 
         FreeTextQuestion freeTextQuestion = new FreeTextQuestion(
@@ -26,7 +26,7 @@ public class FreeTextQuestionService {
 
         );
 
-        freeTextQuestionRepository.save(freeTextQuestion);
+        return freeTextQuestionRepository.save(freeTextQuestion);
     }
 
     private void validateFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {

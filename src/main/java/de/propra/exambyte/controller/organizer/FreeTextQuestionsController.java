@@ -1,13 +1,13 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.FreeTextQuestionDto;
+import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/organizer/tests")
@@ -31,12 +31,9 @@ public class FreeTextQuestionsController {
 
     @PostMapping("/{id}/ft-question")
     public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto) {
-        freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
-
-        testService.addFreeTextQuestionToTest(id, freeTextQuestionService.findFreeTextQuestionById(id));
-
-        // Redirect to the same page to add more questions, ignore this warning
-        return "redirect:/organizer/tests/" + id + "/ft-question";
+        FreeTextQuestion createdQuestion =  freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
+        testService.addFreeTextQuestionToTest(id, createdQuestion);
+        return String.format("redirect:/organizer/tests/%d/ft-question", id);
     }
 
     @GetMapping("/{id}/questions")
