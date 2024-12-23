@@ -1,4 +1,4 @@
-package de.propra.exambyte.controller.organizer;
+package de.propra.exambyte.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
