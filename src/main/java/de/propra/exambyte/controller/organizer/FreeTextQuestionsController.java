@@ -36,10 +36,4 @@ public class FreeTextQuestionsController {
         return String.format("redirect:/organizer/tests/%d/ft-question", id);
     }
 
-    @GetMapping("/{id}/questions")
-    public String showQuestions(@PathVariable Long id, Model model) {
-        model.addAttribute("questions", testService.getAllQuestions(id));
-        model.addAttribute("test", testService.findTestById(id));
-        return "questions";
-    }
 }
