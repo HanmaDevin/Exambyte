@@ -11,7 +11,7 @@ public class TestDto {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") private LocalDateTime resultTime;
 
 
-    public TestDto(String title, @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime  startTime, @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm") LocalDateTime endTime,  @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")LocalDateTime resultTime) {
+    public TestDto(String title, LocalDateTime  startTime, LocalDateTime endTime, LocalDateTime resultTime) {
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
