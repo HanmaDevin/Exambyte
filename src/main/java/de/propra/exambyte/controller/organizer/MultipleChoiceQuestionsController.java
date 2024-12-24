@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class MultipleChoiceQuestionsController {
     public String addMultipleChoiceQuestion(@PathVariable Long id,
                                             @RequestParam List<String> answerTexts,
                                             @RequestParam List<String> answerBooleans,
-                                            @ModelAttribute MultipleChoiceQuestionDto dto) {
+                                            @ModelAttribute MultipleChoiceQuestionDto dto, RedirectAttributes redirectAttributes) {
         Map<String, Boolean> parsedAnswers = IntStream.range(0, answerTexts.size())
                 .boxed()
                 .collect(Collectors.toMap(answerTexts::get, i -> Boolean.parseBoolean(answerBooleans.get(i))));
@@ -46,20 +47,18 @@ public class MultipleChoiceQuestionsController {
 
         MultipleChoiceQuestion createdQuestion = multipleChoiceQuestionService.createMultipleChoiceQuestion(dto);
         testService.addMultipleChoiceQuestionToTest(id, createdQuestion);
-
-
+        redirectAttributes.addFlashAttribute("createdQuestion", createdQuestion);
         System.out.println(createdQuestion.toString());
 
         return String.format("redirect:/organizer/tests/%d/mc-question", id);
     }
 
 
-
     /*
-    * TODO: handle exception per controller
-    * because the global controller advice has conflict with same exception
-    * therefore displaying wrong form depending on the question type
-    */
+     * TODO: handle exception per controller
+     * because the global controller advice has conflict with same exception
+     * therefore displaying wrong form depending on the question type
+     */
     @ExceptionHandler(LowerOrEqualZeroException.class)
     public String handleLowerThanZeroException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());

@@ -29,9 +29,16 @@
 </head>
 <body>
 <div class="container mt-5">
+    <!-- Error Message Box -->
     <div class="alert alert-danger" th:if="${error}" role="alert">
         <strong>Fehler:</strong> <span th:text="${error}"></span>
     </div>
+
+    <!-- Success Message Box -->
+    <div class="alert alert-success" th:if="${createdQuestion != null}" role="alert">
+        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestion()}"></span>
+    </div>
+
 
     <h1 class="text-center">Neue Multiple-Choice Frage erstellen</h1>
     <form method="post" th:action="@{/organizer/tests/{testId}/mc-question(testId=${testId})}">
@@ -44,14 +51,16 @@
             <label class="form-label">Antwortmöglichkeiten</label>
             <div class="d-flex align-items-center mb-2">
                 <label for="answerText1" class="form-label visually-hidden">Antwort 1</label>
-                <input type="text" class="form-control me-2" id="answerText1" name="answerTexts[]" placeholder="Antwort 1" required>
+                <input type="text" class="form-control me-2" id="answerText1" name="answerTexts[]"
+                       placeholder="Antwort 1" required>
                 <input type="hidden" name="answerBooleans[]" value="false">
                 <input type="checkbox" class="form-check-input" id="correct1" onclick="toggleCheckbox(this, 1)">
                 <label for="correct1" class="ms-1">Korrekt</label>
             </div>
             <div class="d-flex align-items-center mb-2">
                 <label for="answerText2" class="form-label visually-hidden">Antwort 2</label>
-                <input type="text" class="form-control me-2" id="answerText2" name="answerTexts[]" placeholder="Antwort 2" required>
+                <input type="text" class="form-control me-2" id="answerText2" name="answerTexts[]"
+                       placeholder="Antwort 2" required>
                 <input type="hidden" name="answerBooleans[]" value="false">
                 <input type="checkbox" class="form-check-input" id="correct2" onclick="toggleCheckbox(this, 2)">
                 <label for="correct2" class="ms-1">Korrekt</label>

@@ -26,10 +26,6 @@ spring:
     driver-class-name: org.h2.Driver
     username: exambyte
     password: exambyte
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
   h2:
     console:
       enabled: true

@@ -48,4 +48,14 @@ public class FreeTextQuestion implements Questions {
     public String getPossibleAnswer() {
         return possibleAnswer;
     }
+
+
+    public String toSting() {
+        return "FreeTextQuestion{" +
+                "id=" + id +
+                ", questionText='" + questionText + '\'' +
+                ", maxScore=" + maxScore +
+                ", possibleAnswer='" + possibleAnswer + '\'' +
+                '}';
+    }
 }

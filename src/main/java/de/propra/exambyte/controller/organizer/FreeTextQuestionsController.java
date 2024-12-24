@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/organizer/tests")
@@ -30,9 +31,11 @@ public class FreeTextQuestionsController {
     }
 
     @PostMapping("/{id}/ft-question")
-    public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto) {
+    public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto, RedirectAttributes redirectAttributes) {
         FreeTextQuestion createdQuestion =  freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
         testService.addFreeTextQuestionToTest(id, createdQuestion);
+        System.out.println(createdQuestion.toSting());
+        redirectAttributes.addFlashAttribute("createdQuestion", createdQuestion);
         return String.format("redirect:/organizer/tests/%d/ft-question", id);
     }
 

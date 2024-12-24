@@ -96,4 +96,15 @@ public class Test {
         return questions;
     }
 
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", resultTime=" + resultTime +
+                '}';
+    }
+
 }

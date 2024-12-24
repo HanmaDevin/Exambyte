@@ -51,4 +51,14 @@ public class TestDto {
     public void setResultTime(LocalDateTime resultTime) {
         this.resultTime = resultTime;
     }
+
+    @Override
+    public String toString() {
+        return "TestDto{" +
+                "title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", resultTime=" + resultTime +
+                '}';
+    }
 }
