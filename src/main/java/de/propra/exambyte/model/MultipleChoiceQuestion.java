@@ -2,7 +2,6 @@ package de.propra.exambyte.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Map;
 
 @Entity

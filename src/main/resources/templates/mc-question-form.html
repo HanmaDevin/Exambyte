@@ -10,17 +10,18 @@
             const container = document.getElementById('answersContainer');
             const newField = document.createElement('div');
             newField.className = 'mb-2 d-flex align-items-center';
+            answerCount++;
             newField.innerHTML = `
-                <input type="text" class="form-control me-2" name="answerTexts[]" placeholder="Antwort ${answerCount + 1}" required>
+                <label for="answerText${answerCount}" class="form-label visually-hidden">Antwort ${answerCount}</label>
+                <input type="text" class="form-control me-2" id="answerText${answerCount}" name="answerTexts[]" placeholder="Antwort ${answerCount}" required>
                 <input type="hidden" name="answerBooleans[]" value="false">
-                <input type="checkbox" class="form-check-input" onclick="toggleCheckbox(this, ${answerCount})">
-                <label class="ms-1">Korrekt</label>
+                <input type="checkbox" class="form-check-input" id="correct${answerCount}" onclick="toggleCheckbox(this, ${answerCount})">
+                <label for="correct${answerCount}" class="ms-1">Korrekt</label>
             `;
             container.appendChild(newField);
-            answerCount++;
         }
 
-        function toggleCheckbox(checkbox, index) {
+        function toggleCheckbox(checkbox) {
             const hiddenField = checkbox.previousElementSibling;
             hiddenField.value = checkbox.checked ? 'true' : 'false';
         }
@@ -42,16 +43,18 @@
         <div class="mb-3" id="answersContainer">
             <label class="form-label">Antwortmöglichkeiten</label>
             <div class="d-flex align-items-center mb-2">
-                <input type="text" class="form-control me-2" name="answerTexts[]" placeholder="Antwort 1" required>
+                <label for="answerText1" class="form-label visually-hidden">Antwort 1</label>
+                <input type="text" class="form-control me-2" id="answerText1" name="answerTexts[]" placeholder="Antwort 1" required>
                 <input type="hidden" name="answerBooleans[]" value="false">
-                <input type="checkbox" class="form-check-input" onclick="toggleCheckbox(this, 1)">
-                <label class="ms-1">Korrekt</label>
+                <input type="checkbox" class="form-check-input" id="correct1" onclick="toggleCheckbox(this, 1)">
+                <label for="correct1" class="ms-1">Korrekt</label>
             </div>
             <div class="d-flex align-items-center mb-2">
-                <input type="text" class="form-control me-2" name="answerTexts[]" placeholder="Antwort 2" required>
+                <label for="answerText2" class="form-label visually-hidden">Antwort 2</label>
+                <input type="text" class="form-control me-2" id="answerText2" name="answerTexts[]" placeholder="Antwort 2" required>
                 <input type="hidden" name="answerBooleans[]" value="false">
-                <input type="checkbox" class="form-check-input" onclick="toggleCheckbox(this, 2)">
-                <label class="ms-1">Korrekt</label>
+                <input type="checkbox" class="form-check-input" id="correct2" onclick="toggleCheckbox(this, 2)">
+                <label for="correct2" class="ms-1">Korrekt</label>
             </div>
         </div>
 
