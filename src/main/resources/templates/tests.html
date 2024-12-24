@@ -7,7 +7,14 @@
     <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+
+
 <div class="container mt-5">
+    <!-- Success Message Box -->
+    <div class="alert alert-success" th:if="${createdTest != null}" role="alert">
+        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdTest.getTitle()}"></span>
+    </div>
+
     <h1 class="text-center">Test Übersicht</h1>
     <div class="d-flex justify-content-end mb-4">
         <a href="/organizer/tests/new" class="btn btn-primary">Neuen Test erstellen</a>

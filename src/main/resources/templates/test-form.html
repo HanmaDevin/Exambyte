@@ -14,7 +14,6 @@
         <strong>Fehler:</strong> <span th:text="${error}"></span>
     </div>
 
-
     <h1 class="text-center">Neuen Test erstellen</h1>
     <form th:action="@{/organizer/tests/new}" th:object="${testDto}" method="post" class="mt-4">
         <div class="mb-3">
