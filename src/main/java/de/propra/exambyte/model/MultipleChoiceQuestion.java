@@ -2,7 +2,7 @@ package de.propra.exambyte.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Map;
 
 @Entity
 public class MultipleChoiceQuestion implements Questions {
@@ -13,14 +13,15 @@ public class MultipleChoiceQuestion implements Questions {
     private String questionText;
 
     @ElementCollection
-    private List<String> answersOptions;
-
-    @ElementCollection
-    private List<Integer> correctAnswers;
+    private Map<String, Boolean> answers;
 
     private int maxScore;
 
     private String explanation;
+
+    public Map<String, Boolean> getAnswers() {
+        return answers;
+    }
 
     @ManyToOne
     private Test test;
@@ -29,10 +30,11 @@ public class MultipleChoiceQuestion implements Questions {
 
     }
 
-    public MultipleChoiceQuestion(String questionText, List<String> answersOptions, List<Integer> correctAnswers, int maxScore, String explanation) {
+
+
+    public MultipleChoiceQuestion(String questionText, Map<String, Boolean> answers, int maxScore, String explanation) {
         this.questionText = questionText;
-        this.answersOptions = answersOptions;
-        this.correctAnswers = correctAnswers;
+        this.answers = answers;
         this.maxScore = maxScore;
         this.explanation = explanation;
     }
@@ -47,13 +49,6 @@ public class MultipleChoiceQuestion implements Questions {
         return questionText;
     }
 
-    public List<String> getAnswersOptions() {
-        return answersOptions;
-    }
-
-    public List<Integer> getCorrectAnswers() {
-        return correctAnswers;
-    }
 
     public String getExplanation() {
         return explanation;
@@ -66,5 +61,15 @@ public class MultipleChoiceQuestion implements Questions {
 
     public void setTest(Test test) {
         this.test = test;
+    }
+
+    @Override
+    public String toString() {
+        return "MultipleChoiceQuestionDto{" +
+                "questionText='" + questionText + '\'' +
+        ", answersOptions=" + answers +
+                ", maxScore=" + maxScore +
+                ", explanation='" + explanation + '\'' +
+        '}';
     }
 }

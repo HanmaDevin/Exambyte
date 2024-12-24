@@ -1,24 +1,30 @@
 package de.propra.exambyte.dto;
 
-import java.util.List;
+import java.util.Map;
 
 public class MultipleChoiceQuestionDto {
 
     private String questionText;
-    private List<String> answersOptions;
-    private List<Integer> correctAnswers;
+    private Map<String, Boolean> answers;
     private int maxScore;
     private String explanation;
 
     public MultipleChoiceQuestionDto() {
     }
 
-    public MultipleChoiceQuestionDto(String questionText, int maxScore, String explanation, List<String> answersOptions, List<Integer> correctAnswers) {
+    public Map<String, Boolean> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Map<String, Boolean> answers) {
+        this.answers = answers;
+    }
+
+    public MultipleChoiceQuestionDto(String questionText, int maxScore, String explanation, Map<String, Boolean> answers) {
         this.questionText = questionText;
         this.maxScore = maxScore;
         this.explanation = explanation;
-        this.answersOptions = answersOptions;
-        this.correctAnswers = correctAnswers;
+        this.answers = answers;
     }
 
     public String getQuestionText() {
@@ -27,22 +33,6 @@ public class MultipleChoiceQuestionDto {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
-    }
-
-    public List<String> getAnswersOptions() {
-        return answersOptions;
-    }
-
-    public void setAnswersOptions(List<String> answersOptions) {
-        this.answersOptions = answersOptions;
-    }
-
-    public List<Integer> getCorrectAnswers() {
-        return correctAnswers;
-    }
-
-    public void setCorrectAnswers(List<Integer> correctAnswers) {
-        this.correctAnswers = correctAnswers;
     }
 
     public int getMaxScore() {
@@ -59,5 +49,15 @@ public class MultipleChoiceQuestionDto {
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
+    }
+
+    @Override
+    public String toString() {
+        return "MultipleChoiceQuestionDto{" +
+                "questionText='" + questionText + '\'' +
+        ", answersOptions=" + answers +
+                ", maxScore=" + maxScore +
+                ", explanation='" + explanation + '\''+
+        '}';
     }
 }

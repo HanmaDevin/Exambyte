@@ -10,6 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Controller
 @RequestMapping("/organizer/tests")
 @Secured("ROLE_ORGANIZER")
@@ -30,11 +35,24 @@ public class MultipleChoiceQuestionsController {
     }
 
     @PostMapping("/{id}/mc-question")
-    public String addMultipleChoiceQuestion(@PathVariable Long id, @ModelAttribute MultipleChoiceQuestionDto multipleChoiceQuestionDto) {
-        MultipleChoiceQuestion createdQuestion =  multipleChoiceQuestionService.createMultipleChoiceQuestion(multipleChoiceQuestionDto);
+    public String addMultipleChoiceQuestion(@PathVariable Long id,
+                                            @RequestParam List<String> answerTexts,
+                                            @RequestParam List<String> answerBooleans,
+                                            @ModelAttribute MultipleChoiceQuestionDto dto) {
+        Map<String, Boolean> parsedAnswers = IntStream.range(0, answerTexts.size())
+                .boxed()
+                .collect(Collectors.toMap(answerTexts::get, i -> Boolean.parseBoolean(answerBooleans.get(i))));
+        dto.setAnswers(parsedAnswers);
+
+        MultipleChoiceQuestion createdQuestion = multipleChoiceQuestionService.createMultipleChoiceQuestion(dto);
         testService.addMultipleChoiceQuestionToTest(id, createdQuestion);
+
+
+        System.out.println(createdQuestion.toString());
+
         return String.format("redirect:/organizer/tests/%d/mc-question", id);
     }
+
 
 
     /*
