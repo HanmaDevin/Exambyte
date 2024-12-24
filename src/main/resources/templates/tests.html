@@ -14,7 +14,7 @@
     </div>
 
     <table class="table table-bordered">
-        <thead class="table-dark">
+        <thead class="table-primary">
         <tr>
             <th>#</th>
             <th>Titel</th>
@@ -34,7 +34,7 @@
             <td>
                 <a href="#" th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen
                     anzeigen</a>
-                <a href="#" th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">MC
+                <a href="#" th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">Multiple Choice Frage
                     hinzufügen</a>
                 <a href="#" th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext
                     hinzufügen</a>

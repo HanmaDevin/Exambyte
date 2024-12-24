@@ -33,8 +33,14 @@
             <label for="resultTime" class="form-label">Ergebniszeitpunkt</label>
             <input type="datetime-local" class="form-control" id="resultTime" th:field="*{resultTime}">
         </div>
-        <button type="submit" class="btn btn-primary">Test speichern</button>
-        <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Abbrechen</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Test speichern</button>
+            <div>
+                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Abbrechen</a>
+            </div>
+        </div>
+
+
     </form>
 </div>
 

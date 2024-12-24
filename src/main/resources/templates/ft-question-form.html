@@ -12,25 +12,28 @@
         <strong>Fehler:</strong> <span th:text="${error}"></span>
     </div>
 
-
     <h1 class="text-center">Neue Frage erstellen</h1>
     <form th:action="@{/organizer/tests/{test-id}/ft-question(test-id=${id})}" th:object="${freeTextQuestionDto}" method="post" class="mt-4">
         <div class="mb-3">
             <label for="frage" class="form-label">Frage</label>
-            <input type="text" class="form-control" id="frage" th:field="*{questionText}" required>
+            <textarea class="form-control" id="frage" th:field="*{questionText}" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="possobleAnswer" class="form-label">Loesungsvroschlag</label>
-            <input type="text" class="form-control" id="possobleAnswer" th:field="*{possibleAnswer}" required>
+            <label for="possibleAnswer" class="form-label">Loesungsvroschlag</label>
+            <textarea type="text" class="form-control" id="possibleAnswer" th:field="*{possibleAnswer}" required></textarea>
         </div>
         <div class="mb-3">
             <label for="maxScore" class="form-label">Punktzahl</label>
             <input type="number" class="form-control" id="maxScore" th:field="*{maxScore}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Frage hinzufuegen</button>
-        <a href="#" th:href="@{/organizer/tests/{test-id}/ft-question(test-id=${id})}" class="btn btn-secondary">Abbrechen</a>
-        <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurueck</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Frage hinzufuegen</button>
+            <div>
+                <a href="#" th:href="@{/organizer/tests/{test-id}/ft-question(test-id=${id})}" class="btn btn-secondary">Abbrechen</a>
+                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurueck</a>
+            </div>
+        </div>
     </form>
 </div>
 </body>

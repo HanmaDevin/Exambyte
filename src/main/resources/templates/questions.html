@@ -2,20 +2,29 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>show questions</title>
+  <title th:text="${test.title}">Fragen</title>
   <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
-<h1>question for the test <span th:text="${test.title}"></span> </h1>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Frage <span th:text="${test.title}"></span></h1>
 
-<ul>
-  <li th:each="question : ${questions}">
-    <span th:text="${question.question != null ? question.question : 'Keine Frage vorhanden'}"></span>
-    - <strong>Max Points:</strong> <span th:text="${question.maxScore}"></span>
-  </li>
-</ul>
+  <table class="table table-striped">
+    <thead class="table-primary">
+    <tr>
+      <th class="col-8">Frage</th>
+      <th class="col-4">Punkte</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question : ${questions}">
+      <td th:text="${question.question != null ? question.question : 'Keine Frage vorhanden'}" class="col-9"></td>
+      <td th:text="${question.maxScore}" class="col-1"></td>
+    </tr>
+    </tbody>
+  </table>
 
-
-<a th:href="@{/organizer/tests}">go back</a>
+  <a href="#" th:href="@{/organizer/tests}" class="btn btn-primary mt-3">Go Back</a>
+</div>
 </body>
 </html>
