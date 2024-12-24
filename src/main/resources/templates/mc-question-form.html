@@ -34,10 +34,15 @@
             <label for="explanation" class="form-label">Erklärung</label>
             <textarea class="form-control" id="explanation" th:field="*{explanation}" rows="3"></textarea>
         </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Frage hinzufuegen</button>
+            <div>
+                <a href="#" th:href="@{/organizer/tests/{test-id}/mc-question(test-id=${id})}" class="btn btn-secondary">Abbrechen</a>
+                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurueck</a>
+            </div>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Frage hinzufuegen</button>
-        <a href="#" th:href="@{/organizer/tests/{test-id}/mc-question(test-id=${id})}" class="btn btn-secondary">Abbrechen</a>
-        <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurueck</a>
+
     </form>
 </div>
 </body>
