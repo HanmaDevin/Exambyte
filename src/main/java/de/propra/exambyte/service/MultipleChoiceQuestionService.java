@@ -21,8 +21,7 @@ public class MultipleChoiceQuestionService {
 
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(
                 multipleChoiceQuestionDto.getQuestionText(),
-                multipleChoiceQuestionDto.getAnswersOptions(),
-                multipleChoiceQuestionDto.getCorrectAnswers(),
+                multipleChoiceQuestionDto.getAnswers(),
                 multipleChoiceQuestionDto.getMaxScore(),
                 multipleChoiceQuestionDto.getExplanation()
 
@@ -37,13 +36,10 @@ public class MultipleChoiceQuestionService {
             throw new EmptyInputException("Question text cannot be empty");
         }
 
-        if (multipleChoiceQuestionDto.getAnswersOptions() == null || multipleChoiceQuestionDto.getAnswersOptions().isEmpty()) {
+        if (multipleChoiceQuestionDto.getAnswers() == null || multipleChoiceQuestionDto.getAnswers().isEmpty()) {
             throw new EmptyInputException("Answer options cannot be empty");
         }
 
-        if (multipleChoiceQuestionDto.getCorrectAnswers() == null || multipleChoiceQuestionDto.getCorrectAnswers().isEmpty()) {
-            throw new EmptyInputException("Correct answers cannot be empty");
-        }
 
         if (multipleChoiceQuestionDto.getMaxScore() <= 0) {
             throw new LowerOrEqualZeroException("Max score cannot be empty or lower than 0");
