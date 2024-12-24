@@ -3,7 +3,7 @@ package de.propra.exambyte.service;
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
-import de.propra.exambyte.exception.LowerThanZeroException;
+import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.repository.FreeTextQuestionRepository;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class FreeTextQuestionService {
         }
 
         if (freeTextQuestionDto.getMaxScore() <= 0) {
-            throw new LowerThanZeroException("Max score must be greater than 0");
+            throw new LowerOrEqualZeroException("Max score must be greater than 0");
         }
 
     }

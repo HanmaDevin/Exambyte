@@ -20,4 +20,9 @@ public class ErrorController {
     public String freeTextQuestionNotFound() {
         return "error/free-text-question-not-found";
     }
+
+    @GetMapping("/multiple-choice-question-not-found")
+    public String multipleChoiceQuestionNotFound() {
+        return "error/multiple-choice-question-not-found";
+    }
 }

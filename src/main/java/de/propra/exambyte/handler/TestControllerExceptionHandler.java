@@ -3,7 +3,7 @@ package de.propra.exambyte.handler;
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.EmptyInputException;
-import de.propra.exambyte.exception.LowerThanZeroException;
+import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class TestControllerExceptionHandler {
         return "test-form";
     }
 
-    @ExceptionHandler(LowerThanZeroException.class)
+    @ExceptionHandler(LowerOrEqualZeroException.class)
     public String handleLowerThanZeroException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
@@ -40,5 +40,7 @@ public class TestControllerExceptionHandler {
         model.addAttribute("error", e.getMessage());
         return "error/test-not-found";
     }
+
+
 }
 
