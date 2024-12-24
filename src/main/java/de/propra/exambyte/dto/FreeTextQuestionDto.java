@@ -38,4 +38,13 @@ public class FreeTextQuestionDto {
     public void setPossibleAnswer(String possibleAnswer) {
         this.possibleAnswer = possibleAnswer;
     }
+
+    @Override
+    public String toString() {
+        return "FreeTextQuestionDto{" +
+                "questionText='" + questionText + '\'' +
+                ", maxScore=" + maxScore +
+                ", possibleAnswer='" + possibleAnswer + '\'' +
+                '}';
+    }
 }

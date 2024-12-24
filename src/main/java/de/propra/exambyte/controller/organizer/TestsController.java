@@ -1,6 +1,7 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
@@ -36,7 +37,8 @@ public class TestsController {
 
     @PostMapping("/new")
     public String createTest(@ModelAttribute TestDto testDto) {
-        testService.createTest(testDto);
+        Test createdTest = testService.createTest(testDto);
+        System.out.println(createdTest.toString());
         return "redirect:/organizer/tests";
     }
 

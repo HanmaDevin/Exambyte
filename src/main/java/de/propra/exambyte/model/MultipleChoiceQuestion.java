@@ -63,7 +63,6 @@ public class MultipleChoiceQuestion implements Questions {
         this.test = test;
     }
 
-    @Override
     public String toString() {
         return "MultipleChoiceQuestionDto{" +
                 "questionText='" + questionText + '\'' +

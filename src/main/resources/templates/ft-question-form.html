@@ -12,6 +12,11 @@
         <strong>Fehler:</strong> <span th:text="${error}"></span>
     </div>
 
+    <!-- Success Message Box -->
+    <div class="alert alert-success" th:if="${createdQuestion != null}" role="alert">
+        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestion()}"></span>
+    </div>
+
     <h1 class="text-center">Neue Frage erstellen</h1>
     <form th:action="@{/organizer/tests/{test-id}/ft-question(test-id=${id})}" th:object="${freeTextQuestionDto}" method="post" class="mt-4">
         <div class="mb-3">

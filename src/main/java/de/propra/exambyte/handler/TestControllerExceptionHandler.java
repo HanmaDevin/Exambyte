@@ -25,14 +25,14 @@ public class TestControllerExceptionHandler {
     public String handleLowerThanZeroException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
-        return "free-text-question-form";
+        return "ft-question-form";
     }
 
     @ExceptionHandler(EmptyInputException.class)
     public String handleEmptyInputException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
-        return "free-text-question-form";
+        return "ft-question-form";
     }
 
     @ExceptionHandler(TestNotFoundException.class)
