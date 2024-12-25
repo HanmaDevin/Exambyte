@@ -7,6 +7,7 @@ import de.propra.exambyte.exception.MultipleChoiceQuestionNotFoundException;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
 import org.springframework.stereotype.Service;
+import java.util.Map;
 
 @Service
 public class MultipleChoiceQuestionService {
@@ -24,13 +25,11 @@ public class MultipleChoiceQuestionService {
                 multipleChoiceQuestionDto.getAnswers(),
                 multipleChoiceQuestionDto.getMaxScore(),
                 multipleChoiceQuestionDto.getExplanation()
-
         );
 
         return multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
     }
 
-    //TODO: Add validation, throw custom Exception and write hanldermethod accordingly
     private void validateMultipleChoiceQuestion(MultipleChoiceQuestionDto multipleChoiceQuestionDto) {
         if (multipleChoiceQuestionDto.getQuestionText() == null || multipleChoiceQuestionDto.getQuestionText().isEmpty()) {
             throw new EmptyInputException("Question text cannot be empty");
@@ -40,11 +39,9 @@ public class MultipleChoiceQuestionService {
             throw new EmptyInputException("Answer options cannot be empty");
         }
 
-
         if (multipleChoiceQuestionDto.getMaxScore() <= 0) {
             throw new LowerOrEqualZeroException("Max score cannot be empty or lower than 0");
         }
-
     }
 
     public MultipleChoiceQuestion findMultipleChoiceQuestionById(Long id) {
