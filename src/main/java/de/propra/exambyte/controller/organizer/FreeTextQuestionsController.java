@@ -36,7 +36,7 @@ public class FreeTextQuestionsController {
     public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto, RedirectAttributes redirectAttributes) {
         FreeTextQuestion createdQuestion =  freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
         testService.addFreeTextQuestionToTest(id, createdQuestion);
-        System.out.println(createdQuestion.toSting());
+        System.out.println(createdQuestion.toString());
         redirectAttributes.addFlashAttribute("createdQuestion", createdQuestion);
         return String.format("redirect:/organizer/tests/%d/ft-question", id);
     }

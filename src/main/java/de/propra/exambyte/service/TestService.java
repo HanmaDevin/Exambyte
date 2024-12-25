@@ -33,26 +33,30 @@ public class TestService {
     }
 
     public void addMultipleChoiceQuestionToTest(Long testId, MultipleChoiceQuestion multipleChoiceQuestion) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
-
+        Test test = findTestById(testId);
         test.addMultipleChoiceQuestion(multipleChoiceQuestion);
         testRepository.save(test);
     }
 
     public void addFreeTextQuestionToTest(Long testId, FreeTextQuestion freeTextQuestion) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
-
+        Test test = findTestById(testId);
         test.addFreeTextQuestion(freeTextQuestion);
         testRepository.save(test);
     }
 
     public List<Questions> getAllQuestions(Long testId) {
-        Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
-
+        Test test = findTestById(testId);
         return test.getAllQuestions();
+    }
+
+    public MultipleChoiceQuestion getMultipleChoiceQuestionById(Long testId, Long questionId) {
+        Test test = findTestById(testId);
+        return (MultipleChoiceQuestion) test.getMultipleChoiceQuestions(questionId);
+    }
+
+    public FreeTextQuestion getFreeTextQuestionById(Long testId, Long questionId) {
+        Test test = findTestById(testId);
+        return (FreeTextQuestion) test.getFreeTextQuestions(questionId);
     }
 
 
@@ -78,7 +82,7 @@ public class TestService {
         return testRepository.findAll();
     }
 
-    public Object findTestById(Long id) {
-        return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
+    public Test findTestById(Long id) {
+        return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test not found"));
     }
 }

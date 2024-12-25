@@ -29,11 +29,20 @@ public class MultipleChoiceQuestionService {
         return multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
     }
 
+    public MultipleChoiceQuestion updateMultipleChoiceQuestion(Long id, MultipleChoiceQuestionDto dto) {
+        MultipleChoiceQuestion question = findMultipleChoiceQuestionById(id);
+
+        dto.parseAnswers();
+
+        question.updateQuestion(dto.getQuestionText(), dto.getAnswers(), dto.getMaxScore(), dto.getExplanation());
+
+        return multipleChoiceQuestionRepository.save(question);
+    }
+
     private void validateMultipleChoiceQuestion(MultipleChoiceQuestionDto multipleChoiceQuestionDto) {
         if (multipleChoiceQuestionDto.getQuestionText() == null || multipleChoiceQuestionDto.getQuestionText().isEmpty()) {
             throw new EmptyInputException("Frage darf nicht leer sein");
         }
-
         if (multipleChoiceQuestionDto.getAnswers() == null || multipleChoiceQuestionDto.getAnswers().isEmpty()) {
             throw new EmptyInputException("Antworten dürfen nicht leer sein");
         }

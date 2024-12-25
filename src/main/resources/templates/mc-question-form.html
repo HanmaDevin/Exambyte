@@ -25,6 +25,11 @@
             const hiddenField = checkbox.previousElementSibling;
             hiddenField.value = checkbox.checked ? 'true' : 'false';
         }
+
+        function removeAnswerField(button) {
+            const fieldToRemove = button.parentNode;
+            fieldToRemove.remove();
+        }
     </script>
 </head>
 <body>
@@ -36,7 +41,7 @@
 
     <!-- Success Message Box -->
     <div class="alert alert-success" th:if="${createdQuestion != null}" role="alert">
-        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestion()}"></span>
+        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestionText()}"></span>
     </div>
 
 

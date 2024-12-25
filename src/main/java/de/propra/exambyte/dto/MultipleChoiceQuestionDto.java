@@ -1,6 +1,10 @@
 package de.propra.exambyte.dto;
 
-import java.util.Map;
+import de.propra.exambyte.exception.DuplicateAnswerException;
+
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MultipleChoiceQuestionDto {
 
@@ -8,6 +12,9 @@ public class MultipleChoiceQuestionDto {
     private Map<String, Boolean> answers;
     private int maxScore;
     private String explanation;
+
+    private List<String> answerTexts;
+    private List<String> answerBooleans;
 
     public MultipleChoiceQuestionDto() {
     }
@@ -25,6 +32,9 @@ public class MultipleChoiceQuestionDto {
         this.maxScore = maxScore;
         this.explanation = explanation;
         this.answers = answers;
+
+        this.answerTexts = new ArrayList<>(answers.keySet());
+        this.answerBooleans = answers.values().stream().map(String::valueOf).collect(Collectors.toList());
     }
 
     public String getQuestionText() {
@@ -51,13 +61,45 @@ public class MultipleChoiceQuestionDto {
         this.explanation = explanation;
     }
 
+    public List<String> getAnswerTexts() {
+        return answerTexts;
+    }
+
+    public void setAnswerTexts(List<String> answerTexts) {
+        Set<String> uniqueAnswers = new HashSet<>(answerTexts);
+        if (uniqueAnswers.size() != answerTexts.size()) {
+            throw new DuplicateAnswerException("Antworten dürfen nicht mehrfach vorkommen");
+        }
+
+        this.answerTexts = answerTexts;
+    }
+
+    public List<String> getAnswerBooleans() {
+        return answerBooleans;
+    }
+
+    public void setAnswerBooleans(List<String> answerBooleans) {
+        this.answerBooleans = answerBooleans;
+    }
+
+    public void parseAnswers() {
+        if (answerTexts != null && answerBooleans != null) {
+            this.answers = IntStream.range(0, answerTexts.size())
+                    .boxed()
+                    .collect(Collectors.toMap(answerTexts::get, i -> Boolean.parseBoolean(answerBooleans.get(i))));
+        }
+    }
+
+
     @Override
     public String toString() {
         return "MultipleChoiceQuestionDto{" +
                 "questionText='" + questionText + '\'' +
-        ", answersOptions=" + answers +
+                ", answerTexts=" + answerTexts +
+                ", answerBooleans=" + answerBooleans +
+                ", answersOptions=" + answers +
                 ", maxScore=" + maxScore +
-                ", explanation='" + explanation + '\''+
-        '}';
+                ", explanation='" + explanation + '\'' +
+                '}';
     }
 }

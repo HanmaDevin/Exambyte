@@ -32,7 +32,7 @@ public class FreeTextQuestion implements Questions {
     }
 
     @Override
-    public String getQuestion() {
+    public String getQuestionText() {
         return questionText;
     }
 
@@ -49,8 +49,13 @@ public class FreeTextQuestion implements Questions {
         return possibleAnswer;
     }
 
+    @Override
+    public String getType() {
+        return "FreeTextQuestion";
+    }
 
-    public String toSting() {
+    @Override
+    public String toString() {
         return "FreeTextQuestion{" +
                 "id=" + id +
                 ", questionText='" + questionText + '\'' +
