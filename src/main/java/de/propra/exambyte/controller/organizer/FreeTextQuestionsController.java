@@ -1,6 +1,8 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.FreeTextQuestionDto;
+import de.propra.exambyte.exception.EmptyInputException;
+import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
@@ -37,6 +39,19 @@ public class FreeTextQuestionsController {
         System.out.println(createdQuestion.toSting());
         redirectAttributes.addFlashAttribute("createdQuestion", createdQuestion);
         return String.format("redirect:/organizer/tests/%d/ft-question", id);
+    }
+
+    @ExceptionHandler(EmptyInputException.class)
+    public String handleEmptyInputException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
+        return "ft-question-form";
+    }
+    @ExceptionHandler(LowerOrEqualZeroException.class)
+    public String handleLowerThanZeroException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
+        return "ft-question-form";
     }
 
 }

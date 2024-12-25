@@ -1,6 +1,8 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.exception.TestNotFoundException;
+import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
@@ -47,6 +49,17 @@ public class TestsController {
         model.addAttribute("questions", testService.getAllQuestions(id));
         model.addAttribute("test", testService.findTestById(id));
         return "questions";
+    }
+    @ExceptionHandler(TestNotFoundException.class)
+    public String handleTestNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/test-not-found";
+    }
+    @ExceptionHandler(WrongDateInputException.class)
+    public String handleWrongDateInput(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("testDto", new TestDto());
+        return "test-form";
     }
 
 }

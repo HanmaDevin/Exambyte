@@ -34,7 +34,7 @@ public class TestService {
 
     public void addMultipleChoiceQuestionToTest(Long testId, MultipleChoiceQuestion multipleChoiceQuestion) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
 
         test.addMultipleChoiceQuestion(multipleChoiceQuestion);
         testRepository.save(test);
@@ -42,7 +42,7 @@ public class TestService {
 
     public void addFreeTextQuestionToTest(Long testId, FreeTextQuestion freeTextQuestion) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
 
         test.addFreeTextQuestion(freeTextQuestion);
         testRepository.save(test);
@@ -50,7 +50,7 @@ public class TestService {
 
     public List<Questions> getAllQuestions(Long testId) {
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new TestNotFoundException("Test not found"));
+                .orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
 
         return test.getAllQuestions();
     }
@@ -58,19 +58,19 @@ public class TestService {
 
     private void validateTestTimes(TestDto testDto) {
         if (testDto.getStartTime() == null || testDto.getEndTime() == null || testDto.getResultTime() == null) {
-            throw new WrongDateInputException("All fields must be provided.");
+            throw new WrongDateInputException("Alle Felder müssen ausgefüllt sein.");
         }
 
         if (testDto.getEndTime().isBefore(testDto.getStartTime())) {
-            throw new WrongDateInputException("End time must be after start time.");
+            throw new WrongDateInputException("Endzeitpunkt muss nach Startzeitpunkt sein.");
         }
 
         if (testDto.getResultTime().isBefore(testDto.getEndTime())) {
-            throw new WrongDateInputException("Result time must be after end time.");
+            throw new WrongDateInputException("Ergebniszeitpunkt muss nach Endzeitpunkt sein.");
         }
 
         if (testDto.getStartTime().isBefore(java.time.LocalDateTime.now())) {
-            throw new WrongDateInputException("Start time must be in the future.");
+            throw new WrongDateInputException("Startzeitpunkt muss in der Zukunft liegen.");
         }
     }
 
@@ -79,6 +79,6 @@ public class TestService {
     }
 
     public Object findTestById(Long id) {
-        return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test not found"));
+        return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test wurde nicht gefunden"));
     }
 }
