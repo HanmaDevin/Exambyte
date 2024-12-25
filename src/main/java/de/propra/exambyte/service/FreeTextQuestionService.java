@@ -31,21 +31,21 @@ public class FreeTextQuestionService {
 
     private void validateFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
         if (freeTextQuestionDto.getQuestionText() == null || freeTextQuestionDto.getQuestionText().isEmpty()) {
-            throw new EmptyInputException("Question must not be empty");
+            throw new EmptyInputException("Die Fragestellung darf nicht leer sein");
         }
 
         if (freeTextQuestionDto.getPossibleAnswer() == null || freeTextQuestionDto.getPossibleAnswer().isEmpty()) {
-            throw new EmptyInputException("Possible answer must not be empty");
+            throw new EmptyInputException("Antworten dürfen nicht leer sein");
         }
 
         if (freeTextQuestionDto.getMaxScore() <= 0) {
-            throw new LowerOrEqualZeroException("Max score must be greater than 0");
+            throw new LowerOrEqualZeroException("Punktzahl muss größer als 0 sein");
         }
 
     }
 
     public FreeTextQuestion findFreeTextQuestionById(Long id) {
-        return freeTextQuestionRepository.findById(id).orElseThrow(() -> new FreeTextQuestionNotFoundException("FreeTextQuestion not found"));
+        return freeTextQuestionRepository.findById(id).orElseThrow(() -> new FreeTextQuestionNotFoundException("Freitextaufgabe wurde nicht gefunden"));
     }
 
     public Long getId(Long id) {

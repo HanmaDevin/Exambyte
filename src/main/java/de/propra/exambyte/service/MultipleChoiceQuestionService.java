@@ -7,7 +7,6 @@ import de.propra.exambyte.exception.MultipleChoiceQuestionNotFoundException;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
 import org.springframework.stereotype.Service;
-import java.util.Map;
 
 @Service
 public class MultipleChoiceQuestionService {
@@ -32,15 +31,19 @@ public class MultipleChoiceQuestionService {
 
     private void validateMultipleChoiceQuestion(MultipleChoiceQuestionDto multipleChoiceQuestionDto) {
         if (multipleChoiceQuestionDto.getQuestionText() == null || multipleChoiceQuestionDto.getQuestionText().isEmpty()) {
-            throw new EmptyInputException("Question text cannot be empty");
+            throw new EmptyInputException("Frage darf nicht leer sein");
         }
 
         if (multipleChoiceQuestionDto.getAnswers() == null || multipleChoiceQuestionDto.getAnswers().isEmpty()) {
-            throw new EmptyInputException("Answer options cannot be empty");
+            throw new EmptyInputException("Antworten dürfen nicht leer sein");
         }
 
         if (multipleChoiceQuestionDto.getMaxScore() <= 0) {
-            throw new LowerOrEqualZeroException("Max score cannot be empty or lower than 0");
+            throw new LowerOrEqualZeroException("Punktanzahl muss größer als 0 sein");
+        }
+
+        if (multipleChoiceQuestionDto.getExplanation() == null || multipleChoiceQuestionDto.getExplanation().isEmpty()) {
+            throw new EmptyInputException("Erklärung darf nicht leer sein");
         }
     }
 
