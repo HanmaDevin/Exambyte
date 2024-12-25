@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FreeTextQuestionRepository extends JpaRepository<FreeTextQuestion, Long> {
-    FreeTextQuestion getFreeTextQuestionById(Long id);
 }

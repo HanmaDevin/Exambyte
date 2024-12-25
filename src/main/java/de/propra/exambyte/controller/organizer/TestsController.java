@@ -3,13 +3,17 @@ package de.propra.exambyte.controller.organizer;
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
+import de.propra.exambyte.model.Questions;
 import de.propra.exambyte.model.Test;
+import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -18,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TestsController {
 
     private final TestService testService;
+    private final FreeTextQuestionService freeTextQuestionService;
 
-    public TestsController(TestService testService) {
+    public TestsController(TestService testService, FreeTextQuestionService freeTextQuestionService) {
         this.testService = testService;
+        this.freeTextQuestionService = freeTextQuestionService;
     }
 
     @GetMapping
@@ -43,18 +49,20 @@ public class TestsController {
         return "redirect:/organizer/tests";
     }
 
-    // TODO: Need to display whether the question is a multiple choice or free text question and display the question accordingly
     @GetMapping("/{id}/questions")
     public String showQuestions(@PathVariable Long id, Model model) {
-        model.addAttribute("questions", testService.getAllQuestions(id));
+        List<Questions> allQuestions = testService.getAllQuestions(id);
+        model.addAttribute("questions", allQuestions);
         model.addAttribute("test", testService.findTestById(id));
         return "questions";
     }
+
     @ExceptionHandler(TestNotFoundException.class)
     public String handleTestNotFoundException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         return "error/test-not-found";
     }
+
     @ExceptionHandler(WrongDateInputException.class)
     public String handleWrongDateInput(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());

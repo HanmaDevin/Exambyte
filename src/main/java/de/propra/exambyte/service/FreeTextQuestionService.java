@@ -47,8 +47,4 @@ public class FreeTextQuestionService {
     public FreeTextQuestion findFreeTextQuestionById(Long id) {
         return freeTextQuestionRepository.findById(id).orElseThrow(() -> new FreeTextQuestionNotFoundException("Freitextaufgabe wurde nicht gefunden"));
     }
-
-    public Long getId(Long id) {
-        return freeTextQuestionRepository.getFreeTextQuestionById(id).getId();
-    }
 }
