@@ -5,7 +5,6 @@ import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.Questions;
 import de.propra.exambyte.model.Test;
-import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -22,11 +21,9 @@ import java.util.List;
 public class TestsController {
 
     private final TestService testService;
-    private final FreeTextQuestionService freeTextQuestionService;
 
-    public TestsController(TestService testService, FreeTextQuestionService freeTextQuestionService) {
+    public TestsController(TestService testService) {
         this.testService = testService;
-        this.freeTextQuestionService = freeTextQuestionService;
     }
 
     @GetMapping
