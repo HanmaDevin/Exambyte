@@ -39,11 +39,11 @@ public class TestsController {
     }
 
     @PostMapping("/new")
-    public String createTest(@ModelAttribute TestDto testDto, RedirectAttributes redirectAttributes) {
+    public String createTest(@ModelAttribute TestDto testDto, Model model) {
         Test createdTest = testService.createTest(testDto);
-        redirectAttributes.addFlashAttribute("createdTest", createdTest);
         System.out.println(createdTest.toString());
-        return "redirect:/organizer/tests";
+        model.addAttribute("createdTest", createdTest);
+        return "test-form";
     }
 
 
@@ -59,6 +59,7 @@ public class TestsController {
         System.out.println(createdTest.toString());
         return "redirect:/organizer/tests";
     }
+
 
 
     @GetMapping("/{id}/questions")

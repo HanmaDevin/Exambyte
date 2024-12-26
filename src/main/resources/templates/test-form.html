@@ -22,25 +22,22 @@
         </div>
         <div class="mb-3">
             <label for="startTime" class="form-label">Startzeitpunkt</label>
-            <input type="datetime-local" class="form-control" id="startTime" th:field="*{startTime}">
+            <input type="datetime-local" class="form-control" id="startTime" th:field="*{startTime}" required>
         </div>
         <div class="mb-3">
             <label for="endTime" class="form-label">Endzeitpunkt</label>
-            <input type="datetime-local" class="form-control" id="endTime" th:field="*{endTime}">
+            <input type="datetime-local" class="form-control" id="endTime" th:field="*{endTime}" required>
         </div>
         <div class="mb-3">
             <label for="resultTime" class="form-label">Ergebniszeitpunkt</label>
-            <input type="datetime-local" class="form-control" id="resultTime" th:field="*{resultTime}">
+            <input type="datetime-local" class="form-control" id="resultTime" th:field="*{resultTime}" required>
         </div>
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">
-                Test speichern
-            </button>
+            <button type="submit" class="btn btn-primary">Test speichern</button>
 
             <div>
-                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Abbrechen</a>
+                <button type="reset" class="btn btn-danger">Zurücksetzen</button>
             </div>
-
         </div>
     </form>
 
