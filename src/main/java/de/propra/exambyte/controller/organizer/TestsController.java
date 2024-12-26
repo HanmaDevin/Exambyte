@@ -1,6 +1,7 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.Questions;
@@ -78,6 +79,13 @@ public class TestsController {
 
     @ExceptionHandler(WrongDateInputException.class)
     public String handleWrongDateInput(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("testDto", new TestDto());
+        return "test-form";
+    }
+
+    @ExceptionHandler(EmptyInputException.class)
+    public String EmptyInputException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("testDto", new TestDto());
         return "test-form";

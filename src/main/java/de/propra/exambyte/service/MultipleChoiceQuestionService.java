@@ -54,6 +54,10 @@ public class MultipleChoiceQuestionService {
         if (multipleChoiceQuestionDto.getExplanation() == null || multipleChoiceQuestionDto.getExplanation().isEmpty()) {
             throw new EmptyInputException("Erklärung darf nicht leer sein");
         }
+
+        // TODO: check if there is at least one correct answer
+
+        // TODO: check if there is no duplicate answer
     }
 
     public MultipleChoiceQuestion findMultipleChoiceQuestionById(Long id) {

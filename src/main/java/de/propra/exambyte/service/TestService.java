@@ -1,6 +1,7 @@
 package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.TestDto;
+import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.FreeTextQuestion;
@@ -62,7 +63,11 @@ public class TestService {
 
     private void validateTestTimes(TestDto testDto) {
         if (testDto.getStartTime() == null || testDto.getEndTime() == null || testDto.getResultTime() == null) {
-            throw new WrongDateInputException("Alle Felder müssen ausgefüllt sein.");
+            throw new EmptyInputException("Alle Felder müssen ausgefüllt sein.");
+        }
+
+        if (testDto.getTitle() == null || testDto.getTitle().isEmpty()) {
+            throw new EmptyInputException("Titel darf nicht leer sein.");
         }
 
         if (testDto.getEndTime().isBefore(testDto.getStartTime())) {

@@ -19,10 +19,6 @@ public class MultipleChoiceQuestion implements Questions {
 
     private String explanation;
 
-    public Map<String, Boolean> getAnswers() {
-        return answers;
-    }
-
     @ManyToOne
     private Test test;
 
@@ -47,6 +43,9 @@ public class MultipleChoiceQuestion implements Questions {
         return questionText;
     }
 
+    public Map<String, Boolean> getAnswers() {
+        return answers;
+    }
 
     public String getExplanation() {
         return explanation;

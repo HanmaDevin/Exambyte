@@ -14,29 +14,29 @@
 
     <!-- Success Message Box -->
     <div class="alert alert-success" th:if="${createdQuestion != null}" role="alert">
-        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestion()}"></span>
+        <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdQuestion.getQuestionText()}"></span>
     </div>
 
     <h1 class="text-center">Neue Frage erstellen</h1>
     <form th:action="@{/organizer/tests/{test-id}/ft-question(test-id=${id})}" th:object="${freeTextQuestionDto}" method="post" class="mt-4">
         <div class="mb-3">
             <label for="frage" class="form-label">Frage</label>
-            <textarea class="form-control" id="frage" th:field="*{questionText}" required></textarea>
+            <textarea class="form-control" id="frage" th:field="*{questionText}" th:value="*{questionText}" required></textarea>
         </div>
         <div class="mb-3">
             <label for="possibleAnswer" class="form-label">Loesungsvorschlag</label>
-            <textarea type="text" class="form-control" id="possibleAnswer" th:field="*{possibleAnswer}" required></textarea>
+            <textarea type="text" class="form-control" id="possibleAnswer" th:field="*{possibleAnswer}" th:value="*{possibleAnswer}" required></textarea>
         </div>
         <div class="mb-3">
             <label for="maxScore" class="form-label">Punktzahl</label>
-            <input type="number" class="form-control" id="maxScore" th:field="*{maxScore}" required>
+            <input type="number" class="form-control" id="maxScore" th:field="*{maxScore}" th:value="*{maxScore}" required>
         </div>
 
         <div class="d-flex justify-content-between">
             <button type="submit" class="btn btn-primary">Frage hinzufügen</button>
             <div>
                 <button type="reset" class="btn btn-danger">Zurücksetzen</button>
-                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurück</a>
+                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurück zur Uebersicht</a>
             </div>
         </div>
     </form>

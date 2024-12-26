@@ -19,14 +19,6 @@ public class MultipleChoiceQuestionDto {
     public MultipleChoiceQuestionDto() {
     }
 
-    public Map<String, Boolean> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Map<String, Boolean> answers) {
-        this.answers = answers;
-    }
-
     public MultipleChoiceQuestionDto(String questionText, int maxScore, String explanation, Map<String, Boolean> answers) {
         this.questionText = questionText;
         this.maxScore = maxScore;
@@ -72,6 +64,14 @@ public class MultipleChoiceQuestionDto {
         }
 
         this.answerTexts = answerTexts;
+    }
+
+    public Map<String, Boolean> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Map<String, Boolean> answers) {
+        this.answers = answers;
     }
 
     public List<String> getAnswerBooleans() {
