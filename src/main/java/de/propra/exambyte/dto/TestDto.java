@@ -58,7 +58,6 @@ public class TestDto {
         this.startTime = LocalDateTime.now().plusHours(1);
         this.endTime = LocalDateTime.now().plusHours(2);
         this.resultTime = LocalDateTime.now().plusHours(3);
-        System.out.println(this.toString());
     }
 
 
