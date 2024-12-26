@@ -26,23 +26,4 @@ public class WebTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
-
-    @Test
-    @DisplayName("Die Login-Seite ist unter '/login' erreichbar")
-    @Disabled //Disabled for now
-    void test_login_page() throws Exception {
-        mvc.perform(get("/login"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-
-    @Test
-    @DisplayName("Die Registrierungsseite ist unter '/register' erreichbar")
-    @WithMockUser()
-    @Disabled //Disabled for now
-    void test_register_page() throws Exception {
-        mvc.perform(get("/register"))
-                .andExpect(status().isOk())
-                .andReturn();
-    }
 }
