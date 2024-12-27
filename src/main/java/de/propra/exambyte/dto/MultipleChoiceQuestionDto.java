@@ -1,10 +1,11 @@
 package de.propra.exambyte.dto;
 
-import de.propra.exambyte.exception.DuplicateAnswerException;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 public class MultipleChoiceQuestionDto {
 
@@ -24,8 +25,10 @@ public class MultipleChoiceQuestionDto {
         this.maxScore = maxScore;
         this.explanation = explanation;
         this.answers = answers;
+        //multimap is used as a workaround to store multiple values for a single key in order to properly use the exception handling
+        Multimap multimap = convertToMultimap(answers);
 
-        this.answerTexts = new ArrayList<>(answers.keySet());
+        this.answerTexts = new ArrayList<>(multimap.keySet());
         this.answerBooleans = answers.values().stream().map(String::valueOf).collect(Collectors.toList());
     }
 
@@ -59,10 +62,6 @@ public class MultipleChoiceQuestionDto {
 
     public void setAnswerTexts(List<String> answerTexts) {
         Set<String> uniqueAnswers = new HashSet<>(answerTexts);
-        if (uniqueAnswers.size() != answerTexts.size()) {
-            throw new DuplicateAnswerException("Antworten dürfen nicht mehrfach vorkommen");
-        }
-
         this.answerTexts = answerTexts;
     }
 
@@ -84,10 +83,23 @@ public class MultipleChoiceQuestionDto {
 
     public void parseAnswers() {
         if (answerTexts != null && answerBooleans != null) {
-            this.answers = IntStream.range(0, answerTexts.size())
-                    .boxed()
-                    .collect(Collectors.toMap(answerTexts::get, i -> Boolean.parseBoolean(answerBooleans.get(i))));
+            this.answers = new LinkedHashMap<>();
+            for (int i = 0; i < answerTexts.size(); i++) {
+                String key = answerTexts.get(i);
+                Boolean value = Boolean.parseBoolean(answerBooleans.get(i));
+                if (!this.answers.containsKey(key)) {
+                    this.answers.put(key, value);
+                }
+            }
         }
+    }
+
+    public Multimap<Boolean, String> convertToMultimap(Map<String, Boolean> inputMap) {
+        Multimap<Boolean, String> multimap = ArrayListMultimap.create();
+        for (Map.Entry<String, Boolean> entry : inputMap.entrySet()) {
+            multimap.put(entry.getValue(), entry.getKey());
+        }
+        return multimap;
     }
 
 
