@@ -26,7 +26,7 @@ public class MultipleChoiceQuestionDto {
         this.explanation = explanation;
         this.answers = answers;
         //multimap is used as a workaround to store multiple values for a single key in order to properly use the exception handling
-        Multimap multimap = convertToMultimap(answers);
+        Multimap<String, Boolean> multimap = convertToMultimap(answers);
 
         this.answerTexts = new ArrayList<>(multimap.keySet());
         this.answerBooleans = answers.values().stream().map(String::valueOf).collect(Collectors.toList());
@@ -94,10 +94,10 @@ public class MultipleChoiceQuestionDto {
         }
     }
 
-    public Multimap<Boolean, String> convertToMultimap(Map<String, Boolean> inputMap) {
-        Multimap<Boolean, String> multimap = ArrayListMultimap.create();
+    public Multimap<String, Boolean> convertToMultimap(Map<String, Boolean> inputMap) {
+        Multimap<String, Boolean> multimap = ArrayListMultimap.create();
         for (Map.Entry<String, Boolean> entry : inputMap.entrySet()) {
-            multimap.put(entry.getValue(), entry.getKey());
+            multimap.put(entry.getKey(), entry.getValue());
         }
         return multimap;
     }
