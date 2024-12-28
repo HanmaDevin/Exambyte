@@ -40,11 +40,11 @@ public class TestsController {
     }
 
     @PostMapping("/new")
-    public String createTest(@ModelAttribute TestDto testDto, Model model) {
+    public String createTest(@ModelAttribute TestDto testDto, RedirectAttributes redirectAttributes) {
         Test createdTest = testService.createTest(testDto);
         System.out.println(createdTest.toString());
-        model.addAttribute("createdTest", createdTest);
-        return "test-form";
+        redirectAttributes.addFlashAttribute("createdTest", createdTest);
+        return "redirect:/organizer/tests/new";
     }
 
 
