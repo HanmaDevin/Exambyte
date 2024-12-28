@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tests</title>
+  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container mt-5 align-self-center">
+    <h1 class="text-center">Tests</h1>
+  </div>
+
+  <div class="container mt-5">
+    <table class="table table-bordered">
+      <thead class="table-primary">
+      <tr>
+        <th>#</th>
+        <th>Titel</th>
+        <th>Startzeit</th>
+        <th>Endzeit</th>
+        <th>Ergebniszeit</th>
+        <th>Aktionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="test, iterStat : ${tests}">
+        <td th:text="${iterStat.index + 1}">1</td>
+        <td th:text="${test.title}">Test Titel</td>
+        <td th:text="${#temporals.format(test.startTime, 'dd.MM.yyyy HH:mm')}">Startzeit</td>
+        <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
+        <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
+        <td>
+          <!-- TODO: add bearbeiten button -->
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

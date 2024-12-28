@@ -17,8 +17,14 @@
         </div>
     </div>
     <br>
-    <div th:if="${id}" class="container-fluid row-cols-1">
+    <!-- TODO: make this to only appear if user has appropriate role -->
+    <div th:if="${authorities eq 'ROLE_ORGANIZER'}" class="container-fluid row-cols-1">
         <a class="btn btn-success btn-lg" href="#" th:href="@{/organizer/tests}" role="button">Tests Erstellen (Organizer only)</a>
+    </div>
+
+    <!-- TODO: make this to only appear if user has appropriate role -->
+    <div th:if="${authorities eq 'ROLE_STUDENT'}" class="container-fluid row-cols-1">
+        <a class="btn btn-success btn-lg" href="#" th:href="@{/student/tests}" role="button">Tests Anzeigen (Student only)</a>
     </div>
 </div>
 </body>

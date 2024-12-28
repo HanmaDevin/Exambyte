@@ -9,6 +9,9 @@ users:
 roles:
   STUDENT:
     description: "Student:in"
+    permission:
+      - "view_own_answers"
+      - "work_on_test"
   CORRECTOR:
     description: "Korrektor:in"
     permission:
