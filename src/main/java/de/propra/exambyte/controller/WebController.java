@@ -19,6 +19,8 @@ public class WebController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         model.addAttribute("authorities", authorities);
+        //only for debugging purposes
+        System.out.println("wird aufgerufen mit der Rolle " + authorities.toString());
         return "public/home";
     }
 
