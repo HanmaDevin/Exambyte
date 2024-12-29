@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
@@ -6,35 +7,41 @@
     <script>
         let answerCount = [[${multipleChoiceQuestionDto.answers != null ? multipleChoiceQuestionDto.answers.size() : 0}]];
 
+        // Neue Antwort hinzufügen
         function addAnswerField() {
             const container = document.getElementById('answersContainer');
+            const newIndex = answerCount++;
+
             const newField = document.createElement('div');
             newField.className = 'mb-3 p-3 border rounded d-flex align-items-center bg-light';
-            answerCount++;
+            newField.setAttribute('id', 'answerField' + newIndex);
+
             newField.innerHTML = `
-                <label for="answerText${answerCount}" class="form-label visually-hidden">Antwort ${answerCount}</label>
-                <input type="text" class="form-control me-2" id="answerText${answerCount}" name="answerTexts[]" placeholder="Antwort ${answerCount}" required>
-                <input type="hidden" name="answerBooleans[]" value="false">
-                <input type="checkbox" class="form-check-input" id="correct${answerCount}" onclick="toggleCheckbox(this, ${answerCount})">
-                <label for="correct${answerCount}" class="ms-1">Korrekt</label>
+                <input type="text" class="form-control me-2" name="answerTexts[${newIndex}]" placeholder="Antwort ${newIndex + 1}" required>
+                <input type="hidden" name="answerBooleans[${newIndex}]" value="false">
+                <input type="checkbox" class="form-check-input" onclick="toggleCheckbox(this)">
+                <label class="ms-1">Korrekt</label>
+                <button type="button" class="btn btn-danger ms-2" onclick="removeAnswerField(${newIndex})">Entfernen</button>
             `;
             container.appendChild(newField);
         }
-        function toggleCheckbox(checkbox) {
-            const hiddenField = checkbox.previousElementSibling;
-            hiddenField.value = checkbox.checked ? 'true' : 'false';
-        }
-        function removeAnswerField() {
-            const container = document.getElementById('answersContainer');
-            if (answerCount > 0) {
-                container.removeChild(container.lastElementChild);
+
+        // Antwort entfernen (gezielt)
+        function removeAnswerField(index) {
+            const answerField = document.getElementById('answerField' + index);
+            if (answerField) {
+                answerField.remove();
                 answerCount--;
             }
         }
 
+        // Checkbox-Status ändern
+        function toggleCheckbox(checkbox) {
+            const hiddenField = checkbox.previousElementSibling;
+            hiddenField.value = checkbox.checked ? 'true' : 'false';
+        }
     </script>
 </head>
-
 
 <body>
 <div class="container mt-5">
@@ -56,20 +63,19 @@
                 <input type="text" class="form-control" id="questionText" name="questionText" th:value="${multipleChoiceQuestionDto.questionText}" required>
             </div>
 
+            <!-- Antwortmöglichkeiten -->
             <div class="mb-4" id="answersContainer">
                 <label class="form-label">Antwortmöglichkeiten</label>
-                <div th:each="answer, iterStat : ${multipleChoiceQuestionDto.answers}" class="mb-3 p-3 border rounded d-flex align-items-center bg-light">
-                    <input type="text" class="form-control me-2" th:id="'answerText' + ${iterStat.index + 1}" th:name="'answerTexts[' + ${iterStat.index} + ']" th:value="${answer.text}" placeholder="Antwort" required>
-                    <input type="hidden" th:name="'answerBooleans[' + ${iterStat.index} + ']" th:value="${answer.correct ? 'true' : 'false'}">
-                    <input type="checkbox" class="form-check-input" th:id="'correct' + ${iterStat.index + 1}" th:checked="${answer.correct}" onclick="toggleCheckbox(this)">
-                    <label th:for="'correct' + ${iterStat.index + 1}" class="ms-1">Korrekt</label>
+                <div th:each="answer, iterStat : ${multipleChoiceQuestionDto.answers}" th:id="|answerField${iterStat.index}|" class="mb-3 p-3 border rounded d-flex align-items-center bg-light">
+                    <input type="text" class="form-control me-2" th:name="|answerTexts[${iterStat.index}]|" th:value="${answer.text}" required>
+                    <input type="hidden" th:name="|answerBooleans[${iterStat.index}]|" th:value="${answer.correct ? 'true' : 'false'}">
+                    <input type="checkbox" class="form-check-input" th:checked="${answer.correct}" onclick="toggleCheckbox(this)">
+                    <label class="ms-1">Korrekt</label>
+                    <button type="button" class="btn btn-danger ms-2" th:onclick="|removeAnswerField(${iterStat.index})|">Entfernen</button>
                 </div>
             </div>
 
             <button type="button" class="btn btn-primary me-2" onclick="addAnswerField()">Antwort hinzufügen</button>
-
-            <button type="button" class="btn btn-primary me-2" onclick="removeAnswerField()">Antwort entfernen</button>
-
 
             <div class="mb-4">
                 <label for="score" class="form-label">Punktzahl</label>
