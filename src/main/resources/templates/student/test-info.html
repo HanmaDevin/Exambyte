@@ -23,9 +23,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td th:text="${test.startTime}">Startzeit</td>
-                    <td th:text="${test.endTime}">Endzeit</td>
-                    <td th:text="${test.resultTime}">Ergebniszeit</td>
+                    <td th:text="${#temporals.format(test.startTime, 'dd.MM.yyyy HH:MM')}">Startzeit</td>
+                    <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:MM')}">Endzeit</td>
+                    <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:MM')}">Ergebniszeit</td>
                 </tr>
                 </tbody>
             </table>
@@ -42,7 +42,7 @@
             <div class="d-flex justify-content-between mb-4">
                 <a href="#" th:href="@{/student/tests}" class="btn btn-secondary">Zurück</a>
                 <div>
-                    <a href="#" th:href="@{/student/test/{id}/edit}" class="btn btn-success">Bearbeiten</a>
+                    <a href="#" th:href="@{/student/test/{id}/edit(id=${test.getId()})}" class="btn btn-success">Bearbeiten</a>
                 </div>
             </div>
         </div>
