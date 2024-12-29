@@ -13,6 +13,9 @@ public class FreeTextQuestion implements Questions {
     private Integer maxScore;
     private String possibleAnswer;
 
+    @OneToOne
+    private FreeTextAnswer freeTextAnswer;
+
     @ManyToOne
     private Test test;
 
@@ -52,6 +55,10 @@ public class FreeTextQuestion implements Questions {
     @Override
     public String getType() {
         return "FreeTextQuestion";
+    }
+
+    public void setFreeTextAnswer(FreeTextAnswer freeTextAnswer) {
+        this.freeTextAnswer = freeTextAnswer;
     }
 
     public void updateQuestion(String questionText, String possibleAnswer, int maxScore) {
