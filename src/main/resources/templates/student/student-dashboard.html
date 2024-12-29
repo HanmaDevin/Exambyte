@@ -7,6 +7,8 @@
 </head>
 <body>
 
+  <!-- TODO: Tests hier nur anzeigen lassen wenn der startzeitpunkt erfolgt -->
+
   <div class="container mt-5 align-self-center">
     <h1 class="text-center">Tests</h1>
   </div>
@@ -17,27 +19,31 @@
       <tr>
         <th>#</th>
         <th>Titel</th>
-        <th>Startzeit</th>
-        <th>Endzeit</th>
-        <th>Ergebniszeit</th>
         <th>Aktionen</th>
       </tr>
       </thead>
-      <tbody>
-      <tr th:each="test, iterStat : ${tests}">
+      <tbody>                                 <!-- erster versuch oben beschriebenes umzusetzen -->
+      <tr th:each="test, iterStat : ${tests}" th:if="${test.startTime ge #dates.createToday()}">
         <td th:text="${iterStat.index + 1}">1</td>
         <td th:text="${test.title}">Test Titel</td>
-        <td th:text="${#temporals.format(test.startTime, 'dd.MM.yyyy HH:mm')}">Startzeit</td>
-        <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
-        <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
         <td>
-          <!-- TODO: add bearbeiten button -->
+          <a href="#" th:href="@{/student/test/{id}(id=${test.getId()})}" class="btn btn-primary">Test anzeigen</a>
         </td>
       </tr>
-
       </tbody>
     </table>
   </div>
+
+  <!-- TODO: irgendwo status ueber alle bisherigen bestanden/nichtbestanden tests einfuegen, mit Statustext. -->
+  <!-- Der Zulassungsstatus soll einen der folgenden vier Zustände haben:
+
+Alle bisher bewerteten Test sind bestanden, d.h. es ist alles auf gutem Kurs
+
+Ein Test ist nicht bestanden, die nächsten Tests sollten mit Sorgfalt angegangen werden
+
+Zwei Tests sind nicht bestanden, Achtung beim nächsten nichtbestandenen Test ist die Zulassung nicht mehr erreichbar
+
+Mehr als zwei Tests sind nicht bestanden: Die Zulassung kann in diesem Semester nicht mehr erworben werden. -->
 
 </body>
 </html>
