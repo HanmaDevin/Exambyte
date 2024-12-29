@@ -3,7 +3,6 @@ package de.propra.exambyte.model;
 import jakarta.persistence.*;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Entity
 public class MultipleChoiceQuestion implements Questions {
