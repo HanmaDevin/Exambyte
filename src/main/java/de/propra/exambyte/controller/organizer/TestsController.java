@@ -77,15 +77,8 @@ public class TestsController {
         return "error/test-not-found";
     }
 
-    @ExceptionHandler(WrongDateInputException.class)
+    @ExceptionHandler({WrongDateInputException.class, EmptyInputException.class})
     public String handleWrongDateInput(Exception e, Model model) {
-        model.addAttribute("error", e.getMessage());
-        model.addAttribute("testDto", new TestDto());
-        return "test-form";
-    }
-
-    @ExceptionHandler(EmptyInputException.class)
-    public String EmptyInputException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("testDto", new TestDto());
         return "test-form";

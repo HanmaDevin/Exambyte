@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title th:text="${test.title}">Fragen</title>
-  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title th:text="${test.title}">Fragen</title>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
 
 <div class="container mt-5">
 
-  <!-- Success Message Box -->
-  <div class="alert alert-success" th:if="${updatedQuestion != null}" role="alert">
-    <strong>Erfolgreich bearbeitet: </strong><span th:text="${updatedQuestion.getQuestionText()}"></span>
-  </div>
+    <!-- Success Message Box -->
+    <div class="alert alert-success" th:if="${updatedQuestion != null}" role="alert">
+        <strong>Erfolgreich bearbeitet: </strong><span th:text="${updatedQuestion.getQuestionText()}"></span>
+    </div>
 
-  <!-- Title -->
-  <h1 class="text-center mb-4">Fragen vom Test <span th:text="${test.getTitle()}">Test</span></h1>
-  <table class="table table-striped">
-    <thead class="table-primary">
-    <tr>
-      <th class="col-6">Frage</th>
-      <th class="col-3">Fragen typ</th>
-      <th class="col-4">Punkte</th>
-    </tr>
-    </thead>
-    <tbody>
+    <!-- Title -->
+    <h1 class="text-center mb-4">Fragen vom Test: <span th:text="${test.getTitle()}">Test</span></h1>
+    <table class="table table-striped">
+        <thead class="table-primary">
+        <tr>
+            <th class="col-6">Frage</th>
+            <th class="col-3">Fragen typ</th>
+            <th class="col-4">Punkte</th>
+            <th class="col-1"></th>
+        </tr>
+        </thead>
+        <tbody>
 
-    <!-- Rows -->
-    <tr th:each="question : ${questions}">
+        <!-- Rows -->
+        <tr th:each="question : ${questions}">
 
-      <td class="col-8">
-        <a th:href="@{/organizer/tests/{testId}/questions/{questionType}/{id}(testId=${test.getId()}, id=${question.getId()}, questionType=${question.getType()})}"
-           th:text="${question.getQuestionText() != null ? question.getQuestionText() : 'Keine Frage vorhanden'}"></a>
-      </td>
+            <!-- Question Text-->
+            <td class="col-6">
+                <a th:text="${question.getQuestionText() != null ? question.getQuestionText() : 'Keine Frage vorhanden'}"></a>
+            </td>
 
-      <td th:text="${question.getType()}" class="col-1"></td>
+            <!-- Question Type -->
+            <td th:text="${question.getType()}" class="col-3"></td>
 
-      <td th:text="${question.maxScore}" class="col-1"></td>
-    </tr>
-    </tbody>
-  </table>
+            <!-- Max Score -->
+            <td th:text="${question.maxScore}" class="col-2"></td>
 
-  <a href="#" th:href="@{/organizer/tests}" class="btn btn-primary mt-3">Go Back</a>
+            <td class="col-1 text-end">
+                <a th:href="@{/organizer/tests/{testId}/questions/{questionType}/{id}(testId=${test.getId()}, id=${question.getId()}, questionType=${question.getType()})}"
+                   href="#" class="btn btn-primary ">Bearbeiten</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="#" th:href="@{/organizer/tests}" class="btn btn-primary mt-3">Go Back</a>
 </div>
 </body>
 </html>

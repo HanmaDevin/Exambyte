@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bearbeiten Free-Text Frage</title>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        input[readonly], textarea[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        select[disabled] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+    </style>
+    <script>
+        function enableEdit(fieldId) {
+            const field = document.getElementById(fieldId);
+            field.readOnly = false;
+            field.focus();
+        }
+
+    </script>
+</head>
+<body>
+<div class="container mt-5">
+
+    <!-- Error Message Box -->
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <strong>Fehler:</strong> <span th:text="${error}"></span>
+    </div>
+
+    <form th:action="@{/organizer/tests/{test-id}/questions/FreeTextQuestion/{id}(test-id=${id_test}, id=${id_question})}"
+          method="post">
+        <h1 class="text-center mb-4">Bearbeiten von: <span th:text="${question.getQuestionText()}"></span></h1>
+
+        <!-- Question Text -->
+        <div class="mb-3">
+            <label for="questionText" class="form-label">Fragetext</label>
+            <div class="d-flex">
+                <input type="text" id="questionText" name="questionText" th:value="${question.getQuestionText()}"
+                       class="form-control" readonly required>
+                <button type="button" class="btn btn-primary ms-2" onclick="enableEdit('questionText')">Bearbeiten
+                </button>
+            </div>
+        </div>
+
+        <!-- Possible Answer -->
+        <div class="mb-3">
+            <label for="possibleAnswer" class="form-label">Lösungsvorschlag</label>
+            <div class="d-flex">
+            <textarea id="possibleAnswer" name="possibleAnswer" class="form-control" readonly
+                      th:text="${question.getPossibleAnswer()}" required></textarea>
+                <button type="button" class="btn btn-primary ms-2" onclick="enableEdit('possibleAnswer')">Bearbeiten
+                </button>
+            </div>
+        </div>
+
+        <!-- Max Score -->
+        <div class="mb-3">
+            <label for="maxScore" class="form-label">Maximale Punkte</label>
+            <div class="d-flex">
+                <input type="number" id="maxScore" name="maxScore" th:value="${question.getMaxScore()}"
+                       class="form-control"
+                       readonly required>
+                <button type="button" class="btn btn-primary ms-2" onclick="enableEdit('maxScore')">Bearbeiten</button>
+            </div>
+        </div>
+
+        <!-- Save Changes -->
+        <div class="mt-4 d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Änderungen speichern</button>
+            <a href="#" th:href="@{/organizer/tests/{id}/questions (id=${id_test})} "
+               class="btn btn-secondary">Abbrechen</a>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

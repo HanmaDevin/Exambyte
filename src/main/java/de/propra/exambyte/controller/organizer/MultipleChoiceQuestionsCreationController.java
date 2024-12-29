@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-
-
 @Controller
 @RequestMapping("/organizer/tests")
 @Secured("ROLE_ORGANIZER")
@@ -51,48 +49,10 @@ public class MultipleChoiceQuestionsCreationController {
     }
 
 
-    @ExceptionHandler(LowerOrEqualZeroException.class)
-    public String handleLowerThanZeroException(Exception e, RedirectAttributes redirectAttributes) {
+    @ExceptionHandler({LowerOrEqualZeroException.class, DuplicateAnswerException.class, EmptyInputException.class, NoAnswersMarkedCorrectException.class, InsufficientAnswersException.class})
+    public String handleExceptions(Exception e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
         redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
         return "redirect:/organizer/tests/{id}/mc-question";
     }
-
-    @ExceptionHandler(DuplicateAnswerException.class)
-    public String handleDuplicateAnswerException(DuplicateAnswerException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", e.getMessage());
-        redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
-        return "redirect:/organizer/tests/{id}/mc-question";
-    }
-
-    @ExceptionHandler(EmptyInputException.class)
-    public String handleMultipleChoiceEmptyInputException(Exception e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", e.getMessage());
-        redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
-        return "redirect:/organizer/tests/{id}/mc-question";
-    }
-
-    @ExceptionHandler(NoAnswersMarkedCorrectException.class)
-    public String handleNoAnswersMarkedCorrectException(Exception e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", e.getMessage());
-        redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
-        return "redirect:/organizer/tests/{id}/mc-question";
-    }
-
-    @ExceptionHandler(InsufficientAnswersException.class)
-    public String handleInsufficientAnswersException(Exception e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", e.getMessage());
-        redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
-        return "redirect:/organizer/tests/{id}/mc-question";
-    }
-
-
-
-
-
-
-
-
-
-
 }

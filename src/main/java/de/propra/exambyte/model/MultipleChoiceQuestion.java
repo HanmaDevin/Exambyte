@@ -15,7 +15,7 @@ public class MultipleChoiceQuestion implements Questions {
     @ElementCollection
     private Map<String, Boolean> answers;
 
-    private int maxScore;
+    private Integer maxScore;
 
     private String explanation;
 
@@ -26,7 +26,7 @@ public class MultipleChoiceQuestion implements Questions {
 
     }
 
-    public MultipleChoiceQuestion(String questionText, Map<String, Boolean> answers, int maxScore, String explanation) {
+    public MultipleChoiceQuestion(String questionText, Map<String, Boolean> answers, Integer maxScore, String explanation) {
         this.questionText = questionText;
         this.answers = answers;
         this.maxScore = maxScore;
@@ -52,7 +52,7 @@ public class MultipleChoiceQuestion implements Questions {
     }
 
     @Override
-    public int getMaxScore() {
+    public Integer getMaxScore() {
         return maxScore;
     }
 
@@ -65,7 +65,7 @@ public class MultipleChoiceQuestion implements Questions {
         return "MultipleChoiceQuestion";
     }
 
-    public void updateQuestion(String questionText, Map<String, Boolean> answers, int maxScore, String explanation) {
+    public void updateQuestion(String questionText, Map<String, Boolean> answers, Integer maxScore, String explanation) {
         this.questionText = questionText;
 
 

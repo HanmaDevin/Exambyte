@@ -10,7 +10,7 @@ public class FreeTextQuestion implements Questions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String questionText;
-    private int maxScore;
+    private Integer maxScore;
     private String possibleAnswer;
 
     @ManyToOne
@@ -37,7 +37,7 @@ public class FreeTextQuestion implements Questions {
     }
 
     @Override
-    public int getMaxScore() {
+    public Integer getMaxScore() {
         return maxScore;
     }
 
@@ -52,6 +52,12 @@ public class FreeTextQuestion implements Questions {
     @Override
     public String getType() {
         return "FreeTextQuestion";
+    }
+
+    public void updateQuestion(String questionText, String possibleAnswer, int maxScore) {
+        this.questionText = questionText;
+        this.possibleAnswer = possibleAnswer;
+        this.maxScore = maxScore;
     }
 
     @Override

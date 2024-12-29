@@ -28,6 +28,13 @@ public class FreeTextQuestionService {
 
         return freeTextQuestionRepository.save(freeTextQuestion);
     }
+    public FreeTextQuestion updateFreeTextQuestion(Long id, FreeTextQuestionDto dto) {
+        validateFreeTextQuestion(dto);
+        FreeTextQuestion question = findFreeTextQuestionById(id);
+        question.updateQuestion(dto.getQuestionText(), dto.getPossibleAnswer(), dto.getMaxScore());
+        return freeTextQuestionRepository.save(question);
+    }
+
 
     private void validateFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
         if (freeTextQuestionDto.getQuestionText() == null || freeTextQuestionDto.getQuestionText().isEmpty()) {
@@ -40,6 +47,10 @@ public class FreeTextQuestionService {
 
         if (freeTextQuestionDto.getMaxScore() <= 0) {
             throw new LowerOrEqualZeroException("Punktzahl muss größer als 0 sein");
+        }
+
+        if(freeTextQuestionDto.getMaxScore() == null){
+            throw new EmptyInputException("Punktzahl darf nicht leer sein");
         }
 
     }

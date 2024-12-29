@@ -3,7 +3,7 @@ package de.propra.exambyte.model;
 public interface Questions {
     Long getId();
     String getQuestionText();
-    int getMaxScore();
+    Integer getMaxScore();
     String toString();
     String getType();
 }

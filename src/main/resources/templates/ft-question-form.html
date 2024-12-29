@@ -24,7 +24,7 @@
             <textarea class="form-control" id="frage" th:field="*{questionText}" th:value="*{questionText}" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="possibleAnswer" class="form-label">Loesungsvorschlag</label>
+            <label for="possibleAnswer" class="form-label">Lösungsvorschlag</label>
             <textarea type="text" class="form-control" id="possibleAnswer" th:field="*{possibleAnswer}" th:value="*{possibleAnswer}" required></textarea>
         </div>
         <div class="mb-3">
@@ -33,10 +33,10 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Frage hinzufügen</button>
+            <button type="submit" class="btn btn-success">Frage hinzufügen</button>
             <div>
                 <button type="reset" class="btn btn-danger">Zurücksetzen</button>
-                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurück zur Uebersicht</a>
+                <a href="#" th:href="@{/organizer/tests}" class="btn btn-secondary">Zurück zur Übersicht</a>
             </div>
         </div>
     </form>
