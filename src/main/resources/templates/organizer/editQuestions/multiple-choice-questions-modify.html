@@ -29,7 +29,7 @@
 
             const inputs = parent.querySelectorAll('input, select');
             inputs.forEach(input => {
-                input.disabled = false;
+                input.disabled = false
                 input.readOnly = false;
 
                 input.style.backgroundColor = '';
@@ -47,17 +47,17 @@
             newField.className = 'd-flex align-items-center mb-2';
 
             newField.innerHTML = `
-                <label>
+                <label class="me-2 flex-grow-1">
                     <input type="text" class="form-control me-2" id="answerText${answerCount}" name="answerTexts[]"
                            placeholder="Neue Antwort ${answerCount}" required>
                 </label>
-                <label>
+                <label class="d-flex align-items-center me-2">
                     <input type="hidden" name="answerBooleans[]" value="false">
-                    <input type="checkbox" class="form-check-input me-2" id="correct${answerCount}"
+                    <input type="checkbox" class="form-check-input" id="correct${answerCount}"
                            onclick="toggleCheckbox(this, ${answerCount})">
-                    <label for="correct${answerCount}" class="ms-1">Richtig</label>
+                    <label for="correct${answerCount}" class="ms-1">Korrekt</label>
                 </label>
-                <button type="button" class="btn btn-danger ms-2" onclick="removeAnswerField(this)">Entfernen</button>
+                <button type="button" class="btn btn-danger me-1" onclick="removeAnswerField(this)">Entfernen</button>
             `;
             container.appendChild(newField);
         }
@@ -85,6 +85,12 @@
 <body>
 <div class="container mt-5">
 
+    <!-- Error Message Box -->
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <strong>Fehler:</strong> <span th:text="${error}"></span>
+    </div>
+
+
     <form method="post"
           th:action="@{/organizer/tests/{test_id}/questions/MultipleChoiceQuestion/{question_id} (test_id=${id_test}, question_id=${id_question})}">
         <h1 class="text-center mb-4">Bearbeiten von: <span th:text="${question.getQuestionText()}"></span></h1>
@@ -104,29 +110,37 @@
 
         <!-- Answer Options -->
         <div class="mb-3">
-            <label class="form-label">Antwortmöglichkeiten</label>
-            <div id="answersContainer">
+            <label for="answersContainer" class="form-label">Antwortmöglichkeiten</label>
+            <div class="d-flex">
+                <div id="answersContainer" class="flex-grow-1">
 
-                <!-- Loop through all answer options -->
-                <div th:each="entry, iStat : ${question.getAnswerTexts()}" class="d-flex align-items-center mb-2">
-                    <label>
-                        <input type="text" th:value="${entry}" th:name="|answerTexts[${iStat.index}]|"
-                               class="form-control me-2" readonly>
-                    </label>
-                    <label>
-                        <input type="hidden" th:name="|answerBooleans[${iStat.index}]|"
-                               th:value="${question.answerBooleans[iStat.index]}">
-                        <input type="checkbox" class="form-check-input me-2"
-                               th:checked="${question.answerBooleans[iStat.index]} == 'true'"
-                               onclick="toggleCheckbox(this)">
-                    </label>
-                    <button type="button" class="btn btn-danger"
-                            onclick="removeAnswerField(this)">Entfernen
-                    </button>
-                    <button type="button" class="btn btn-primary" onclick="enableEditOption(this)">Bearbeiten</button>
+                    <!-- Loop through all answer options -->
+                    <div th:each="entry, iStat : ${question.getAnswerTexts()}" class="d-flex align-items-center mb-2">
+                        <!-- Answer Text -->
+                        <label class="me-2 flex-grow-1">
+                            <input type="text" th:value="${entry}" th:name="|answerTexts[${iStat.index}]|"
+                                   class="form-control me-2" readonly>
+                        </label>
+                        <!-- Answer Boolean -->
+                        <label class="d-flex align-items-center me-2">
+                            <input type="hidden" th:name="|answerBooleans[${iStat.index}]|"
+                                   th:value="${question.answerBooleans[iStat.index]}">
+                            <input type="checkbox" class="form-check-input"
+                                   th:checked="${question.answerBooleans[iStat.index]} == 'true'"
+                                   onclick="toggleCheckbox(this)">
+                        </label>
+                        <!-- Remove Button -->
+                        <button type="button" class="btn btn-danger me-1" onclick="removeAnswerField(this)">Entfernen
+                        </button>
+                        <!-- Edit Button -->
+                        <button type="button" class="btn btn-primary" onclick="enableEditOption(this)">Bearbeiten
+                        </button>
+                    </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary mt-2" onclick="addAnswerField()">Antwort hinzufügen</button>
+            <button type="button" class="btn btn-secondary align-self-start mt-2" onclick="addAnswerField()">Antwort
+                hinzufügen
+            </button>
         </div>
 
         <!-- Max Score -->
@@ -140,6 +154,18 @@
             </div>
         </div>
 
+        <!-- Explanation -->
+        <div class="mb-3">
+            <label for="explanation" class="form-label">Erklärung</label>
+            <div class="d-flex">
+            <textarea id="explanation" name="explanation" class="form-control" readonly
+                      th:text="${question.getExplanation()}"></textarea>
+                <button type="button" class="btn btn-primary ms-2" onclick="enableEdit('explanation')">Bearbeiten
+                </button>
+            </div>
+        </div>
+
+        <!-- Save Changes -->
         <div class="mt-4 d-flex justify-content-between">
             <button type="submit" class="btn btn-success">Änderungen speichern</button>
             <a href="#" th:href="@{/organizer/tests/{id}/questions (id=${id_test})} "

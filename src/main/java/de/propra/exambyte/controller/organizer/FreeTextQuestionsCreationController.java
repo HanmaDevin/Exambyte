@@ -15,12 +15,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/organizer/tests")
 @Secured("ROLE_ORGANIZER")
-public class FreeTextQuestionsController {
+public class FreeTextQuestionsCreationController {
 
     private final TestService testService;
     private final FreeTextQuestionService freeTextQuestionService;
 
-    public FreeTextQuestionsController(TestService testService, FreeTextQuestionService freeTextQuestionService) {
+    public FreeTextQuestionsCreationController(TestService testService, FreeTextQuestionService freeTextQuestionService) {
         this.testService = testService;
         this.freeTextQuestionService = freeTextQuestionService;
     }
@@ -41,17 +41,10 @@ public class FreeTextQuestionsController {
         return String.format("redirect:/organizer/tests/%d/ft-question", id);
     }
 
-    @ExceptionHandler(EmptyInputException.class)
+    @ExceptionHandler({EmptyInputException.class, LowerOrEqualZeroException.class})
     public String handleEmptyInputException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
         return "ft-question-form";
     }
-    @ExceptionHandler(LowerOrEqualZeroException.class)
-    public String handleLowerThanZeroException(Exception e, Model model) {
-        model.addAttribute("error", e.getMessage());
-        model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
-        return "ft-question-form";
-    }
-
 }

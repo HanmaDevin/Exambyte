@@ -31,6 +31,7 @@ public class MultipleChoiceQuestionService {
     }
 
     public MultipleChoiceQuestion updateMultipleChoiceQuestion(Long id, MultipleChoiceQuestionDto dto, List<String> deletedAnswers) {
+        validateMultipleChoiceQuestion(dto);
         MultipleChoiceQuestion question = findMultipleChoiceQuestionById(id);
         dto.parseAnswers();
 
@@ -57,6 +58,10 @@ public class MultipleChoiceQuestionService {
 
         if (multipleChoiceQuestionDto.getMaxScore() <= 0) {
             throw new LowerOrEqualZeroException("Punktanzahl muss größer als 0 sein");
+        }
+
+        if(multipleChoiceQuestionDto.getMaxScore() == null){
+            throw new EmptyInputException("Punktanzahl darf nicht leer sein");
         }
 
         if (multipleChoiceQuestionDto.getExplanation() == null || multipleChoiceQuestionDto.getExplanation().isEmpty()) {

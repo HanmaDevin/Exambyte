@@ -33,6 +33,13 @@ public class TestService {
         return testRepository.save(test);
     }
 
+    public Test updateTest(Long id, TestDto dto) {
+        validateTestTimes(dto);
+        Test test = findTestById(id);
+        test.updateTest(dto.getTitle(), dto.getStartTime(), dto.getEndTime(), dto.getResultTime());
+        return testRepository.save(test);
+    }
+
     public void addMultipleChoiceQuestionToTest(Long testId, MultipleChoiceQuestion multipleChoiceQuestion) {
         Test test = findTestById(testId);
         test.addMultipleChoiceQuestion(multipleChoiceQuestion);

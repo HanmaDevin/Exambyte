@@ -3,13 +3,13 @@ package de.propra.exambyte.dto;
 public class FreeTextQuestionDto {
 
     private String questionText;
-    private int maxScore;
+    private Integer maxScore;
     private String possibleAnswer;
 
     public FreeTextQuestionDto() {
     }
 
-    public FreeTextQuestionDto(String questionText, int maxScore, String possibleAnswer) {
+    public FreeTextQuestionDto(String questionText, Integer maxScore, String possibleAnswer) {
         this.questionText = questionText;
         this.maxScore = maxScore;
         this.possibleAnswer = possibleAnswer;
@@ -23,7 +23,7 @@ public class FreeTextQuestionDto {
         this.questionText = questionText;
     }
 
-    public int getMaxScore() {
+    public Integer getMaxScore() {
         return maxScore;
     }
 

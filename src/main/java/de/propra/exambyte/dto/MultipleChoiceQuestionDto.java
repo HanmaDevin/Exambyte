@@ -11,7 +11,7 @@ public class MultipleChoiceQuestionDto {
 
     private String questionText;
     private Map<String, Boolean> answers;
-    private int maxScore;
+    private Integer maxScore;
     private String explanation;
 
     private List<String> answerTexts;
@@ -20,7 +20,7 @@ public class MultipleChoiceQuestionDto {
     public MultipleChoiceQuestionDto() {
     }
 
-    public MultipleChoiceQuestionDto(String questionText, int maxScore, String explanation, Map<String, Boolean> answers) {
+    public MultipleChoiceQuestionDto(String questionText, Integer maxScore, String explanation, Map<String, Boolean> answers) {
         this.questionText = questionText;
         this.maxScore = maxScore;
         this.explanation = explanation;
@@ -40,11 +40,11 @@ public class MultipleChoiceQuestionDto {
         this.questionText = questionText;
     }
 
-    public int getMaxScore() {
+    public Integer getMaxScore() {
         return maxScore;
     }
 
-    public void setMaxScore(int maxScore) {
+    public void setMaxScore(Integer maxScore) {
         this.maxScore = maxScore;
     }
 

@@ -1,9 +1,11 @@
 package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
+import de.propra.exambyte.exception.*;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
 import de.propra.exambyte.service.TestService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,9 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/organizer/tests")
+@Secured("ROLE_ORGANIZER")
 public class MultipleChoiceQuestionsModifyController {
+
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
     private final TestService testService;
 
@@ -47,6 +51,12 @@ public class MultipleChoiceQuestionsModifyController {
         flashAttributes.addFlashAttribute("updatedQuestion", updatedQuestion);
 
         return String.format("redirect:/organizer/tests/%d/questions", id_test);
+    }
+
+    @ExceptionHandler({LowerOrEqualZeroException.class, DuplicateAnswerException.class, EmptyInputException.class, NoAnswersMarkedCorrectException.class, InsufficientAnswersException.class})
+    public String handleExceptions(Exception e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+        return "redirect:/organizer/tests/{id_test}/questions/MultipleChoiceQuestion/{id_question}";
     }
 
 }

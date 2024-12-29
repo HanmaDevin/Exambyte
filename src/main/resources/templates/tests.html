@@ -15,6 +15,11 @@
         <strong>Erfolgreich hinzugefügt: </strong><span th:text="${createdTest.getTitle()}"></span>
     </div>
 
+    <div class="alert alert-success" th:if="${updatedTest != null}" role="alert">
+        <strong>Erfolgreich bearbeitet: </strong><span th:text="${updatedTest.getTitle()}"></span>
+    </div>
+
+
     <h1 class="text-center">Test Übersicht</h1>
     <div class="d-flex justify-content-end mb-4">
         <a href="/organizer/tests/new" class="btn btn-primary">Neuen Test erstellen</a>
@@ -39,12 +44,13 @@
             <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
             <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
             <td>
-                <a href="#" th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-info btn-sm">Fragen
+                <a href="#" th:href="@{/organizer/tests/{id}/questions(id=${test.id})}" class="btn btn-outline-primary btn-sm">Fragen
                     anzeigen</a>
-                <a href="#" th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-success btn-sm">Multiple Choice Frage
+                <a href="#" th:href="@{/organizer/tests/{id}/mc-question(id=${test.id})}" class="btn btn-outline-primary btn-sm">Multiple Choice Frage
                     hinzufügen</a>
-                <a href="#" th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-warning btn-sm">Freitext
+                <a href="#" th:href="@{/organizer/tests/{id}/ft-question(id=${test.id})}" class="btn btn-outline-primary btn-sm">Freitext
                     hinzufügen</a>
+                <a href="#" th:href="@{/organizer/tests/{id}/edit(id=${test.id})}" class="btn btn-primary btn-sm">Bearbeiten</a>
             </td>
         </tr>
 

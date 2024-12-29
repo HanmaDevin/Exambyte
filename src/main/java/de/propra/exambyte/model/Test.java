@@ -113,6 +113,13 @@ public class Test {
         return questions;
     }
 
+    public void updateTest(String title, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime resultTime) {
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.resultTime = resultTime;
+    }
+
     @Override
     public String toString() {
         return "Test{" +
@@ -123,5 +130,4 @@ public class Test {
                 ", resultTime=" + resultTime +
                 '}';
     }
-
 }
