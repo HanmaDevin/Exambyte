@@ -3,6 +3,7 @@ package de.propra.exambyte.model;
 import jakarta.persistence.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Entity
 public class MultipleChoiceQuestion implements Questions {
@@ -66,18 +67,15 @@ public class MultipleChoiceQuestion implements Questions {
     }
 
     public void updateQuestion(String questionText, Map<String, Boolean> answers, int maxScore, String explanation) {
-//        if (questionText == null || questionText.isEmpty()) {
-//            throw new EmptyInputException("Question text cannot be null or empty");
-//        }
-//        if (answers == null || answers.isEmpty()) {
-//            throw new EmptyInputException("Answers cannot be null or empty");
-//        }
-//        if (maxScore <= 0) {
-//            throw new EmptyInputException("Max score must be greater than zero");
-//        }
-
         this.questionText = questionText;
-        this.answers = answers;
+
+
+        for (Map.Entry<String, Boolean> entry : answers.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                this.answers.put(entry.getKey(), entry.getValue());
+            }
+        }
+
         this.maxScore = maxScore;
         this.explanation = explanation;
     }

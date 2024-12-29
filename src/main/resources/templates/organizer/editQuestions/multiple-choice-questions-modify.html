@@ -17,7 +17,6 @@
     </style>
     <script>
         let answerCount = /*[[${#lists.size(question.getAnswerTexts())}]]*/ null;
-        console.log(answerCount);
 
         function enableEdit(fieldId) {
             const field = document.getElementById(fieldId);
@@ -30,7 +29,7 @@
 
             const inputs = parent.querySelectorAll('input, select');
             inputs.forEach(input => {
-                input.disabled = false
+                input.disabled = false;
                 input.readOnly = false;
 
                 input.style.backgroundColor = '';
@@ -69,8 +68,17 @@
         }
 
         function removeAnswerField(button) {
-            const fieldToRemove = button.parentNode;
-            fieldToRemove.remove();
+            const container = button.parentElement;
+            const input = container.querySelector('input[type="text"]');
+
+            const hiddenContainer = document.getElementById('hiddenDeletedAnswersContainer');
+
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'deletedAnswers[]';
+            hiddenField.value = input.value;
+            hiddenContainer.appendChild(hiddenField);
+            container.remove();
         }
     </script>
 </head>
@@ -80,6 +88,8 @@
     <form method="post"
           th:action="@{/organizer/tests/{test_id}/questions/MultipleChoiceQuestion/{question_id} (test_id=${id_test}, question_id=${id_question})}">
         <h1 class="text-center mb-4">Bearbeiten von: <span th:text="${question.getQuestionText()}"></span></h1>
+
+        <div id="hiddenDeletedAnswersContainer"></div> <!-- Container für gelöschte Antworten -->
 
         <!-- Question Text -->
         <div class="mb-3">
@@ -99,13 +109,10 @@
 
                 <!-- Loop through all answer options -->
                 <div th:each="entry, iStat : ${question.getAnswerTexts()}" class="d-flex align-items-center mb-2">
-                    <!-- Answer Text -->
                     <label>
                         <input type="text" th:value="${entry}" th:name="|answerTexts[${iStat.index}]|"
                                class="form-control me-2" readonly>
                     </label>
-
-                    <!-- Answer Boolean -->
                     <label>
                         <input type="hidden" th:name="|answerBooleans[${iStat.index}]|"
                                th:value="${question.answerBooleans[iStat.index]}">
@@ -113,12 +120,10 @@
                                th:checked="${question.answerBooleans[iStat.index]} == 'true'"
                                onclick="toggleCheckbox(this)">
                     </label>
-
-                    <!-- Remove Button -->
-                    <button type="button" class="btn btn-danger ms-2" onclick="removeAnswerField(this)">Entfernen</button>
-                    <!-- Button to enable editing of the answer option -->
+                    <button type="button" class="btn btn-danger"
+                            onclick="removeAnswerField(this)">Entfernen
+                    </button>
                     <button type="button" class="btn btn-primary" onclick="enableEditOption(this)">Bearbeiten</button>
-
                 </div>
             </div>
             <button type="button" class="btn btn-secondary mt-2" onclick="addAnswerField()">Antwort hinzufügen</button>
@@ -135,18 +140,6 @@
             </div>
         </div>
 
-        <!-- Explanation -->
-        <div class="mb-3">
-            <label for="explanation" class="form-label">Erklärung</label>
-            <div class="d-flex">
-            <textarea id="explanation" name="explanation" class="form-control" readonly
-                      th:text="${question.getExplanation()}"></textarea>
-                <button type="button" class="btn btn-primary ms-2" onclick="enableEdit('explanation')">Bearbeiten
-                </button>
-            </div>
-        </div>
-
-        <!-- Save Changes -->
         <div class="mt-4 d-flex justify-content-between">
             <button type="submit" class="btn btn-success">Änderungen speichern</button>
             <a href="#" th:href="@{/organizer/tests/{id}/questions (id=${id_test})} "

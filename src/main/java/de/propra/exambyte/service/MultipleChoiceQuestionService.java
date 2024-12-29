@@ -6,6 +6,10 @@ import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 @Service
 public class MultipleChoiceQuestionService {
     private final MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
@@ -27,13 +31,20 @@ public class MultipleChoiceQuestionService {
         return multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
     }
 
-    public MultipleChoiceQuestion updateMultipleChoiceQuestion(Long id, MultipleChoiceQuestionDto dto) {
+    public MultipleChoiceQuestion updateMultipleChoiceQuestion(Long id, MultipleChoiceQuestionDto dto, List<String> deletedAnswers) {
         MultipleChoiceQuestion question = findMultipleChoiceQuestionById(id);
-
         dto.parseAnswers();
 
-        question.updateQuestion(dto.getQuestionText(), dto.getAnswers(), dto.getMaxScore(), dto.getExplanation());
 
+        if (deletedAnswers != null) {
+            for (String deleted : deletedAnswers) {
+                question.getAnswers().remove(deleted); // Entferne direkt aus der Map
+                dto.getAnswers().remove(deleted);
+                System.out.println("Deleted from Entity: " + deleted);
+            }
+        }
+
+        question.updateQuestion(dto.getQuestionText(), dto.getAnswers(), dto.getMaxScore(), dto.getExplanation());
         return multipleChoiceQuestionRepository.save(question);
     }
 

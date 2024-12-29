@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/organizer/tests")
 public class MultipleChoiceQuestionsModifyController {
@@ -35,12 +37,12 @@ public class MultipleChoiceQuestionsModifyController {
     @PostMapping("/{id_test}/questions/MultipleChoiceQuestion/{id_question}")
     public String saveModifiedMultipleChoiceQuestion(@PathVariable Long id_test,
                                                      @PathVariable Long id_question,
+                                                     @RequestParam(required = false) List<String> deletedAnswers,
                                                      @ModelAttribute MultipleChoiceQuestionDto modifiedQuestion,
                                                      RedirectAttributes flashAttributes) {
 
-        System.out.println(modifiedQuestion);
         modifiedQuestion.parseAnswers();
-        MultipleChoiceQuestion updatedQuestion = multipleChoiceQuestionService.updateMultipleChoiceQuestion(id_question, modifiedQuestion);
+        MultipleChoiceQuestion updatedQuestion = multipleChoiceQuestionService.updateMultipleChoiceQuestion(id_question, modifiedQuestion, deletedAnswers);
         System.out.println(updatedQuestion.toString());
         flashAttributes.addFlashAttribute("updatedQuestion", updatedQuestion);
 
