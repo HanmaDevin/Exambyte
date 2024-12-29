@@ -28,6 +28,12 @@ public class StudentController {
     @GetMapping("/test/{id}")
     public String showTest(Model model, @PathVariable Long id) {
         model.addAttribute("test", testService.findTestById(id));
-        return "student/test";
+        return "student/test-info";
+    }
+
+    @GetMapping("/test/{id}/edit")
+    public String editTest(Model model, @PathVariable Long id) {
+        model.addAttribute("test", testService.findTestById(id));
+        return "student/test-edit";
     }
 }
