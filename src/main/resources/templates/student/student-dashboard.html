@@ -22,8 +22,11 @@
         <th>Aktionen</th>
       </tr>
       </thead>
-      <tbody>                                 <!-- erster versuch oben beschriebenes umzusetzen -->
-      <tr th:each="test, iterStat : ${tests}" th:if="${test.startTime ge #dates.createToday()}">
+      <tbody>
+      <!-- erster versuch oben beschriebenes umzusetzen -->
+      <!-- th:if="${test.startTime ge #dates.createToday()}" -->
+
+      <tr th:each="test, iterStat : ${tests}" >
         <td th:text="${iterStat.index + 1}">1</td>
         <td th:text="${test.title}">Test Titel</td>
         <td>
