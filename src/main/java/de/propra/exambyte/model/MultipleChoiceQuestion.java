@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Map;
 
 @Entity
-public class MultipleChoiceQuestion implements Questions {
+public class MultipleChoiceQuestion implements Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

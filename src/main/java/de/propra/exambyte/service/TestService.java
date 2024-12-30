@@ -6,7 +6,7 @@ import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
-import de.propra.exambyte.model.Questions;
+import de.propra.exambyte.model.Question;
 import de.propra.exambyte.model.Test;
 import de.propra.exambyte.repository.TestRepository;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class TestService {
         testRepository.save(test);
     }
 
-    public List<Questions> getAllQuestions(Long testId) {
+    public List<Question> getAllQuestions(Long testId) {
         Test test = findTestById(testId);
         return test.getAllQuestions();
     }
@@ -65,6 +65,14 @@ public class TestService {
     public FreeTextQuestion getFreeTextQuestionById(Long testId, Long questionId) {
         Test test = findTestById(testId);
         return (FreeTextQuestion) test.getFreeTextQuestions(questionId);
+    }
+
+    public Question getQuestionById(Long testId, Long questionId) {
+        Test test = findTestById(testId);
+        return test.getAllQuestions().stream()
+                .filter(question -> question.getId().equals(questionId))
+                .findFirst()
+                .orElseThrow(() -> new TestNotFoundException("Question with ID " + questionId + " not found"));
     }
 
 

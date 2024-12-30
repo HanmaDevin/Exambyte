@@ -4,7 +4,7 @@ import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
-import de.propra.exambyte.model.Questions;
+import de.propra.exambyte.model.Question;
 import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
@@ -65,7 +65,7 @@ public class TestsController {
 
     @GetMapping("/{id}/questions")
     public String showQuestions(@PathVariable Long id, Model model) {
-        List<Questions> allQuestions = testService.getAllQuestions(id);
+        List<Question> allQuestions = testService.getAllQuestions(id);
         model.addAttribute("questions", allQuestions);
         model.addAttribute("test", testService.findTestById(id));
         return "questions";

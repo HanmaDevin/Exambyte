@@ -1,6 +1,6 @@
 package de.propra.exambyte.model;
 
-public interface Questions {
+public interface Question {
     Long getId();
     String getQuestionText();
     Integer getMaxScore();

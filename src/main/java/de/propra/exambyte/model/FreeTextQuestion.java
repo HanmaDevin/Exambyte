@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 
 @Entity
-public class FreeTextQuestion implements Questions {
+public class FreeTextQuestion implements Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,6 +66,7 @@ public class FreeTextQuestion implements Questions {
         this.possibleAnswer = possibleAnswer;
         this.maxScore = maxScore;
     }
+
 
     @Override
     public String toString() {
