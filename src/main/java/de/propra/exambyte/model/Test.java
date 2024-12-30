@@ -2,6 +2,7 @@ package de.propra.exambyte.model;
 
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.MultipleChoiceQuestionNotFoundException;
+import de.propra.exambyte.exception.TestNotFoundException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -98,19 +99,26 @@ public class Test {
     }
 
 
-    public List<Questions> getMultipleChoiceQuestions(Long questionId) {
+    public List<Question> getMultipleChoiceQuestions(Long questionId) {
         return new ArrayList<>(multipleChoiceQuestions);
     }
 
-    public List<Questions> getFreeTextQuestions(Long questionId) {
+    public List<Question> getFreeTextQuestions(Long questionId) {
         return new ArrayList<>(freeTextQuestions);
     }
 
-    public List<Questions> getAllQuestions() {
-        List<Questions> questions = new ArrayList<>();
+    public List<Question> getAllQuestions() {
+        List<Question> questions = new ArrayList<>();
         questions.addAll(multipleChoiceQuestions);
         questions.addAll(freeTextQuestions);
         return questions;
+    }
+
+    public Question getQuestionById(Long questionId) {
+        return getAllQuestions().stream()
+                .filter(question -> question.getId().equals(questionId))
+                .findFirst()
+                .orElseThrow(() -> new TestNotFoundException("Question with ID " + questionId + " not found"));
     }
 
     public void updateTest(String title, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime resultTime) {
