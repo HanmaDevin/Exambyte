@@ -1,19 +1,24 @@
 package de.propra.exambyte.controller;
 
+import de.propra.exambyte.config.SecurityConfig;
 import de.propra.exambyte.controller.organizer.TestsController;
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
 import de.propra.exambyte.model.Question;
+import de.propra.exambyte.service.RoleAssignmentService;
 import de.propra.exambyte.service.TestService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,12 +31,34 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(TestsController.class)
+@Import(SecurityConfig.class)
 public class TestControllerTest {
 
     @Autowired
     private MockMvc mvc;
     @MockBean
+    private RoleAssignmentService roleAssignmentService;
+
+    @MockBean
     private TestService testService;
+
+    @ParameterizedTest
+    @ValueSource(strings = {"STUDENT", "CORRECTOR"})
+    @WithMockUser
+    @DisplayName("Get Request auf /organizer/tests - Access Denied für nicht autorisierte Role")
+    void test7() throws Exception {
+        mvc.perform(get("/organizer/tests/"))
+                .andExpect(forwardedUrl("/forbidden-access"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"STUDENT", "CORRECTOR"})
+    @WithMockUser
+    @DisplayName("Post Request auf /organizer/tests - Access Denied für nicht autorisierte Role trotz valider csrf()")
+    void test8() throws Exception {
+        mvc.perform(post("/organizer/tests/").with(csrf()))
+                .andExpect(forwardedUrl("/forbidden-access"));
+    }
 
     @Test
     @WithMockUser(roles = "ORGANIZER")
