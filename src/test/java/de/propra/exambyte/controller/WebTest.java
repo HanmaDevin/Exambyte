@@ -1,18 +1,10 @@
-package de.propra.exambyte;
+package de.propra.exambyte.controller;
 
-import de.propra.exambyte.controller.WebController;
-import de.propra.exambyte.repository.FreeTextAnswerRepository;
-import de.propra.exambyte.repository.FreeTextQuestionRepository;
-import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
-import de.propra.exambyte.repository.TestRepository;
-import de.propra.exambyte.service.TestService;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,25 +17,9 @@ public class WebTest {
 
     @Autowired
     private MockMvc mvc;
-    @MockBean
-    private TestService testService;
-    @MockBean
-    private EntityManager entityManager;
-    @MockBean
-    private FreeTextQuestionRepository freeTextQuestionRepository;
-    @MockBean
-    private TestRepository testRepository;
-    @MockBean
-    private MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
-    @MockBean
-    private FreeTextAnswerRepository freeTextAnswerRepository;
-
-
-
-
 
     @Test
-    @WithMockUser(roles = "USER")  // Simuliert einen eingeloggten User
+    @WithMockUser(roles = "STUDENT")  // Simuliert einen eingeloggten User
     @DisplayName("Startseite ist erreichbar")
     void test_home_page_accessible() throws Exception {
         mvc.perform(get("/"))
@@ -61,7 +37,7 @@ public class WebTest {
     }
 
     @Test
-    @DisplayName("Unberechtigte Benutzer erhalten Redirect (302)")
+    @DisplayName("Unberechtigte Benutz er erhalten Redirect (302)")
     void test_home_page_unauthenticated_redirect() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().is3xxRedirection());
