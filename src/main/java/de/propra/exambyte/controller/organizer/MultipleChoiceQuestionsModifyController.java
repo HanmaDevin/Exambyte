@@ -46,10 +46,9 @@ public class MultipleChoiceQuestionsModifyController {
                                                      RedirectAttributes flashAttributes) {
 
         modifiedQuestion.parseAnswers();
+        //multipleChoiceQuestionService.validateMultipleChoiceQuestion(modifiedQuestion);
         MultipleChoiceQuestion updatedQuestion = multipleChoiceQuestionService.updateMultipleChoiceQuestion(id_question, modifiedQuestion, deletedAnswers);
-        System.out.println(updatedQuestion.toString());
         flashAttributes.addFlashAttribute("updatedQuestion", updatedQuestion);
-
         return String.format("redirect:/organizer/tests/%d/questions", id_test);
     }
 
