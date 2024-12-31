@@ -4,7 +4,6 @@ import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.*;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
-import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +18,9 @@ import java.util.List;
 public class MultipleChoiceQuestionsModifyController {
 
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
-    private final TestService testService;
 
-    public MultipleChoiceQuestionsModifyController(MultipleChoiceQuestionService multipleChoiceQuestionService, TestService testService) {
+    public MultipleChoiceQuestionsModifyController(MultipleChoiceQuestionService multipleChoiceQuestionService) {
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
-        this.testService = testService;
     }
 
     @GetMapping("/{id_test}/questions/MultipleChoiceQuestion/{id_question}")
@@ -56,6 +53,12 @@ public class MultipleChoiceQuestionsModifyController {
     public String handleExceptions(Exception e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
         return "redirect:/organizer/tests/{id_test}/questions/MultipleChoiceQuestion/{id_question}";
+    }
+
+    @ExceptionHandler(MultipleChoiceQuestionNotFoundException.class)
+    public String handleMultipleChoiceQuestionNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/multiple-choice-question-not-found";
     }
 
 }

@@ -48,7 +48,9 @@ public class TestControllerTest {
     void test_create_test_page() throws Exception {
         mvc.perform(get("/organizer/tests/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("test-form"));
+                .andExpect(view().name("test-form"))
+                .andExpect(model().attributeExists("testDto"))
+                .andExpect(model().attribute("testDto", Matchers.any(TestDto.class)));
     }
 
     @Test

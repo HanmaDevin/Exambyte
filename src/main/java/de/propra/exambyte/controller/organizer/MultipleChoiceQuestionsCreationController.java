@@ -55,4 +55,10 @@ public class MultipleChoiceQuestionsCreationController {
         redirectAttributes.addFlashAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
         return "redirect:/organizer/tests/{id}/mc-question";
     }
+
+    @ExceptionHandler(TestNotFoundException.class)
+    public String handleTestNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/test-not-found";
+    }
 }

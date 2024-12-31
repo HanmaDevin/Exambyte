@@ -2,10 +2,10 @@ package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
+import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
-import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FreeTextQuestionsModifyController {
 
     private final FreeTextQuestionService freeTextQuestionService;
-    private final TestService testService;
 
-    public FreeTextQuestionsModifyController(FreeTextQuestionService freeTextQuestionService, TestService testService) {
+    public FreeTextQuestionsModifyController(FreeTextQuestionService freeTextQuestionService) {
         this.freeTextQuestionService = freeTextQuestionService;
-        this.testService = testService;
     }
 
     @GetMapping("/{id_test}/questions/FreeTextQuestion/{id_question}")
@@ -56,5 +54,11 @@ public class FreeTextQuestionsModifyController {
     public String handleExceptions(Exception e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());
         return "redirect:/organizer/tests/{id_test}/questions/FreeTextQuestion/{id_question}";
+    }
+
+    @ExceptionHandler(FreeTextQuestionNotFoundException.class)
+    public String handleFreeTextQuestionNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/free-text-question-not-found";
     }
 }
