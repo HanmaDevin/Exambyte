@@ -22,11 +22,11 @@ public class MultipleChoiceQuestionService {
 
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(
                 multipleChoiceQuestionDto.getQuestionText(),
-                multipleChoiceQuestionDto.getAnswers(),
                 multipleChoiceQuestionDto.getMaxScore(),
-                multipleChoiceQuestionDto.getExplanation()
-        );
-        System.out.println("Created Question: " + multipleChoiceQuestion.toString());
+                multipleChoiceQuestionDto.getExplanation(),
+                multipleChoiceQuestionDto.getAnswers()
+                );
+        System.out.println("Created Question: " + multipleChoiceQuestion);
         validateMultipleChoiceQuestion(multipleChoiceQuestion);
         return multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
     }
@@ -47,7 +47,7 @@ public class MultipleChoiceQuestionService {
 
         question.updateQuestion(dto.getQuestionText(), dto.getAnswers(), dto.getMaxScore(), dto.getExplanation());
 
-        System.out.println("Updated Question: " + question.toString());
+        System.out.println("Updated Question: " + question);
         validateMultipleChoiceQuestion(question);
         return multipleChoiceQuestionRepository.save(question);
     }
@@ -77,7 +77,7 @@ public class MultipleChoiceQuestionService {
         }
 
         if (multipleChoiceQuestion.getAnswers().size() != multipleChoiceQuestion.getAnswers().size()) {
-            throw new NoAnswersMarkedCorrectException("Antworten dürfen nicht mehrfach vorkommen");
+            throw new DuplicateAnswerException("Antworten dürfen nicht mehrfach vorkommen");
         }
 
         if(multipleChoiceQuestion.getAnswers().size() < 2){

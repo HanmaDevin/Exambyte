@@ -3,6 +3,7 @@ package de.propra.exambyte.config;
 import de.propra.exambyte.service.RoleAssignmentService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.List;
 
 @Configuration
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     private final RoleAssignmentService roleAssignmentService;
@@ -27,7 +29,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity chainBuilder) throws Exception {
         chainBuilder.authorizeHttpRequests(
-                        configurer -> configurer.requestMatchers("/", "/login", "/register", "/css/*").permitAll()
+                        configurer -> configurer.requestMatchers("/", "/css/*").permitAll()
                                 .requestMatchers("/organizer/**").hasAuthority("ROLE_ORGANIZER")
                                 .requestMatchers("/corrector/**").hasAuthority("ROLE_CORRECTOR")
                                 .anyRequest().authenticated())
@@ -37,6 +39,7 @@ public class SecurityConfig {
                         )
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(((request, response, authException) -> response.sendRedirect("/"))) // Redirect anonymous User to "/"
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                             System.out.println("Access denied: " + request.getRequestURI());
                             request.setAttribute("error", accessDeniedException.getMessage());

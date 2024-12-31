@@ -26,7 +26,7 @@ public class MultipleChoiceQuestion implements Question {
 
     }
 
-    public MultipleChoiceQuestion(String questionText, Map<String, Boolean> answers, Integer maxScore, String explanation) {
+    public MultipleChoiceQuestion(String questionText, Integer maxScore, String explanation, Map<String, Boolean> answers) {
         this.questionText = questionText;
         this.answers = answers;
         this.maxScore = maxScore;

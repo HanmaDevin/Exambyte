@@ -1,19 +1,24 @@
 package de.propra.exambyte.controller;
 
 
+import de.propra.exambyte.config.SecurityConfig;
 import de.propra.exambyte.controller.organizer.TestsModifyController;
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.exception.WrongDateInputException;
+import de.propra.exambyte.service.RoleAssignmentService;
 import de.propra.exambyte.service.TestService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,19 +30,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(TestsModifyController.class)
+@Import(SecurityConfig.class)
 public class TestModifyControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
+    private RoleAssignmentService roleAssignmentService;
+
+    @MockBean
     private TestService testService;
+
+    @ParameterizedTest
+    @ValueSource(strings = {"STUDENT", "CORRECTOR"})
+    @WithMockUser
+    @DisplayName("Get Request auf /organizer/tests/{id}/edit - Access Denied für nicht autorisierte Role")
+    void test7() throws Exception {
+        long mockTestId = 1L;
+
+        mvc.perform(get("/organizer/tests/" + mockTestId + "/edit"))
+                .andExpect(forwardedUrl("/forbidden-access"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"STUDENT", "CORRECTOR"})
+    @WithMockUser
+    @DisplayName("Post Request auf /organizer/tests/{id}/edit - Access Denied für nicht autorisierte Role trotz valider csrf()")
+    void test8() throws Exception {
+        long mockTestId = 1L;
+
+        mvc.perform(post("/organizer/tests/" + mockTestId + "/edit").with(csrf()))
+                .andExpect(forwardedUrl("/forbidden-access"));
+    }
 
     @Test
     @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Get Request auf /organizer/tests/{id}/edit - mit valider Test Id: soll 200 wiedergeben und die passenden attribute im Model stehen")
     void test1() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         de.propra.exambyte.model.Test mockTest = new de.propra.exambyte.model.Test("SampleTest", null, null, null);
         Mockito.when(testService.findTestById(mockTestId)).thenReturn(mockTest);
 
@@ -54,7 +85,7 @@ public class TestModifyControllerTest {
     @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Get Request auf /organizer/tests/{id}/edit - mit NICHT valider Test Id: soll eine TestNotFoundException auslösen welche einen zu error/test-not-found weiterleitet")
     void test2() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         Mockito.when(testService.findTestById(mockTestId)).thenThrow(new TestNotFoundException("Test not Found"));
 
         mvc.perform(get("/organizer/tests/" + mockTestId + "/edit"))
@@ -69,7 +100,7 @@ public class TestModifyControllerTest {
     @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Post Request auf /organizer/tests/{id}/edit - mit  valider Test Id und Data: soll zurück auf /organizer/tests redirecten mit passenden Flashattributen")
     void test3() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         TestDto modifiedTest = new TestDto("UpdatedTest", null, null, null);
         de.propra.exambyte.model.Test updatedTest = new de.propra.exambyte.model.Test("UpdatedTest", null, null, null);
 
@@ -86,9 +117,21 @@ public class TestModifyControllerTest {
 
     @Test
     @WithMockUser(roles = "ORGANIZER")
+    @DisplayName("Post Request auf /organizer/tests/{id}/edit ohne CSRF token: Access denied")
+    void testPostWithoutCsrf() throws Exception {
+        long mockTestId = 1L;
+        TestDto modifiedTest = new TestDto("UpdatedTest", null, null, null);
+
+        mvc.perform(post("/organizer/tests/" + mockTestId + "/edit")
+                        .flashAttr("modifiedTest", modifiedTest)) // No CSRF
+                        .andExpect(forwardedUrl("/forbidden-access"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Post Request auf /organizer/tests/{id}/edit - mit  NICHT valider Test Id: TestNotFoundException auslösen und auf error/test-not-found leiten")
     void test4() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         TestDto modifiedTest = new TestDto("UpdatedTest", null, null, null);
 
         Mockito.when(testService.updateTest(Mockito.eq(mockTestId), Mockito.any(TestDto.class))).thenThrow(new TestNotFoundException("Test not Found"));
@@ -106,7 +149,7 @@ public class TestModifyControllerTest {
     @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Post Request auf /organizer/tests/{id}/edit - mit  NICHT valider Test Data (EmptyInput): EmptyInputException auslösen und auf error/test-not-found leiten ")
     void test5() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         TestDto emptyDto = new TestDto("", null, null, null);
 
         Mockito.when(testService.updateTest(Mockito.eq(mockTestId), Mockito.any(TestDto.class)))
@@ -124,7 +167,7 @@ public class TestModifyControllerTest {
     @WithMockUser(roles = "ORGANIZER")
     @DisplayName("Post Request auf /organizer/tests/{id}/edit - mit  NICHT valider Test Data (WrongDate): WrongDateInputException auslösen und auf error/test-not-found leiten")
     void test6() throws Exception {
-        Long mockTestId = 1L;
+        long mockTestId = 1L;
         TestDto emptyDto = new TestDto("WrongDto", null, null, null);
 
         Mockito.when(testService.updateTest(Mockito.eq(mockTestId), Mockito.any(TestDto.class)))

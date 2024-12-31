@@ -24,8 +24,9 @@ public class MultipleChoiceQuestionsCreationController {
         this.testService = testService;
     }
 
-    @GetMapping("/{id}/mc-question")
+     @GetMapping("/{id}/mc-question")
     public String showCreateMultipleChoiceQuestionForm(@PathVariable Long id, Model model) {
+        testService.findTestById(id);
         if (!model.containsAttribute("multipleChoiceQuestionDto")) {
             model.addAttribute("multipleChoiceQuestionDto", new MultipleChoiceQuestionDto());
         }
