@@ -28,6 +28,10 @@ public class FreeTextQuestionsCreationController {
 
     @GetMapping("/{id}/ft-question")
     public String showCreateFreeTextQuestionForm(@PathVariable Long id, Model model) {
+    if(testService.findTestById(id) == null){
+        throw new TestNotFoundException("Test wurde nicht gefunden");
+    }
+
         model.addAttribute("testId", id);
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
         return "ft-question-form";
