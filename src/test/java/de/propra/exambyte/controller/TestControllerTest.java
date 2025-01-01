@@ -26,6 +26,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,10 +45,10 @@ public class TestControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("Get Request auf /organizer/tests - Access Denied für nicht autorisierte Role")
-    void test7() throws Exception {
-        mvc.perform(get("/organizer/tests/"))
+    void test7(String role) throws Exception {
+        mvc.perform(get("/organizer/tests/")
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 
@@ -55,8 +56,10 @@ public class TestControllerTest {
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
     @WithMockUser
     @DisplayName("Post Request auf /organizer/tests - Access Denied für nicht autorisierte Role trotz valider csrf()")
-    void test8() throws Exception {
-        mvc.perform(post("/organizer/tests/").with(csrf()))
+    void test8(String role) throws Exception {
+        mvc.perform(post("/organizer/tests/")
+                        .with(csrf())
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 
@@ -157,7 +160,6 @@ public class TestControllerTest {
                 .andExpect(model().attribute("testDto", Matchers.any(TestDto.class)));
 
     }
-
 
 
 }

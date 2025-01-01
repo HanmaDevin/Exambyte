@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,10 +30,9 @@ public class WebTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR", "ORGANIZER"})
-    @WithMockUser()
     @DisplayName("Startseite ist als STUDENT, CORRECTOR und ORGANIZER erreichbar")
-    void test1() throws Exception {
-        mvc.perform(get("/"))
+    void test1(String role) throws Exception {
+        mvc.perform(get("/").with(user("user").roles(role)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("public/home"));
     }

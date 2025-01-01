@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -70,15 +71,15 @@ public class FreeTextQuestionCreationControllerTest {
     void test_getWithNonExistentTestId() throws Exception {
         long mockTestId = 999L;
 
-        // Simuliere, dass findTestById null zurückgibt
-        Mockito.when(testService.findTestById(mockTestId)).thenReturn(null);
+        // Simuliere, dass findTestById einen Fehler zurückgibt
+        Mockito.when(testService.findTestById(mockTestId)).thenThrow(new TestNotFoundException("Test not Found"));
 
 
         mvc.perform(get("/organizer/tests/" + mockTestId + "/ft-question"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error/test-not-found"))  // Erwartet die Fehlerseite
                 .andExpect(model().attributeExists("error"))  // Überprüft, ob das Model die Fehlernachricht enthält
-                .andExpect(model().attribute("error", "Test wurde nicht gefunden"));  // Erwartet die spezifische Fehlermeldung
+                .andExpect(model().attribute("error", "Test not Found"));  // Erwartet die spezifische Fehlermeldung
     }
 
 
@@ -177,19 +178,21 @@ public class FreeTextQuestionCreationControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
+
     @DisplayName("GET /organizer/tests/{id}/ft-question - Zugriff verweigert für STUDENT und CORRECTOR (403)")
-    void test_accessDeniedForUnauthorizedRolesOnGet() throws Exception {
-        mvc.perform(get("/organizer/tests/1/ft-question"))
+    void test_accessDeniedForUnauthorizedRolesOnGet(String role) throws Exception {
+        mvc.perform(get("/organizer/tests/1/ft-question")
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("POST /organizer/tests/{id}/ft-question - Zugriff verweigert für STUDENT und CORRECTOR (403)")
-    void test_accessDeniedForUnauthorizedRolesOnPost() throws Exception {
-        mvc.perform(post("/organizer/tests/1/ft-question").with(csrf()))
+    void test_accessDeniedForUnauthorizedRolesOnPost(String role) throws Exception {
+        mvc.perform(post("/organizer/tests/1/ft-question")
+                        .with(csrf())
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 

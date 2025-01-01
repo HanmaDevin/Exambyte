@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -47,19 +48,20 @@ public class MultipleChoiceQuestionsCreationControllerTest {
     // Tests same Test with different roles
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("Get Request auf /organizer/tests/{id}/mc-question - Access Denied für nicht autorisierte Role")
-    void test6() throws Exception {
-        mvc.perform(get("/organizer/tests/1/mc-question"))
+    void test6(String role) throws Exception {
+        mvc.perform(get("/organizer/tests/1/mc-question")
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("Post Request auf /organizer/tests/{id}/mc-question - Access Denied für nicht autorisierte Role trotz valider csrf() ")
-    void test7() throws Exception {
-        mvc.perform(post("/organizer/tests/1/mc-question").with(csrf()))
+    void test7(String role) throws Exception {
+        mvc.perform(post("/organizer/tests/1/mc-question")
+                .with(csrf())
+                .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 

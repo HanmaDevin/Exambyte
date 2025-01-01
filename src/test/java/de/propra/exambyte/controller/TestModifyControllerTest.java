@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -44,23 +45,24 @@ public class TestModifyControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("Get Request auf /organizer/tests/{id}/edit - Access Denied für nicht autorisierte Role")
-    void test7() throws Exception {
+    void test7(String role) throws Exception {
         long mockTestId = 1L;
 
-        mvc.perform(get("/organizer/tests/" + mockTestId + "/edit"))
+        mvc.perform(get("/organizer/tests/" + mockTestId + "/edit")
+                        .with(user("user").roles(role)))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"STUDENT", "CORRECTOR"})
-    @WithMockUser
     @DisplayName("Post Request auf /organizer/tests/{id}/edit - Access Denied für nicht autorisierte Role trotz valider csrf()")
-    void test8() throws Exception {
+    void test8(String role) throws Exception {
         long mockTestId = 1L;
 
-        mvc.perform(post("/organizer/tests/" + mockTestId + "/edit").with(csrf()))
+        mvc.perform(post("/organizer/tests/" + mockTestId + "/edit")
+                        .with(user("user").roles(role))
+                        .with(csrf()))
                 .andExpect(forwardedUrl("/forbidden-access"));
     }
 

@@ -28,10 +28,7 @@ public class FreeTextQuestionsCreationController {
 
     @GetMapping("/{id}/ft-question")
     public String showCreateFreeTextQuestionForm(@PathVariable Long id, Model model) {
-    if(testService.findTestById(id) == null){
-        throw new TestNotFoundException("Test wurde nicht gefunden");
-    }
-
+        testService.findTestById(id);
         model.addAttribute("testId", id);
         model.addAttribute("freeTextQuestionDto", new FreeTextQuestionDto());
         return "ft-question-form";
@@ -39,7 +36,7 @@ public class FreeTextQuestionsCreationController {
 
     @PostMapping("/{id}/ft-question")
     public String addFreeTextQuestion(@PathVariable Long id, @ModelAttribute FreeTextQuestionDto freeTextQuestionDto, RedirectAttributes redirectAttributes) {
-        FreeTextQuestion createdQuestion =  freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
+        FreeTextQuestion createdQuestion = freeTextQuestionService.createFreeTextQuestion(freeTextQuestionDto);
         testService.addFreeTextQuestionToTest(id, createdQuestion);
         System.out.println(createdQuestion.toString());
         redirectAttributes.addFlashAttribute("createdQuestion", createdQuestion);
