@@ -62,7 +62,7 @@ public class MultipleChoiceQuestionDto {
 
     public void setAnswerTexts(List<String> answerTexts) {
         Set<String> uniqueAnswers = new HashSet<>(answerTexts);
-        this.answerTexts = answerTexts;
+        this.answerTexts = uniqueAnswers.stream().collect(Collectors.toList());
     }
 
     public Map<String, Boolean> getAnswers() {
