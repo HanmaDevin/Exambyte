@@ -60,9 +60,10 @@ public class MultipleChoiceQuestionDto {
         return answerTexts;
     }
 
+    //TODO: handle duplicates in Service and don't convert to set, as it makes testing harder
     public void setAnswerTexts(List<String> answerTexts) {
         Set<String> uniqueAnswers = new HashSet<>(answerTexts);
-        this.answerTexts = uniqueAnswers.stream().collect(Collectors.toList());
+        this.answerTexts = new ArrayList<>(uniqueAnswers);
     }
 
     public Map<String, Boolean> getAnswers() {

@@ -1,7 +1,6 @@
-package de.propra.exambyte.controller;
+package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.config.SecurityConfig;
-import de.propra.exambyte.controller.organizer.TestsController;
 import de.propra.exambyte.dto.TestDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.TestNotFoundException;

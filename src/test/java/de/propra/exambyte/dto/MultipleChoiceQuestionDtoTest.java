@@ -18,11 +18,9 @@ public class MultipleChoiceQuestionDtoTest {
     public void testMultipleChoiceQuestionDtoConstructorAndGetters() {
         String question = "What is the capital of Germany?";
         int maxScore = 5;
-        List<String> answerText = new ArrayList<>();
-        answerText.addAll(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
+        List<String> answerText = new ArrayList<>(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
 
-        List<String> answerBooleans = new ArrayList<>();
-        answerBooleans.addAll(List.of("true", "false", "false", "false"));
+        List<String> answerBooleans = new ArrayList<>(List.of("true", "false", "false", "false"));
 
         String explanation = "Berlin is the capital of Germany.";
         Map<String, Boolean> answers = new HashMap<>();
@@ -48,11 +46,9 @@ public class MultipleChoiceQuestionDtoTest {
 
         String question = "What is the capital of Germany?";
 
-        List<String> answerTexts = new ArrayList<>();
-        answerTexts.addAll(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
+        List<String> answerTexts = new ArrayList<>(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
 
-        List<String> answerBooleans = new ArrayList<>();
-        answerBooleans.addAll(List.of("true", "false", "false", "false"));
+        List<String> answerBooleans = new ArrayList<>(List.of("true", "false", "false", "false"));
 
         int maxScore = 5;
 
@@ -73,15 +69,13 @@ public class MultipleChoiceQuestionDtoTest {
 
     @Test
     @DisplayName("Die toString-Methode von MultipleChoiceQuestionDto funktioniert wie erwartet")
-    @Disabled // just for now because of the order of the answers from conversion to set from list
+    @Disabled //TODO: just for now because of the order of the answers from conversion to set from list
     public void testMultipleChoiceQuestionDtoToString() {
         String question = "What is the capital of Germany?";
         int maxScore = 5;
-        List<String> answerText = new ArrayList<>();
-        answerText.addAll(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
+        List<String> answerText = new ArrayList<>(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
 
-        List<String> answerBooleans = new ArrayList<>();
-        answerBooleans.addAll(List.of("true", "false", "false", "false"));
+        List<String> answerBooleans = new ArrayList<>(List.of("true", "false", "false", "false"));
 
         String explanation = "Berlin is the capital of Germany.";
         Map<String, Boolean> answers = new HashMap<>();
@@ -106,15 +100,13 @@ public class MultipleChoiceQuestionDtoTest {
 
     @Test
     @DisplayName("Die parseAnswers-Methode von MultipleChoiceQuestionDto funktioniert wie erwartet")
-    @Disabled // just for now because of the order of the answers from conversion to set from list
+    @Disabled //TODO: just for now because of the order of the answers from conversion to set from list
     public void testMultipleChoiceQuestionDtoParseAnswers() {
         MultipleChoiceQuestionDto dto = new MultipleChoiceQuestionDto();
 
-        List<String> answerTexts = new ArrayList<>();
-        answerTexts.addAll(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
+        List<String> answerTexts = new ArrayList<>(List.of("Berlin", "Munich", "Hamburg", "Frankfurt"));
 
-        List<String> answerBooleans = new ArrayList<>();
-        answerBooleans.addAll(List.of("true", "false", "false", "false"));
+        List<String> answerBooleans = new ArrayList<>(List.of("true", "false", "false", "false"));
 
         dto.setAnswerTexts(answerTexts);
         dto.setAnswerBooleans(answerBooleans);

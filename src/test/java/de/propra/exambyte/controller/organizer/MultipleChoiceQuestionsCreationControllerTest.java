@@ -1,7 +1,6 @@
-package de.propra.exambyte.controller;
+package de.propra.exambyte.controller.organizer;
 
 import de.propra.exambyte.config.SecurityConfig;
-import de.propra.exambyte.controller.organizer.MultipleChoiceQuestionsCreationController;
 import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.*;
 import de.propra.exambyte.model.MultipleChoiceQuestion;

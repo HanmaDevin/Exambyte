@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import java.nio.file.AccessDeniedException;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -35,6 +35,12 @@ public class WebController {
         //only for debugging purposes
         System.out.println("User: " + principal.getName() + " mit der Rolle " + authorities.toString());
         return "public/home";
+    }
+
+    // Dummy method to throw an exception
+    @GetMapping("/dummyError")
+    public String dummyError() throws Exception {
+        throw new AccessDeniedException("Access Denied");
     }
 }
 
