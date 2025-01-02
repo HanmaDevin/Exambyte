@@ -34,6 +34,8 @@ public class MultipleChoiceQuestionService {
     public MultipleChoiceQuestion updateMultipleChoiceQuestion(Long id, MultipleChoiceQuestionDto dto, List<String> deletedAnswers) {
 
         MultipleChoiceQuestion question = findMultipleChoiceQuestionById(id);
+        MultipleChoiceQuestion newQuestion = new MultipleChoiceQuestion(dto.getQuestionText(), dto.getMaxScore(), dto.getExplanation(), dto.getAnswers());
+        validateMultipleChoiceQuestion(newQuestion);
         dto.parseAnswers();
 
 
@@ -45,10 +47,7 @@ public class MultipleChoiceQuestionService {
             }
         }
 
-        question.updateQuestion(dto.getQuestionText(), dto.getAnswers(), dto.getMaxScore(), dto.getExplanation());
-
-        System.out.println("Updated Question: " + question);
-        validateMultipleChoiceQuestion(question);
+        question.updateQuestion(newQuestion.getQuestionText(), newQuestion.getMaxScore(), newQuestion.getExplanation(), newQuestion.getAnswers());
         return multipleChoiceQuestionRepository.save(question);
     }
 

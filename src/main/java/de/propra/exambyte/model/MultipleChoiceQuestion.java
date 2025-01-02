@@ -65,7 +65,7 @@ public class MultipleChoiceQuestion implements Question {
         return "MultipleChoiceQuestion";
     }
 
-    public void updateQuestion(String questionText, Map<String, Boolean> answers, Integer maxScore, String explanation) {
+    public void updateQuestion(String questionText, Integer maxScore, String explanation, Map<String, Boolean> answers) {
         this.questionText = questionText;
 
 
