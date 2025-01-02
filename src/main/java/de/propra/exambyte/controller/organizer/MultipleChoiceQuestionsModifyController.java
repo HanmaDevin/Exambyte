@@ -4,6 +4,7 @@ import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.*;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
+import de.propra.exambyte.service.TestService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +19,20 @@ import java.util.List;
 public class MultipleChoiceQuestionsModifyController {
 
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
+    private final TestService testService;
 
-    public MultipleChoiceQuestionsModifyController(MultipleChoiceQuestionService multipleChoiceQuestionService) {
+    public MultipleChoiceQuestionsModifyController(MultipleChoiceQuestionService multipleChoiceQuestionService, TestService testService) {
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
+        this.testService = testService;
     }
 
     @GetMapping("/{id_test}/questions/MultipleChoiceQuestion/{id_question}")
     public String modifyMultipleChoiceQuestion(Model model, @PathVariable Long id_test, @PathVariable Long id_question) {
+        testService.findTestById(id_test);
         MultipleChoiceQuestion currentQuestion = multipleChoiceQuestionService.findMultipleChoiceQuestionById(id_question);
         MultipleChoiceQuestionDto multipleChoiceQuestionDto = new MultipleChoiceQuestionDto(currentQuestion.getQuestionText(), currentQuestion.getMaxScore(), currentQuestion.getExplanation(), currentQuestion.getAnswers());
         System.out.println(multipleChoiceQuestionDto);
-        model.addAttribute("question", multipleChoiceQuestionDto);
+        model.addAttribute("question", multipleChoiceQuestionDto) ;
         model.addAttribute("id_test", id_test);
         model.addAttribute("id_question", id_question);
 
@@ -41,9 +45,8 @@ public class MultipleChoiceQuestionsModifyController {
                                                      @RequestParam(required = false) List<String> deletedAnswers,
                                                      @ModelAttribute MultipleChoiceQuestionDto modifiedQuestion,
                                                      RedirectAttributes flashAttributes) {
-
+        testService.findTestById(id_test);
         modifiedQuestion.parseAnswers();
-        //multipleChoiceQuestionService.validateMultipleChoiceQuestion(modifiedQuestion);
         MultipleChoiceQuestion updatedQuestion = multipleChoiceQuestionService.updateMultipleChoiceQuestion(id_question, modifiedQuestion, deletedAnswers);
         flashAttributes.addFlashAttribute("updatedQuestion", updatedQuestion);
         return String.format("redirect:/organizer/tests/%d/questions", id_test);
@@ -59,6 +62,12 @@ public class MultipleChoiceQuestionsModifyController {
     public String handleMultipleChoiceQuestionNotFoundException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());
         return "error/multiple-choice-question-not-found";
+    }
+
+    @ExceptionHandler(TestNotFoundException.class)
+    public String handleTestNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/test-not-found";
     }
 
 }

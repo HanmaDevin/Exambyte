@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(FreeTextQuestionsCreationController.class)
 @Import(SecurityConfig.class)
-public class FreeTextQuestionCreationControllerTest {
+public class FreeTextQuestionsCreationControllerTest {
 
     @Autowired
     private MockMvc mvc;
