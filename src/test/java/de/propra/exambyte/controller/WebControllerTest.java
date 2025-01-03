@@ -1,7 +1,6 @@
-package de.propra.exambyte.controller.organizer;
+package de.propra.exambyte.controller;
 
 import de.propra.exambyte.config.SecurityConfig;
-import de.propra.exambyte.controller.WebController;
 import de.propra.exambyte.service.RoleAssignmentService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

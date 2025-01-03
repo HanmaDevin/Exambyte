@@ -1,4 +1,4 @@
-package de.propra.exambyte;
+package de.propra.exambyte.service;
 
 import de.propra.exambyte.config.SecurityConfig;
 import de.propra.exambyte.dto.FreeTextAnswerDto;
@@ -6,7 +6,6 @@ import de.propra.exambyte.exception.FreeTextAnswerNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextAnswer;
 import de.propra.exambyte.repository.FreeTextAnswerRepository;
-import de.propra.exambyte.service.FreeTextAnswerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
