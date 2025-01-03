@@ -4,6 +4,7 @@ import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
+import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
@@ -53,6 +54,7 @@ public class FreeTextQuestionsModifyController {
         flashAttributes.addFlashAttribute("updatedQuestion", updatedQuestion);
 
         return String.format("redirect:/organizer/tests/%d/questions", id_test);
+
     }
 
     @ExceptionHandler({LowerOrEqualZeroException.class, EmptyInputException.class})
@@ -66,4 +68,11 @@ public class FreeTextQuestionsModifyController {
         model.addAttribute("error", e.getMessage());
         return "error/free-text-question-not-found";
     }
+
+    @ExceptionHandler(TestNotFoundException.class)
+    public String handleTestNotFoundException(Exception e, Model model) {
+        model.addAttribute("error", e.getMessage());
+        return "error/test-not-found";
+    }
+
 }
