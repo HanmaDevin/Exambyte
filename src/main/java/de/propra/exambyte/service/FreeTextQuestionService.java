@@ -31,7 +31,7 @@ public class FreeTextQuestionService {
     public FreeTextQuestion updateFreeTextQuestion(Long id, FreeTextQuestionDto dto) {
         validateFreeTextQuestion(dto);
         FreeTextQuestion question = findFreeTextQuestionById(id);
-        question.updateQuestion(dto.getQuestionText(), dto.getPossibleAnswer(), dto.getMaxScore());
+        question.updateQuestion(dto.getQuestionText(),  dto.getMaxScore(), dto.getPossibleAnswer());
         return freeTextQuestionRepository.save(question);
     }
 
