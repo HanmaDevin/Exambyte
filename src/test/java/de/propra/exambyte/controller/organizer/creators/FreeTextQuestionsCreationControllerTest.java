@@ -90,7 +90,7 @@ public class FreeTextQuestionsCreationControllerTest {
         long mockTestId = 1L;
 
         FreeTextQuestionDto questionDto = new FreeTextQuestionDto("Sample Question", 3, "asnwer");
-        FreeTextQuestion createdQuestion = new FreeTextQuestion("Sample Question", "3", 3);
+        FreeTextQuestion createdQuestion = new FreeTextQuestion("Sample Question", 3,"3");
 
         Mockito.when(freeTextQuestionService.createFreeTextQuestion(Mockito.any(FreeTextQuestionDto.class)))
                 .thenReturn(createdQuestion);

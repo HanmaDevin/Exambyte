@@ -138,7 +138,7 @@ public class FreeTextQuestionModifyControllerTest {
         long mockQuestionId = 1L;
 
         FreeTextQuestionDto mockDto = new FreeTextQuestionDto(" Question", 1, "Explanation");
-        FreeTextQuestion updatedQuestion = new FreeTextQuestion("Modified Question","Updated Explanation" , 10);
+        FreeTextQuestion updatedQuestion = new FreeTextQuestion("Modified Question",10, "Updated Explanation" );
 
 
         Mockito.when(freeTextQuestionService.updateFreeTextQuestion(Mockito.eq(mockQuestionId), Mockito.any(FreeTextQuestionDto.class)))

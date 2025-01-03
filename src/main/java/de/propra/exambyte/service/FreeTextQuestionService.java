@@ -21,8 +21,8 @@ public class FreeTextQuestionService {
 
         FreeTextQuestion freeTextQuestion = new FreeTextQuestion(
                 freeTextQuestionDto.getQuestionText(),
-                freeTextQuestionDto.getPossibleAnswer(),
-                freeTextQuestionDto.getMaxScore()
+                freeTextQuestionDto.getMaxScore(),
+                freeTextQuestionDto.getPossibleAnswer()
 
         );
 

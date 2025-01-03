@@ -22,7 +22,7 @@ public class FreeTextQuestion implements Question {
     public FreeTextQuestion() {
     }
 
-    public FreeTextQuestion(String questionText, String possibleAnswer, int maxScore) {
+    public FreeTextQuestion(String questionText, int maxScore, String possibleAnswer) {
         this.questionText = questionText;
         this.possibleAnswer = possibleAnswer;
         this.maxScore = maxScore;

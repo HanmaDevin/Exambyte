@@ -21,9 +21,9 @@ import static org.mockito.Mockito.*;
 public class FreeTextAnswerServiceTest {
 
 
-    FreeTextAnswerRepository repository;
+    private FreeTextAnswerRepository repository;
 
-    FreeTextAnswerService service;
+    private FreeTextAnswerService service;
 
     @BeforeEach
     void setUp() {
