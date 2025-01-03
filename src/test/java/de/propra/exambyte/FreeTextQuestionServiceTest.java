@@ -72,9 +72,7 @@ void testFindFreeTextAnswerByIdThrowsException() {
     Long mockID = 1L;
         when(repository.findById(mockID)).thenReturn(Optional.empty());
 
-    Exception exception = assertThrows(FreeTextAnswerNotFoundException.class, () -> {
-        service.findFreeTextAnswerById(mockID);
-    });
+    Exception exception = assertThrows(FreeTextAnswerNotFoundException.class, () -> service.findFreeTextAnswerById(mockID));
 
     assertEquals("Freitextantwort wurde nicht gefunden", exception.getMessage());
 }
@@ -87,9 +85,7 @@ void testFindFreeTextAnswerByIdThrowsException() {
     void testCreateFreeTextAnswerThrowsExceptionForInvalidScore() {
         FreeTextAnswerDto dto = new FreeTextAnswerDto("Invalid Answer", -5);
 
-        Exception exception = assertThrows(LowerOrEqualZeroException.class, () -> {
-            service.createFreeTextAnswer(dto);
-        });
+        Exception exception = assertThrows(LowerOrEqualZeroException.class, () -> service.createFreeTextAnswer(dto));
 
         assertEquals("Punktzahl darf nicht negativ sein", exception.getMessage());
     }
