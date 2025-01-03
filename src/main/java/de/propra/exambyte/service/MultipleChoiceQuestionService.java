@@ -25,7 +25,7 @@ public class MultipleChoiceQuestionService {
                 multipleChoiceQuestionDto.getMaxScore(),
                 multipleChoiceQuestionDto.getExplanation(),
                 multipleChoiceQuestionDto.getAnswers()
-                );
+        );
         System.out.println("Created Question: " + multipleChoiceQuestion);
         validateMultipleChoiceQuestion(multipleChoiceQuestion);
         return multipleChoiceQuestionRepository.save(multipleChoiceQuestion);
@@ -58,31 +58,37 @@ public class MultipleChoiceQuestionService {
         if (multipleChoiceQuestion.getAnswers() == null || multipleChoiceQuestion.getAnswers().isEmpty()) {
             throw new EmptyInputException("Antworten dürfen nicht leer sein");
         }
-
+        if (multipleChoiceQuestion.getMaxScore() == null) {
+            throw new EmptyInputException("Punktanzahl darf nicht leer sein");
+        }
         if (multipleChoiceQuestion.getMaxScore() <= 0) {
             throw new LowerOrEqualZeroException("Punktanzahl muss größer als 0 sein");
         }
-
-        if(multipleChoiceQuestion.getMaxScore() == null){
-            throw new EmptyInputException("Punktanzahl darf nicht leer sein");
-        }
-
         if (multipleChoiceQuestion.getExplanation() == null || multipleChoiceQuestion.getExplanation().isEmpty()) {
             throw new EmptyInputException("Erklärung darf nicht leer sein");
         }
 
+        /* Duplikatsprüfung im Service
+        List<String> answerTexts = new ArrayList<>(multipleChoiceQuestion.getAnswers().keySet());
+        Set<String> uniqueAnswers = new HashSet<>(answerTexts);
+
+        if (answerTexts.size() != uniqueAnswers.size()) {
+            throw new DuplicateAnswerException("Antworten dürfen nicht mehrfach vorkommen");
+        }
+        */
+
+        // Prüfen, ob mindestens eine Antwort als korrekt markiert ist
         if (!multipleChoiceQuestion.getAnswers().containsValue(true)) {
             throw new NoAnswersMarkedCorrectException("Mindestens eine Antwort muss als korrekt markiert werden.");
         }
 
-        if (multipleChoiceQuestion.getAnswers().size() != multipleChoiceQuestion.getAnswers().size()) {
-            throw new DuplicateAnswerException("Antworten dürfen nicht mehrfach vorkommen");
-        }
-
-        if(multipleChoiceQuestion.getAnswers().size() < 2){
+        if (multipleChoiceQuestion.getAnswers().size() < 2) {
             throw new InsufficientAnswersException("Es müssen mindestens 2 Antworten vorhanden sein");
         }
     }
+
+
+
 
     public MultipleChoiceQuestion findMultipleChoiceQuestionById(Long id) {
         return multipleChoiceQuestionRepository.findById(id).orElseThrow(() -> new MultipleChoiceQuestionNotFoundException("MultipleChoiceQuestion not found"));
