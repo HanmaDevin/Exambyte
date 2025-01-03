@@ -57,16 +57,6 @@ public class TestService {
         return test.getAllQuestions();
     }
 
-    public MultipleChoiceQuestion getMultipleChoiceQuestionById(Long testId, Long questionId) {
-        Test test = findTestById(testId);
-        return (MultipleChoiceQuestion) test.getMultipleChoiceQuestions(questionId);
-    }
-
-    public FreeTextQuestion getFreeTextQuestionById(Long testId, Long questionId) {
-        Test test = findTestById(testId);
-        return (FreeTextQuestion) test.getFreeTextQuestions(questionId);
-    }
-
     public Question getQuestionById(Long testId, Long questionId) {
         Test test = findTestById(testId);
         return test.getAllQuestions().stream()
