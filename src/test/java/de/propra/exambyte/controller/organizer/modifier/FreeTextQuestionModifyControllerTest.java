@@ -1,16 +1,12 @@
-package de.propra.exambyte.controller;
+package de.propra.exambyte.controller.organizer.modifier;
 
 import de.propra.exambyte.config.SecurityConfig;
-import de.propra.exambyte.controller.organizer.FreeTextQuestionsCreationController;
 import de.propra.exambyte.controller.organizer.FreeTextQuestionsModifyController;
 import de.propra.exambyte.dto.FreeTextQuestionDto;
-import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
-import de.propra.exambyte.exception.MultipleChoiceQuestionNotFoundException;
 import de.propra.exambyte.exception.TestNotFoundException;
 import de.propra.exambyte.model.FreeTextQuestion;
-import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.RoleAssignmentService;
 import de.propra.exambyte.service.TestService;
@@ -27,7 +23,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

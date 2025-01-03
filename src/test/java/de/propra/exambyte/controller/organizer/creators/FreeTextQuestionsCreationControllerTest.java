@@ -1,6 +1,7 @@
-package de.propra.exambyte.controller.organizer;
+package de.propra.exambyte.controller.organizer.creators;
 
 import de.propra.exambyte.config.SecurityConfig;
+import de.propra.exambyte.controller.organizer.FreeTextQuestionsCreationController;
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
