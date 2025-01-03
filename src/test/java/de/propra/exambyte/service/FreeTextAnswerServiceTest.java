@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @Import(SecurityConfig.class)
-public class FreeTextQuestionServiceTest {
+public class FreeTextAnswerServiceTest {
 
 
     FreeTextAnswerRepository repository;
