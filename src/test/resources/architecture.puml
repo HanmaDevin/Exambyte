@@ -1,0 +1,8 @@
+@startuml
+[Repository] <<..repository..>>
+[Domain] <<..model..>>
+[DomainServices] <<..services..>>
+[GUI] <<main.resources.templates..>>
+[Controller] <<..controller..>>
+
+@enduml
