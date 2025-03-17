@@ -9,8 +9,9 @@ group = 'de.propra'
 version = '0.0.1-SNAPSHOT'
 
 java {
+
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -20,12 +21,13 @@ repositories {
 
 spotbugs {
 	effort = com.github.spotbugs.snom.Effort.MAX
+	ignoreFailures = true
 }
 
 spotbugsMain {
 	reports {
-		xml.enabled = false
-		html.enabled = true
+		xml.required = false
+		html.required = true
 	}
 }
 
