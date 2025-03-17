@@ -1,0 +1,24 @@
+@startuml
+!theme plain
+
+actor Organizer as Organizer
+actor Student as Student
+actor Korrektor as Korrektor
+
+rectangle "Exambyte-System (Spring Boot)" {
+  rectangle "Controller" as Controllers
+  rectangle "Service" as Services
+  rectangle "Repository" as Repositories
+}
+
+Organizer --> Controllers : Verwalten von Tests \n(Erstellen, Bearbeiten)
+Student --> Controllers : Zugriff auf \nPrüfungen/Fragen
+Korrektor --> Controllers : Korrigieren von Tests
+
+Controllers --> Services : Anwendungslogik
+Services --> Repositories : Datenzugriff (Persistenz)
+
+cloud "Datenbank" as DB
+Repositories --> DB : Lesen/Schreiben
+
+@enduml
