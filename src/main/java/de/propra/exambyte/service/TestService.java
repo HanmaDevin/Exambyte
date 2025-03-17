@@ -11,6 +11,7 @@ import de.propra.exambyte.model.Test;
 import de.propra.exambyte.repository.TestRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -63,6 +64,20 @@ public class TestService {
                 .filter(question -> question.getId().equals(questionId))
                 .findFirst()
                 .orElseThrow(() -> new TestNotFoundException("Question with ID " + questionId + " not found"));
+    }
+
+
+
+    //prüfen, ob Test schon aktiv ist
+    public boolean isActive(Long id) {
+        Test test = findTestById(id);
+        return LocalDateTime.now().isAfter(test.getStartTime()) && LocalDateTime.now().isBefore(test.getEndTime());
+    }
+
+    //prüfen, ob Test beendet ist
+    public boolean isEnded(Long id) {
+        Test test = findTestById(id);
+        return LocalDateTime.now().isAfter(test.getEndTime());
     }
 
 

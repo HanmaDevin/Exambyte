@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 @Controller
 @Secured("ROLE_STUDENT")
 @RequestMapping("/student")
@@ -39,8 +40,11 @@ public class StudentController {
 
     @GetMapping("/test/{id}")
     public String showTest(Model model, @PathVariable Long id) {
-        model.addAttribute("test", testService.findTestById(id));
-        return "student/test-info";
+        if(testService.isActive(id)){
+            model.addAttribute("test", testService.findTestById(id));
+            return "student/test-info";
+        }
+        throw new RuntimeException("Test is not active");
     }
 
     @GetMapping("/test/{id}/edit/{id_question}")
@@ -60,4 +64,7 @@ public class StudentController {
 
         return String.format("redirect:/student/test/%d/edit/%d", id, id_question);
     }
+
+
+
 }
