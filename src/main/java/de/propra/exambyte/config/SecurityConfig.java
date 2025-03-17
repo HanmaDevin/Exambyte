@@ -32,6 +32,7 @@ public class SecurityConfig {
                         configurer -> configurer.requestMatchers("/", "/css/*").permitAll()
                                 .requestMatchers("/organizer/**").hasAuthority("ROLE_ORGANIZER")
                                 .requestMatchers("/corrector/**").hasAuthority("ROLE_CORRECTOR")
+                                .requestMatchers("/student/**").hasAuthority("ROLE_STUDENT")
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
