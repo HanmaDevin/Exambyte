@@ -36,6 +36,8 @@ public class Test {
     @NotNull(message = "Result time is mandatory")
     private LocalDateTime resultTime;
 
+    private boolean testWorkedOn;
+
     public Test() {
     }
 
@@ -139,5 +141,13 @@ public class Test {
                 ", endTime=" + endTime +
                 ", resultTime=" + resultTime +
                 '}';
+    }
+
+    public void setTestWorkedOn(boolean testInProgress) {
+        this.testWorkedOn = testInProgress;
+    }
+
+    public boolean getTestWorkedOn() {
+        return testWorkedOn;
     }
 }

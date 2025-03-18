@@ -111,4 +111,9 @@ public class TestService {
     public Test findTestById(Long id) {
         return testRepository.findById(id).orElseThrow(() -> new TestNotFoundException("Test not found"));
     }
+
+    public void setTestWorkedOnToTrue(Test test) {
+        test.setTestWorkedOn(true);
+        testRepository.save(test);
+    }
 }

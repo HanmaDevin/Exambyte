@@ -2,6 +2,7 @@ package de.propra.exambyte.controller.student;
 
 import de.propra.exambyte.model.FreeTextAnswer;
 import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.stereotype.Controller;
@@ -44,10 +45,16 @@ public class FreeTextQuestionAnswerController {
     @PostMapping("/submit")
     public String submitAnswer(
             @PathVariable Long id_question,
+            @PathVariable Long id,
             @RequestParam("answer") String studentAnswer, RedirectAttributes redirectAttributes) {
         FreeTextQuestion currentQuestion = freeTextQuestionService.findFreeTextQuestionById(id_question);
-        redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);
         freeTextQuestionService.saveOrUpdateStudentAnswer(id_question, studentAnswer);
+
+        Test test = testService.findTestById(id);
+        testService.setTestWorkedOnToTrue(test);
+
+        redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);
+
         return "redirect:/student/test/{id}/edit/";
     }
 }

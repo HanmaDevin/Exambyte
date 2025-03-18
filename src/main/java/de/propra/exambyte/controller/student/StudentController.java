@@ -2,6 +2,7 @@ package de.propra.exambyte.controller.student;
 
 import de.propra.exambyte.dto.FreeTextAnswerDto;
 import de.propra.exambyte.exception.NoTestActiveException;
+import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +34,14 @@ public class StudentController {
     public String showTest(Model model, @PathVariable Long id) {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        Test test = testService.findTestById(id);
 
 //        if (testService.isActive(id, now)) {
-            model.addAttribute("test", testService.findTestById(id));
+            model.addAttribute("test", test);
             model.addAttribute("test_id", id);
             return "student/test-info";
 //        } else {
-//            throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin: " + testService.findTestById(id).getStartTime().format(formatter));
+//            throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin: " + test.getStartTime().format(formatter));
 //        }
     }
 

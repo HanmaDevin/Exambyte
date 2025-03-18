@@ -2,6 +2,7 @@ package de.propra.exambyte.controller.student;
 
 import de.propra.exambyte.model.MultipleChoiceAnswer;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
+import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
 import de.propra.exambyte.service.TestService;
 import org.springframework.stereotype.Controller;
@@ -46,10 +47,16 @@ public class MultipleChoiceQuestionAnswerController {
     @PostMapping("/submit")
     public String submitAnswer(
             @PathVariable Long id_question,
+            @PathVariable Long id,
             @RequestParam(value = "selectedAnswers", required = false) Set<String> selectedAnswers, RedirectAttributes redirectAttributes) {
         MultipleChoiceQuestion currentQuestion = multipleChoiceQuestionService.findMultipleChoiceQuestionById(id_question);
-        redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);
         multipleChoiceQuestionService.saveOrUpdateStudentAnswer(id_question, selectedAnswers);
+
+        Test test = testService.findTestById(id);
+        testService.setTestWorkedOnToTrue(test);
+
+        redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);
+
         return "redirect:/student/test/{id}/edit/";
     }
 }

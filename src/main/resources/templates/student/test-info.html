@@ -28,7 +28,7 @@
                 <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
                 <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
                 <td>-</td> <!-- Platzhalter für Prozentwert -->
-                <td>-</td> <!-- Platzhalter für Status -->
+                <td > <span th:if="${test.getTestWorkedOn()}"> in bearbeitung</span><span th:unless="${test.getTestWorkedOn()}"> nicht bearbeitet</span></td>
             </tr>
             </tbody>
         </table>
