@@ -20,15 +20,8 @@ import java.time.LocalDateTime;
 public class StudentController {
 
     private final TestService testService;
-    private final FreeTextAnswerService freeTextAnswerService;
-    private final FreeTextQuestionService freeTextQuestionService;
-    private final MultipleChoiceQuestionService multipleChoiceQuestionService;
-    // private final MultipleChoiceAnswerService multipleChoiceAnswerService;
 
     public StudentController(TestService testService, FreeTextAnswerService freeTextAnswerService, FreeTextQuestionService freeTextQuestionService, MultipleChoiceQuestionService multipleChoiceQuestionService) {
-        this.multipleChoiceQuestionService = multipleChoiceQuestionService;
-        this.freeTextQuestionService = freeTextQuestionService;
-        this.freeTextAnswerService = freeTextAnswerService;
         this.testService = testService;
     }
 
