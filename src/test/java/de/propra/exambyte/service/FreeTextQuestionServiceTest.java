@@ -4,6 +4,7 @@ import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.repository.FreeTextAnswerRepository;
 import de.propra.exambyte.repository.FreeTextQuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,12 +21,13 @@ public class FreeTextQuestionServiceTest {
 
     private FreeTextQuestionService freeTextQuestionService;
     private FreeTextQuestionRepository freeTextQuestionRepository;
+    private FreeTextAnswerRepository freeTextAnswerRepository;
 
 
     @BeforeEach
     void setUp() {
         freeTextQuestionRepository = mock(FreeTextQuestionRepository.class);
-        freeTextQuestionService = new FreeTextQuestionService(freeTextQuestionRepository);
+        freeTextQuestionService = new FreeTextQuestionService(freeTextQuestionRepository, freeTextAnswerRepository);
     }
 
     @Test

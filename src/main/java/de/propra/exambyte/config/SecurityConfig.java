@@ -31,9 +31,9 @@ public class SecurityConfig {
         chainBuilder.authorizeHttpRequests(
                         configurer -> configurer.requestMatchers("/", "/css/*").permitAll()
                                 //Temp for testing
-                                .requestMatchers("/organizer/**").hasAnyAuthority("ROLE_ORGANIZER" , "ROLE_STUDENT")
+                                .requestMatchers("/organizer/**").hasAuthority("ROLE_ORGANIZER")
                                 .requestMatchers("/corrector/**").hasAuthority("ROLE_CORRECTOR")
-                                .requestMatchers("/student/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ORGANIZER")
+                                .requestMatchers("/student/**").hasAuthority("ROLE_STUDENT")
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo

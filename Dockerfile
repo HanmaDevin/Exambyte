@@ -1,7 +1,10 @@
-from openjdk:23-jdk
+FROM openjdk:17-jdk
 
-copy build/libs/Exambyte-0.0.1-SNAPSHOT.jar exambyte.jar
 
-expose 8080
+COPY build/libs/Exambyte-0.0.1-SNAPSHOT.jar exambyte.jar
+COPY .env ./
 
-entrypoint ["java", "-jar", "exambyte.jar"]
+EXPOSE 8080
+EXPOSE 5432
+
+CMD ["java", "-jar", "exambyte.jar"]

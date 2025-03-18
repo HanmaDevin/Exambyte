@@ -3,6 +3,7 @@ package de.propra.exambyte.service;
 import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.*;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
+import de.propra.exambyte.repository.MultipleChoiceAnswerRepository;
 import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -20,11 +21,12 @@ public class MultipleChoiceQuestionServiceTest {
 
     private MultipleChoiceQuestionService multipleChoiceQuestionService;
     private MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
+    private MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
 
     @BeforeEach
     void setUp() {
         multipleChoiceQuestionRepository = mock(MultipleChoiceQuestionRepository.class);
-        multipleChoiceQuestionService = new MultipleChoiceQuestionService(multipleChoiceQuestionRepository);
+        multipleChoiceQuestionService = new MultipleChoiceQuestionService(multipleChoiceQuestionRepository, multipleChoiceAnswerRepository);
     }
 
     @Test
