@@ -19,6 +19,9 @@ public class MultipleChoiceQuestion implements Question {
 
     private String explanation;
 
+    @OneToOne
+    private MultipleChoiceAnswer multipleChoiceAnswer;
+
     @ManyToOne
     private Test test;
 
@@ -87,5 +90,13 @@ public class MultipleChoiceQuestion implements Question {
                 ", maxScore=" + maxScore +
                 ", explanation='" + explanation + '\'' +
                 '}';
+    }
+
+    public MultipleChoiceAnswer getMultipleChoiceAnswer() {
+        return multipleChoiceAnswer;
+    }
+
+    public void setMultipleChoiceAnswer(MultipleChoiceAnswer multipleChoiceAnswer) {
+        this.multipleChoiceAnswer = multipleChoiceAnswer;
     }
 }
