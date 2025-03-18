@@ -61,6 +61,10 @@ public class FreeTextQuestion implements Question {
         this.freeTextAnswer = freeTextAnswer;
     }
 
+    public FreeTextAnswer getFreeTextAnswer() {
+        return freeTextAnswer;
+    }
+
     public void updateQuestion(String questionText, int maxScore,String possibleAnswer) {
         this.questionText = questionText;
         this.possibleAnswer = possibleAnswer;

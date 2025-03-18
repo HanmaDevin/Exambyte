@@ -11,13 +11,9 @@ public class FreeTextAnswer {
     private Long id;
 
     @NotBlank(message = "Answer is mandatory")
-    private String answer;
+    @Lob
+    private String studentAnswer;
 
-    @NotBlank(message = "Score is mandatory")
-    private int score;
-
-    @NotBlank(message = "Corrector Comment is mandatory")
-    private String correctorComment;
 
     @OneToOne
     private FreeTextQuestion freeTextQuestion;
@@ -25,32 +21,28 @@ public class FreeTextAnswer {
     public FreeTextAnswer() {
     }
 
-    public FreeTextAnswer(String answer, int score) {
-        this.answer = answer;
-        this.score = score;
+    public FreeTextAnswer(String studentAnswer, FreeTextQuestion freeTextQuestion) {
+        this.studentAnswer = studentAnswer;
+        this.freeTextQuestion = freeTextQuestion;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getStudentAnswer() {
+        return studentAnswer;
+    }
+    
+    public void setStudentAnswer(String studentAnswer) {
+        this.studentAnswer = studentAnswer;
     }
 
-    public int getScore() {
-        return score;
+    public FreeTextQuestion getFreeTextQuestion() {
+        return freeTextQuestion;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setCorrectorComment(String correctorComment) {
-        this.correctorComment = correctorComment;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setFreeTextQuestion(FreeTextQuestion freeTextQuestion) {
+        this.freeTextQuestion = freeTextQuestion;
     }
 }

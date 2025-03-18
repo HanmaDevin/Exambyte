@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Choice Frage Beantworten</title>
+  <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Multiple Choice Frage Beantworten</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <!-- Question Text -->
+      <h2 class="card-title">Frage:</h2>
+      <p class="card-text" th:text="${question.getQuestionText()}">Hier steht die Frage</p>
+
+      <!-- Max Score -->
+      <h3>Maximale Punktzahl: <span th:text="${question.getMaxScore()}">10</span></h3>
+
+      <!-- Explanation -->
+      <p><strong>Erklärung:</strong> <span th:text="${question.getExplanation()}">Beispiel Erklärung</span></p>
+
+      <!-- Answer Form -->
+      <form th:action="@{/student/test/{id}/edit/MultipleChoiceQuestion/{id_question}/submit(id=${test_id}, id_question=${question_id})}" method="post">
+        <div class="form-group">
+          <label>Wählen Sie die richtigen Antworten:</label>
+          <div th:each="answer : ${question.answers}">
+            <input type="checkbox" th:name="selectedAnswers"
+                   th:value="${answer.key}"
+                   th:checked="${selectedAnswers.contains(answer.key)}">
+            <span th:text="${answer.key}"></span>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-3">
+          <a href="#" th:href="@{/student/tests/{id}/edit/(id=${test_id})}" class="btn btn-secondary">Abbrechen</a>
+          <button type="submit" class="btn btn-primary">Antwort absenden</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

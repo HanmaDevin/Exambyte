@@ -2,19 +2,25 @@ package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.MultipleChoiceQuestionDto;
 import de.propra.exambyte.exception.*;
+import de.propra.exambyte.model.MultipleChoiceAnswer;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
+import de.propra.exambyte.repository.MultipleChoiceAnswerRepository;
 import de.propra.exambyte.repository.MultipleChoiceQuestionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service
 public class MultipleChoiceQuestionService {
     private final MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
+    private final MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
 
-    public MultipleChoiceQuestionService(MultipleChoiceQuestionRepository multipleChoiceQuestionRepository) {
+    public MultipleChoiceQuestionService(MultipleChoiceQuestionRepository multipleChoiceQuestionRepository, MultipleChoiceAnswerRepository multipleChoiceAnswerRepository) {
         this.multipleChoiceQuestionRepository = multipleChoiceQuestionRepository;
+        this.multipleChoiceAnswerRepository = multipleChoiceAnswerRepository;
     }
 
     public MultipleChoiceQuestion createMultipleChoiceQuestion(MultipleChoiceQuestionDto multipleChoiceQuestionDto) {
@@ -88,7 +94,23 @@ public class MultipleChoiceQuestionService {
     }
 
 
+    @Transactional
+    public void saveOrUpdateStudentAnswer(Long questionId, Set<String> selectedAnswers) {
+        MultipleChoiceQuestion question = multipleChoiceQuestionRepository.findById(questionId)
+                .orElseThrow(() -> new RuntimeException("Frage nicht gefunden"));
 
+        MultipleChoiceAnswer existingAnswer = question.getMultipleChoiceAnswer();
+
+        if (existingAnswer != null) {
+            existingAnswer.setSelectedAnswers(selectedAnswers);
+            multipleChoiceAnswerRepository.save(existingAnswer);
+        } else {
+            MultipleChoiceAnswer newAnswer = new MultipleChoiceAnswer(selectedAnswers, question);
+            question.setMultipleChoiceAnswer(newAnswer);
+            multipleChoiceQuestionRepository.save(question);
+            multipleChoiceAnswerRepository.save(newAnswer);
+        }
+    }
 
     public MultipleChoiceQuestion findMultipleChoiceQuestionById(Long id) {
         return multipleChoiceQuestionRepository.findById(id).orElseThrow(() -> new MultipleChoiceQuestionNotFoundException("MultipleChoiceQuestion not found"));

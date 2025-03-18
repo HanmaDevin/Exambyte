@@ -4,16 +4,21 @@ import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
+import de.propra.exambyte.model.FreeTextAnswer;
 import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.repository.FreeTextAnswerRepository;
 import de.propra.exambyte.repository.FreeTextQuestionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FreeTextQuestionService {
     private final FreeTextQuestionRepository freeTextQuestionRepository;
+    private final FreeTextAnswerRepository freeTextAnswerRepository;
 
-    public FreeTextQuestionService(FreeTextQuestionRepository freeTextQuestionRepository) {
+    public FreeTextQuestionService(FreeTextQuestionRepository freeTextQuestionRepository, FreeTextAnswerRepository freeTextAnswerRepository) {
         this.freeTextQuestionRepository = freeTextQuestionRepository;
+        this.freeTextAnswerRepository = freeTextAnswerRepository;
     }
 
     public FreeTextQuestion createFreeTextQuestion(FreeTextQuestionDto freeTextQuestionDto) {
@@ -53,6 +58,24 @@ public class FreeTextQuestionService {
             throw new EmptyInputException("Punktzahl darf nicht leer sein");
         }
 
+    }
+
+    @Transactional
+    public void saveOrUpdateStudentAnswer(Long questionId, String studentAnswer) {
+        FreeTextQuestion question = freeTextQuestionRepository.findById(questionId)
+                .orElseThrow(() -> new RuntimeException("Frage nicht gefunden"));
+
+        FreeTextAnswer existingAnswer = question.getFreeTextAnswer();
+
+        if(existingAnswer != null){
+            existingAnswer.setStudentAnswer(studentAnswer);
+            freeTextAnswerRepository.save(existingAnswer);
+        } else {
+            FreeTextAnswer newAnswer = new FreeTextAnswer(studentAnswer, question);
+            question.setFreeTextAnswer(newAnswer);
+            freeTextQuestionRepository.save(question);
+            freeTextAnswerRepository.save(newAnswer);
+        }
     }
 
 
