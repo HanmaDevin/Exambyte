@@ -1,7 +1,5 @@
 package de.propra.exambyte.controller.student;
 
-import de.propra.exambyte.model.FreeTextAnswer;
-import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.model.MultipleChoiceAnswer;
 import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
@@ -48,7 +46,6 @@ public class MultipleChoiceQuestionAnswerController {
     @PostMapping("/submit")
     public String submitAnswer(
             @PathVariable Long id_question,
-            @PathVariable String id,
             @RequestParam(value = "selectedAnswers", required = false) Set<String> selectedAnswers, RedirectAttributes redirectAttributes) {
         MultipleChoiceQuestion currentQuestion = multipleChoiceQuestionService.findMultipleChoiceQuestionById(id_question);
         redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);

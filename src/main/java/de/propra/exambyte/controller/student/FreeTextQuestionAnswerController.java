@@ -1,6 +1,5 @@
 package de.propra.exambyte.controller.student;
 
-import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.model.FreeTextAnswer;
 import de.propra.exambyte.model.FreeTextQuestion;
 import de.propra.exambyte.service.FreeTextQuestionService;
@@ -45,7 +44,6 @@ public class FreeTextQuestionAnswerController {
     @PostMapping("/submit")
     public String submitAnswer(
             @PathVariable Long id_question,
-            @PathVariable String id,
             @RequestParam("answer") String studentAnswer, RedirectAttributes redirectAttributes) {
         FreeTextQuestion currentQuestion = freeTextQuestionService.findFreeTextQuestionById(id_question);
         redirectAttributes.addFlashAttribute("savedQuestion", currentQuestion);

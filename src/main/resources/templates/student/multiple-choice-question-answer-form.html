@@ -28,10 +28,12 @@
         <div class="form-group">
           <label>Wählen Sie die richtigen Antworten:</label>
           <div th:each="answer : ${question.answers}">
-            <input type="checkbox" th:name="selectedAnswers"
-                   th:value="${answer.key}"
-                   th:checked="${selectedAnswers.contains(answer.key)}">
-            <span th:text="${answer.key}"></span>
+            <label>
+              <input type="checkbox" th:name="selectedAnswers"
+                          th:value="${answer.key}"
+                          th:checked="${selectedAnswers.contains(answer.key)}">
+              <span th:text="${answer.key}"></span>
+            </label>
           </div>
         </div>
 
