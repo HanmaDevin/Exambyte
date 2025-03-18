@@ -48,18 +48,18 @@ public class TestsController {
     }
 
 
-//    //This is just for testing purposes and should be removed later
-//    private static int testCounter = 1;
-//    @PostMapping("/new/fill")
-//    public String createFilledTest(@ModelAttribute TestDto testDto, RedirectAttributes redirectAttributes) {
-//        testDto.fillTestValues();
-//        testDto.setTitle("Test " + testCounter);
-//        testCounter++;
-//        Test createdTest = testService.createTest(testDto);
-//        redirectAttributes.addFlashAttribute("createdTest", createdTest);
-//        System.out.println(createdTest.toString());
-//        return "redirect:/organizer/tests";
-//    }
+    //This is just for testing purposes and should be removed later
+    private static int testCounter = 1;
+    @PostMapping("/new/fill")
+    public String createFilledTest(@ModelAttribute TestDto testDto, RedirectAttributes redirectAttributes) {
+        testDto.fillTestValues();
+        testDto.setTitle("Test " + testCounter);
+        testCounter++;
+        Test createdTest = testService.createTest(testDto);
+        redirectAttributes.addFlashAttribute("createdTest", createdTest);
+        System.out.println(createdTest.toString());
+        return "redirect:/organizer/tests";
+    }
 
 
 

@@ -6,6 +6,12 @@
   <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div class="container mt-5">
+  <!-- Error Message Box -->
+  <div class="alert alert-danger" th:if="${error}" role="alert">
+    <strong>Fehler:</strong> <span th:text="${error}"></span>
+  </div>
+</div>
 
   <!-- TODO: Tests hier nur anzeigen lassen wenn der startzeitpunkt erfolgt -->
 

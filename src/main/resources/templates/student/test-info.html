@@ -42,8 +42,7 @@
             <div class="d-flex justify-content-between mb-4">
                 <a href="#" th:href="@{/student/tests}" class="btn btn-secondary">Zurück</a>
                 <div>
-                    <a href="#" th:href="@{/student/test/{id}/edit/{id_question}(id=${test.getId()},
-                    id_question=${test.getAllQuestions().getFirst().getId()})}" class="btn btn-success">Bearbeiten</a>
+                    <a href="#" th:href="@{/student/test/{id}/edit/(id=${test.id})}" class="btn btn-success">Bearbeiten</a>
                 </div>
             </div>
         </div>

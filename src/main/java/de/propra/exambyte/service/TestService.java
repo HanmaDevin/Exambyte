@@ -69,15 +69,16 @@ public class TestService {
 
 
     //prüfen, ob Test schon aktiv ist
-    public boolean isActive(Long id) {
+    public boolean isActive(Long id, LocalDateTime now) {
         Test test = findTestById(id);
-        return LocalDateTime.now().isAfter(test.getStartTime()) && LocalDateTime.now().isBefore(test.getEndTime());
+        System.out.println(now);
+        return now.isAfter(test.getStartTime()) && now.isBefore(test.getEndTime());
     }
 
     //prüfen, ob Test beendet ist
-    public boolean isEnded(Long id) {
+    public boolean isEnded(Long id, LocalDateTime now) {
         Test test = findTestById(id);
-        return LocalDateTime.now().isAfter(test.getEndTime());
+        return now.isAfter(test.getEndTime());
     }
 
 

@@ -1,21 +1,21 @@
 package de.propra.exambyte.controller.student;
 
 import de.propra.exambyte.dto.FreeTextAnswerDto;
-import de.propra.exambyte.model.FreeTextAnswer;
-import de.propra.exambyte.model.FreeTextQuestion;
+import de.propra.exambyte.exception.NoTestActiveException;
 import de.propra.exambyte.service.FreeTextAnswerService;
 import de.propra.exambyte.service.FreeTextQuestionService;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
 import de.propra.exambyte.service.TestService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+
 
 @Controller
-@Secured("ROLE_STUDENT")
+//@Secured("ROLE_STUDENT")
 @RequestMapping("/student")
 public class StudentController {
 
@@ -40,31 +40,33 @@ public class StudentController {
 
     @GetMapping("/test/{id}")
     public String showTest(Model model, @PathVariable Long id) {
-        if(testService.isActive(id)){
+        LocalDateTime now = LocalDateTime.now();
+        if (testService.isActive(id, now)) {
             model.addAttribute("test", testService.findTestById(id));
+            model.addAttribute("test_id", id);
             return "student/test-info";
+        } else if (testService.isEnded(id, now)) {
+            model.addAttribute("test", testService.findTestById(id));
+            model.addAttribute("test_id", id);
+            return "student/test-info";
+        } else {
+            throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin. :" + testService.findTestById(id).getStartTime());
         }
-        throw new RuntimeException("Test is not active");
     }
 
-    @GetMapping("/test/{id}/edit/{id_question}")
-    public String editTest(Model model, @PathVariable Long id, @PathVariable Long id_question) {
+    @GetMapping("/test/{id}/edit/")
+    public String editTest(Model model, @PathVariable Long id) {
         model.addAttribute("test", testService.findTestById(id));
-        model.addAttribute("questionID", testService.getQuestionById(id, id_question));
         model.addAttribute("freeTextAnswerDto", new FreeTextAnswerDto());
 
         return "student/test-edit-form";
     }
 
-    @PostMapping("/test/{id}/edit/{id_question}")
-    public String editTest(@PathVariable Long id, @PathVariable Long id_question, @ModelAttribute FreeTextAnswerDto freeTextAnswerDto, RedirectAttributes redirectAttributes) {
-        FreeTextAnswer createedFreeTextAnswer = freeTextAnswerService.createFreeTextAnswer(freeTextAnswerDto);
-        FreeTextQuestion freeTextQuestion = freeTextQuestionService.findFreeTextQuestionById(id_question);
-        freeTextQuestion.setFreeTextAnswer(createedFreeTextAnswer);
-
-        return String.format("redirect:/student/test/%d/edit/%d", id, id_question);
+    @ExceptionHandler({NoTestActiveException.class})
+    public String handleExceptions(Exception e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+        return "redirect:/student/tests";
     }
-
 
 
 }

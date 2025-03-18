@@ -11,26 +11,15 @@
     </div>
 
     <div th:each="question, iterStat : ${test.getAllQuestions()}">
-        <a href="#" th:href="@{/student/test/{id}/edit/{id_question}(id_question=${question.getId()}, id=${test.getId()})}"
-               th:text="${'Frage' + iterStat.index + 1}">Link to question</a>
+        <div th:if="${question.getType()eq 'FreeTextQuestion'}">
+            <a href="#" th:href="@{/student/test/{id}/edit/FreeTextQuestion/{id_question}(id_question=${question.getId()}, id=${test.getId()})}"
+               th:text="${question.getQuestionText()}">Link to question</a>
+        </div>
+        <div th:if="${question.getType()eq 'MultipleChoiceQuestion'}">
+            <a href="#" th:href="@{/student/test/{id}/edit/MultipleChoiceQuestion/{id_question}(id_question=${question.getId()}, id=${test.getId()})}"
+               th:text="${question.getQuestionText()}">Link to question</a>
+        </div>
     </div>
 
-
-    <div th:if="${test.getQuestionById(questionID).getType() eq 'FreeTextQuestion'}">
-        <p class="text-body" th:utext="${test.getQuestionById(questionID).getQuestionText()}">Text</p>
-
-        <form th:object="${freeTextAnswerDto}" th:action="@{/student/test/{id}/edit/{id_question}(id=${test.getId()}, id_question=${questionID})}" method="post">
-            <div class="mb-3">
-                <label for="answer" class="form-label">Antwort</label>
-                <textarea th:field="*{answer}" id="answer" name="answer" class="form-control" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Antwort abschicken</button>
-        </form>
-    </div>
-
-    <div th:if="${test.getQuestionById(questionID).getType() eq 'MultipleChoiceQuestion'}">
-        <p>Ich bin MultipleChoice</p>
-        <p class="text-body" th:utext="${test.getQuestionById(questionID).getQuestionText()}">Text</p>
-    </div>
 </body>
 </html>

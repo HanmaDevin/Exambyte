@@ -53,17 +53,17 @@
     <!-- created a new form to fill the values, so testing is easier.
     should be removed or adjusted(for example test starts at the beginning of next week and is due in 1 week)
     in the final version -->
-<!--    <form th:action="@{/organizer/tests/new/fill}" th:object="${testDto}" method="post" class="mt-4">-->
-<!--        &lt;!&ndash; invisble fileds to transfer data &ndash;&gt;-->
-<!--        <input type="hidden" th:field="*{title}">-->
-<!--        <input type="hidden" th:field="*{startTime}">-->
-<!--        <input type="hidden" th:field="*{endTime}">-->
-<!--        <input type="hidden" th:field="*{resultTime}">-->
+    <form th:action="@{/organizer/tests/new/fill}" th:object="${testDto}" method="post" class="mt-4">
+        <!-- invisble fileds to transfer data -->
+        <input type="hidden" th:field="*{title}">
+        <input type="hidden" th:field="*{startTime}">
+        <input type="hidden" th:field="*{endTime}">
+        <input type="hidden" th:field="*{resultTime}">
 
-<!--        <button type="submit" class="btn btn-primary">-->
-<!--            Werte auffüllen und Test speichern-->
-<!--        </button>-->
-<!--    </form>-->
+        <button type="submit" class="btn btn-primary">
+            Werte auffüllen und Test speichern
+        </button>
+    </form>
 
 
 </div>
