@@ -76,7 +76,7 @@ public class TestService {
     }
 
     //prüfen, ob Test beendet ist
-    public boolean isEnded(Long id, LocalDateTime now) {
+    public boolean hasEnded(Long id, LocalDateTime now) {
         Test test = findTestById(id);
         return now.isAfter(test.getEndTime());
     }

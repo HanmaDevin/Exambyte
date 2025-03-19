@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 
 @Controller
-@Secured("ROLE_STUDENT")
+//@Secured("ROLE_STUDENT")
 @RequestMapping("/student")
 public class StudentController {
 
@@ -37,19 +37,20 @@ public class StudentController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         Test test = testService.findTestById(id);
 
-        if (testService.isActive(id, now)) {
+        //if (testService.isActive(id, now)) {
             model.addAttribute("test", test);
             model.addAttribute("test_id", id);
             return "student/test-info";
-        } else {
-            throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin: " + test.getStartTime().format(formatter));
-        }
+        //} else {
+          //  throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin: " + test.getStartTime().format(formatter));
+       // }
     }
 
     @GetMapping("/test/{id}/edit/")
     public String editTest(Model model, @PathVariable Long id) {
         model.addAttribute("test", testService.findTestById(id));
-        model.addAttribute("freeTextAnswerDto", new FreeTextAnswerDto());
+        model.addAttribute("readOnly", testService.hasEnded(id, LocalDateTime.now()));
+
 
         return "student/test-edit-form";
     }

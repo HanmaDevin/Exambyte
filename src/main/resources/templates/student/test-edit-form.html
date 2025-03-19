@@ -16,6 +16,13 @@
 
     <h1 class="text-center mb-4" th:text="${test.title}">Title</h1>
 
+    <!-- Hinweis, falls Test beendet ist -->
+    <div class="alert alert-danger" th:if="${readOnly}" role="alert">
+        <strong>Dieser Test ist bereits beendet. Änderungen sind nicht mehr möglich.</strong>
+    </div>
+
+
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead class="table-primary">

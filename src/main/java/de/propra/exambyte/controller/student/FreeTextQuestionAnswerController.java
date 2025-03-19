@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+
 @Controller
 //@Secured("ROLE_STUDENT")
 @RequestMapping("student/test/{id}/edit/FreeTextQuestion/{id_question}")
@@ -25,6 +27,7 @@ public class FreeTextQuestionAnswerController {
 
     @GetMapping()
     public String showFreeTextQuestionAnswerForm(Model model, @PathVariable Long id, @PathVariable Long id_question) {
+
         testService.findTestById(id);
         FreeTextQuestion currentQuestion = freeTextQuestionService.findFreeTextQuestionById(id_question);
         FreeTextAnswer currentAnswer = currentQuestion.getFreeTextAnswer();
@@ -39,6 +42,10 @@ public class FreeTextQuestionAnswerController {
             model.addAttribute("answer", "");
         }
 
+        // Test abgeschlossen? Falls ja, setze readOnly = true
+        boolean isReadOnly = testService.hasEnded(id, LocalDateTime.now());
+        model.addAttribute("readOnly", isReadOnly);
+
         return "student/free-text-question-answer-form";
     }
 
@@ -47,6 +54,8 @@ public class FreeTextQuestionAnswerController {
             @PathVariable Long id_question,
             @PathVariable Long id,
             @RequestParam("answer") String studentAnswer, RedirectAttributes redirectAttributes) {
+
+
         FreeTextQuestion currentQuestion = freeTextQuestionService.findFreeTextQuestionById(id_question);
         freeTextQuestionService.saveOrUpdateStudentAnswer(id_question, studentAnswer);
 
