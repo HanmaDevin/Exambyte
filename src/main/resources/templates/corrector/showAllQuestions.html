@@ -15,6 +15,12 @@
         <strong>Erfolgreich Feedback zu <span th:text="${savedQuestion.getQuestionText()}"></span> hinzugefügt</strong>
     </div>
 
+    <!-- Error Message Box -->
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <strong>Fehler:</strong> <span th:text="${error}"></span>
+    </div>
+
+
     <h1 class="text-center mb-4">Questions for Correction</h1>
 
     <div class="card p-3 mb-4">
@@ -43,7 +49,8 @@
                 <td>
                     <a th:if="${question.getType() eq 'FreeTextQuestion'}"
                        th:href="@{/corrector/tests/{id}/FreeTextQuestion/{qid}/evaluate(id=${test.id}, qid=${question.id})}"
-                       class="btn btn-outline-primary btn-sm">Korrigieren</a>
+                       class="btn btn-outline-primary btn-sm">Korrigieren
+                    </a>
 
                 </td>
             </tr>
