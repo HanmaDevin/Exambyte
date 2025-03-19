@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Questions for Correction</title>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <!-- Success Message Box -->
+    <div class="alert alert-success" th:if="${savedQuestion != null}" role="alert">
+        <strong>Erfolgreich Feedback zu <span th:text="${savedQuestion.getQuestionText()}"></span> hinzugefügt</strong>
+    </div>
+
+    <h1 class="text-center mb-4">Questions for Correction</h1>
+
+    <div class="card p-3 mb-4">
+        <h2>Test Title: <span th:text="${test.title}"></span></h2>
+        <p>Start Time: <span th:text="${test.startTime}"></span></p>
+        <p>End Time: <span th:text="${test.endTime}"></span></p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Question Text</th>
+                <th>Max Score</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question : ${test.getAllQuestions()}">
+                <td th:text="${question.id}"></td>
+                <td th:text="${question.questionText}"></td>
+                <td th:text="${question.maxScore}"></td>
+                <td th:text="${question.getType()}"></td>
+                <td>
+                    <a th:if="${question.getType() eq 'FreeTextQuestion'}"
+                       th:href="@{/corrector/tests/{id}/FreeTextQuestion/{qid}/evaluate(id=${test.id}, qid=${question.id})}"
+                       class="btn btn-outline-primary btn-sm">Korrigieren</a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <a href="/corrector/tests" class="btn btn-secondary">Zurück zu den Tests</a>
+    </div>
+</div>
+
+</body>
+</html>

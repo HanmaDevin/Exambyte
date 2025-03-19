@@ -2,6 +2,7 @@ package de.propra.exambyte.service;
 
 import de.propra.exambyte.dto.FreeTextQuestionDto;
 import de.propra.exambyte.exception.EmptyInputException;
+import de.propra.exambyte.exception.FreeTextAnswerNotFoundException;
 import de.propra.exambyte.exception.FreeTextQuestionNotFoundException;
 import de.propra.exambyte.exception.LowerOrEqualZeroException;
 import de.propra.exambyte.model.FreeTextAnswer;
@@ -63,7 +64,7 @@ public class FreeTextQuestionService {
     @Transactional
     public void saveOrUpdateStudentAnswer(Long questionId, String studentAnswer) {
         FreeTextQuestion question = freeTextQuestionRepository.findById(questionId)
-                .orElseThrow(() -> new RuntimeException("Frage nicht gefunden"));
+                .orElseThrow(() -> new FreeTextQuestionNotFoundException("Frage nicht gefunden"));
 
         FreeTextAnswer existingAnswer = question.getFreeTextAnswer();
 
@@ -77,6 +78,22 @@ public class FreeTextQuestionService {
             freeTextAnswerRepository.save(newAnswer);
         }
     }
+
+    @Transactional
+    public void evaluateFreeTextAnswer(Long questionId, String feedback, Integer score) {
+        FreeTextQuestion question = freeTextQuestionRepository.findById(questionId)
+                .orElseThrow(() -> new FreeTextQuestionNotFoundException("Question not found"));
+
+        FreeTextAnswer answer = question.getFreeTextAnswer();
+        if (answer == null) {
+            throw new RuntimeException("No answer found for this question");
+        }
+
+        answer.setFeedback(feedback);
+        answer.setScore(score);
+        freeTextAnswerRepository.save(answer);
+    }
+
 
 
     public FreeTextQuestion findFreeTextQuestionById(Long id) {

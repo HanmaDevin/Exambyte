@@ -18,6 +18,27 @@ public class FreeTextAnswer {
     @OneToOne
     private FreeTextQuestion freeTextQuestion;
 
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    @Lob
+    private String feedback;
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    private Integer score;
+
     public FreeTextAnswer() {
     }
 
