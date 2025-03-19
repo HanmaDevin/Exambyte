@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 
 @Controller
-//@Secured("ROLE_STUDENT")
+@Secured("ROLE_STUDENT")
 @RequestMapping("/student")
 public class StudentController {
 
@@ -41,13 +41,25 @@ public class StudentController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         Test test = testService.findTestById(id);
 
-        //if (testService.isActive(id, now)) {
+        if(testService.resultDue(id, LocalDateTime.now())){
+            double totalEarned = testService.calculateTotalEarnedPoints(id);
+            double totalMax = testService.calculateTotalMaxPoints(testService.findTestById(id));
+            double percentage = (totalMax > 0) ? (totalEarned / totalMax * 100) : 0;
+            String resultStatus = (percentage >= 50.0) ? "Bestanden!" : "Nicht Bestanden!";
+
+            model.addAttribute("totalEarned", totalEarned);
+            model.addAttribute("totalMax", totalMax);
+            model.addAttribute("percentage", percentage);
+            model.addAttribute("resultStatus", resultStatus);
+
+        }
+
+
+
             model.addAttribute("test", test);
             model.addAttribute("test_id", id);
             return "student/test-info";
-        //} else {
-          //  throw new NoTestActiveException("Test ist nicht aktiv, bitte warten Sie auf den Starttermin: " + test.getStartTime().format(formatter));
-       // }
+
     }
 
     @GetMapping("/test/{id}/edit/")

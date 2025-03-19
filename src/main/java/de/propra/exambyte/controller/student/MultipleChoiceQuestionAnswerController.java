@@ -5,6 +5,7 @@ import de.propra.exambyte.model.MultipleChoiceQuestion;
 import de.propra.exambyte.model.Test;
 import de.propra.exambyte.service.MultipleChoiceQuestionService;
 import de.propra.exambyte.service.TestService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Controller
-//@Secured("ROLE_STUDENT")
+@Secured("ROLE_STUDENT")
 @RequestMapping("student/test/{id}/edit/MultipleChoiceQuestion/{id_question}")
 public class MultipleChoiceQuestionAnswerController {
 

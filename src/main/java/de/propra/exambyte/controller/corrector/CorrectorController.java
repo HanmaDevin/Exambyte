@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDateTime;
 
 @Controller
-//@Secured("ROLE_CORRECTOR")
+@Secured("ROLE_CORRECTOR")
 @RequestMapping("/corrector")
 public class CorrectorController {
 

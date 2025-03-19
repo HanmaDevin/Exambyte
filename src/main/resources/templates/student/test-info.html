@@ -27,11 +27,16 @@
                 <td th:text="${#temporals.format(test.startTime, 'dd.MM.yyyy HH:mm')}">Startzeit</td>
                 <td th:text="${#temporals.format(test.endTime, 'dd.MM.yyyy HH:mm')}">Endzeit</td>
                 <td th:text="${#temporals.format(test.resultTime, 'dd.MM.yyyy HH:mm')}">Ergebniszeit</td>
-                <td>-</td> <!-- Platzhalter für Prozentwert -->
-                <td > <span th:if="${test.getTestWorkedOn()}"> in bearbeitung</span><span th:unless="${test.getTestWorkedOn()}"> nicht bearbeitet</span></td>
+                <td th:text="${percentage != null ? #numbers.formatDecimal(percentage, 1, 'POINT', 2, 'NONE') : '-'}">-</td>
+                <td th:text="${resultStatus != null ? resultStatus : (test.getTestWorkedOn() ? 'in bearbeitung' : 'nicht bearbeitet')}"></td>
             </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Optional: Falls du auch die Gesamtpunktzahl anzeigen möchtest -->
+    <div th:if="${totalEarned != null}">
+        <p>Punkte: <span th:text="${totalEarned}"></span> von <span th:text="${totalMax}"></span></p>
     </div>
 
     <div class="d-flex justify-content-between mt-4">
