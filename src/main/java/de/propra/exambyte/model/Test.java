@@ -38,6 +38,8 @@ public class Test {
 
     private boolean testWorkedOn;
 
+    private String workedOnBy;
+
     public Test() {
     }
 
@@ -141,6 +143,14 @@ public class Test {
                 ", endTime=" + endTime +
                 ", resultTime=" + resultTime +
                 '}';
+    }
+
+    public String getWorkedOnBy() {
+        return workedOnBy;
+    }
+
+    public void setWorkedOnBy(String workedOnBy) {
+        this.workedOnBy = workedOnBy;
     }
 
     public void setTestWorkedOn(boolean testInProgress) {

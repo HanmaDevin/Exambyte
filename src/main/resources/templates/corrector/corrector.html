@@ -19,6 +19,7 @@
                 <tr>
                     <th>#</th>
                     <th>Titel</th>
+                    <th>GitHub Handle</th>
                     <th>Aktionen</th>
                 </tr>
             </thead>
@@ -27,8 +28,9 @@
                 <tr th:each="test, iterStat : ${tests}">
                     <td th:text="${iterStat.index + 1}">1</td>
                     <td th:text="${test.title}">Test Titel</td>
+                    <td th:text="${test.getWorkedOnBy()}">-</td>
                     <td>
-                        <a href="#" th:href="@{/corrector/correct/test/{id}(id=${test.id})}"
+                        <a href="#" th:href="@{/corrector/tests/{id}(id=${test.id})}"
                             class="btn btn-primary">Test korrigieren</a>
                     </td>
                 </tr>

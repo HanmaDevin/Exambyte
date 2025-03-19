@@ -116,4 +116,9 @@ public class TestService {
         test.setTestWorkedOn(true);
         testRepository.save(test);
     }
+
+    public void setGithubHandle(Test test, String githubHandle) {
+        test.setWorkedOnBy(githubHandle);
+        testRepository.save(test);
+    }
 }
