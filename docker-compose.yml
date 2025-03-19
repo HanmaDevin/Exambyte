@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres:15
+    image: postgres:14
     container_name: exambyte-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -11,6 +11,14 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+      - ./roles.yaml:/app/config/roles.yaml
+    networks:
+      - exambyte-network
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "ExamByte", "-d", "ExamByte" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
 
   app:
     build: .
@@ -18,9 +26,11 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://exambyte-db:5432/exambyte_db
-      SPRING_DATASOURCE_USERNAME: exambyte
-      SPRING_DATASOURCE_PASSWORD: exambyte123
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ExamByte
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "8080:8080"
     networks:
