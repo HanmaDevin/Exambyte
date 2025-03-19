@@ -42,9 +42,12 @@ public class FreeTextQuestionAnswerController {
             model.addAttribute("answer", "");
         }
 
-        // Test abgeschlossen? Falls ja, setze readOnly = true
         boolean isReadOnly = testService.hasEnded(id, LocalDateTime.now());
         model.addAttribute("readOnly", isReadOnly);
+        if (isReadOnly) {
+            model.addAttribute("solution", currentQuestion.getPossibleAnswer());
+        }
+
 
         return "student/free-text-question-answer-form";
     }

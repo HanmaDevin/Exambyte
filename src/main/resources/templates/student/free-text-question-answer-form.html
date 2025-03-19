@@ -11,19 +11,14 @@
             var isReadOnly = /*[[${readOnly}]]*/ false;
 
             if (isReadOnly) {
-                // Textarea sperren (falls vorhanden)
                 var textarea = document.getElementById("answer");
                 if (textarea) {
                     textarea.readOnly = true;
                     textarea.disabled = true;
                 }
-
-                // Checkboxen sperren
                 document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
                     checkbox.disabled = true;
                 });
-
-                // Speichern-Button sperren (falls vorhanden)
                 var submitButton = document.querySelector('button[type="submit"]');
                 if (submitButton) {
                     submitButton.disabled = true;
@@ -40,13 +35,10 @@
 
     <div class="card">
         <div class="card-body">
-            <!-- Question Text -->
             <h4 class="card-title">Frage:</h4>
             <p class="card-text" th:text="${question.getQuestionText()}">Hier steht die Frage</p>
 
-            <!-- Max Score -->
             <h5>Maximale Punktzahl: <span th:text="${question.getMaxScore()}">10</span></h5>
-
             <form th:action="@{/student/test/{id}/edit/FreeTextQuestion/{id_question}/submit(id=${test_id}, id_question=${question_id})}" method="post">
                 <div class="form-group">
                     <label for="answer">Antwort:</label>
@@ -56,13 +48,17 @@
                               th:disabled="${readOnly}"></textarea>
                 </div>
 
+                <div class="mt-3" th:if="${readOnly}">
+                    <h5>Lösungsvorschlag:</h5>
+                    <p th:text="${solution}">Kein Lösungsvorschlag vorhanden</p>
+                </div>
+
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between mt-3">
                     <a th:href="@{/student/test/{id}/edit/(id=${test_id})}" class="btn btn-secondary">Abbrechen</a>
                     <button type="submit" class="btn btn-primary" th:disabled="${readOnly}">Antwort absenden</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

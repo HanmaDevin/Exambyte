@@ -3,6 +3,8 @@ package de.propra.exambyte.model;
 import jakarta.persistence.*;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class MultipleChoiceQuestion implements Question {
@@ -81,6 +83,14 @@ public class MultipleChoiceQuestion implements Question {
         this.maxScore = maxScore;
         this.explanation = explanation;
     }
+
+    public Set<String> getCorrectAnswers() {
+        return answers.entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
+    }
+
 
     @Override
     public String toString() {

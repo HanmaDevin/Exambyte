@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Controller
@@ -35,10 +36,37 @@ public class MultipleChoiceQuestionAnswerController {
         model.addAttribute("test_id", id);
         model.addAttribute("question_id", id_question);
 
-        if (currentAnswer != null) {
-            model.addAttribute("selectedAnswers", currentAnswer.getSelectedAnswers());
-        } else {
-            model.addAttribute("selectedAnswers", "");
+        Set<String> selectedAnswers = (currentAnswer != null)
+                ? currentAnswer.getSelectedAnswers()
+                : java.util.Collections.emptySet();
+        model.addAttribute("selectedAnswers", selectedAnswers);
+
+        boolean isReadOnly = testService.hasEnded(id, LocalDateTime.now());
+        model.addAttribute("readOnly", isReadOnly);
+
+        if (isReadOnly) {
+            Set<String> correctAnswers = currentQuestion.getCorrectAnswers();
+            model.addAttribute("correctAnswers", correctAnswers);
+
+            // Berechne die symmetrische Differenz zwischen korrekten Antworten und den ausgewählten Antworten
+            Set<String> symDiff = new java.util.HashSet<>(correctAnswers);
+            symDiff.addAll(selectedAnswers);
+            Set<String> intersection = new java.util.HashSet<>(correctAnswers);
+            intersection.retainAll(selectedAnswers);
+            symDiff.removeAll(intersection);
+            int errorCount = symDiff.size();
+
+            double maxPoints = currentQuestion.getMaxScore();
+            double earnedPoints;
+            if (errorCount == 0) {
+                earnedPoints = maxPoints;
+            } else if (errorCount == 1) {
+                earnedPoints = maxPoints / 2.0;
+            } else {
+                earnedPoints = 0;
+            }
+            model.addAttribute("earnedPoints", earnedPoints);
+            model.addAttribute("maxPoints", maxPoints);
         }
 
         return "student/multiple-choice-question-answer-form";
