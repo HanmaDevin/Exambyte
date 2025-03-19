@@ -26,6 +26,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ExamByte
     password: ExamByte
+    hikari:
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: update
